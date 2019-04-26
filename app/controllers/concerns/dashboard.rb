@@ -330,10 +330,12 @@ extend ActiveSupport::Concern
                   end
                 end
 
-                if key_name == "LPMI"
+                if key_name == "DTI"
                   begin
-                    if adj.data[first_key]["true"].present?
-                      adj_key_hash[key_index] = "true"
+                    dti_key2 = ''
+                    dti_key2 = dti_key_of_adjustment(adj.data[first_key].keys, value_dti)
+                    if dti_key2.present?
+                      adj_key_hash[key_index] = dti_key2
                     else
                       break
                     end
@@ -614,10 +616,12 @@ extend ActiveSupport::Concern
                   end
                 end
 
-                if key_name == "LPMI"
+                if key_name == "DTI"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-1]]["true"].present?
-                      adj_key_hash[key_index] = "true"
+                    dti_key2 = ''
+                    dti_key2 = dti_key_of_adjustment(adj.data[first_key][adj_key_hash[key_index-1]].keys, value_dti)
+                    if dti_key2.present?
+                      adj_key_hash[key_index] = dti_key2
                     else
                       break
                     end
@@ -625,6 +629,7 @@ extend ActiveSupport::Concern
                     puts "Adjustment Error: Adjustment Id: #{adj.id}, Adjustment Primary Key: #{first_key}, Key Name: #{key_name}, Loan Category: #{adj.loan_category}"
                   end
                 end
+
               end
 
               if key_index==2
@@ -896,10 +901,12 @@ extend ActiveSupport::Concern
                   end
                 end
 
-                if key_name == "LPMI"
+                if key_name == "DTI"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]]["true"].present?
-                      adj_key_hash[key_index] = "true"
+                    dti_key2 = ''
+                    dti_key2 = dti_key_of_adjustment(adj.data[first_key][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_dti)
+                    if dti_key2.present?
+                      adj_key_hash[key_index] = dti_key2
                     else
                       break
                     end
@@ -907,6 +914,7 @@ extend ActiveSupport::Concern
                     puts "Adjustment Error: Adjustment Id: #{adj.id}, Adjustment Primary Key: #{first_key}, Key Name: #{key_name}, Loan Category: #{adj.loan_category}"
                   end
                 end
+
               end
               if key_index==3
                 if key_name == "LockDay"
@@ -1178,10 +1186,12 @@ extend ActiveSupport::Concern
                   end
                 end
 
-                if key_name == "LPMI"
+                if key_name == "DTI"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]]["true"].present?
-                      adj_key_hash[key_index] = "true"
+                    dti_key2 = ''
+                    dti_key2 = dti_key_of_adjustment(adj.data[first_key][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_dti)
+                    if dti_key2.present?
+                      adj_key_hash[key_index] = dti_key2
                     else
                       break
                     end
@@ -1189,6 +1199,7 @@ extend ActiveSupport::Concern
                     puts "Adjustment Error: Adjustment Id: #{adj.id}, Adjustment Primary Key: #{first_key}, Key Name: #{key_name}, Loan Category: #{adj.loan_category}"
                   end
                 end
+
               end
               if key_index==4
                 if key_name == "LockDay"
@@ -1460,10 +1471,12 @@ extend ActiveSupport::Concern
                   end
                 end
 
-                if key_name == "LPMI"
+                if key_name == "DTI"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]]["true"].present?
-                      adj_key_hash[key_index] = "true"
+                    dti_key2 = ''
+                    dti_key2 = dti_key_of_adjustment(adj.data[first_key][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_dti)
+                    if dti_key2.present?
+                      adj_key_hash[key_index] = dti_key2
                     else
                       break
                     end
@@ -1471,6 +1484,7 @@ extend ActiveSupport::Concern
                     puts "Adjustment Error: Adjustment Id: #{adj.id}, Adjustment Primary Key: #{first_key}, Key Name: #{key_name}, Loan Category: #{adj.loan_category}"
                   end
                 end
+
               end
               if key_index==5
                 if key_name == "LockDay"
@@ -1742,10 +1756,12 @@ extend ActiveSupport::Concern
                   end
                 end
 
-                if key_name == "LPMI"
+                if key_name == "DTI"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-5]][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]]["true"].present?
-                      adj_key_hash[key_index] = "true"
+                    dti_key2 = ''
+                    dti_key2 = dti_key_of_adjustment(adj.data[first_key][adj_key_hash[key_index-5]][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_dti)
+                    if dti_key2.present?
+                      adj_key_hash[key_index] = dti_key2
                     else
                       break
                     end
@@ -1753,6 +1769,7 @@ extend ActiveSupport::Concern
                     puts "Adjustment Error: Adjustment Id: #{adj.id}, Adjustment Primary Key: #{first_key}, Key Name: #{key_name}, Loan Category: #{adj.loan_category}"
                   end
                 end
+
               end
               if key_index==6
                 if key_name == "LockDay"
@@ -2027,10 +2044,12 @@ extend ActiveSupport::Concern
                   end
                 end
 
-                if key_name == "LPMI"
+                if key_name == "DTI"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-6]][adj_key_hash[key_index-5]][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]]["true"].present?
-                      adj_key_hash[key_index] = "true"
+                    dti_key2 = ''
+                    dti_key2 = dti_key_of_adjustment(adj.data[first_key][adj_key_hash[key_index-6]][adj_key_hash[key_index-5]][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_dti)
+                    if dti_key2.present?
+                      adj_key_hash[key_index] = dti_key2
                     else
                       break
                     end
@@ -2038,6 +2057,7 @@ extend ActiveSupport::Concern
                     puts "Adjustment Error: Adjustment Id: #{adj.id}, Adjustment Primary Key: #{first_key}, Key Name: #{key_name}, Loan Category: #{adj.loan_category}"
                   end
                 end
+
               end
             else
               if key_index==0
@@ -2412,5 +2432,15 @@ extend ActiveSupport::Concern
       end
     end
     return fico_key2
+  end
+
+  def dti_key_of_adjustment(dti_keys, value_dti)
+    dti_key_2 = ''
+    dti_keys.each do |dti_key|
+      if dti_key == value_dti
+        dti_key_2 = dti_key
+      end
+    end
+    return dti_key_2
   end
 end
