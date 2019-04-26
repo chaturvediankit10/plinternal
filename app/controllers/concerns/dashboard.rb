@@ -1,6 +1,6 @@
 module Dashboard
 extend ActiveSupport::Concern
-  def find_adjustments_by_searched_programs(programs, value_lock_period, value_arm_basic, value_arm_advanced, value_fannie_mae_product, value_freddie_mac_product, value_loan_purpose, value_program_category, value_property_type, value_financing_type, value_premium_type, value_refinance_option, value_misc_adjuster, value_state, value_loan_type, value_loan_size, value_result, value_interest, value_loan_amount, value_ltv, value_cltv, value_term, value_credit_score)
+  def find_adjustments_by_searched_programs(programs, value_lock_period, value_arm_basic, value_arm_advanced, value_fannie_mae_product, value_freddie_mac_product, value_loan_purpose, value_program_category, value_property_type, value_financing_type, value_premium_type, value_refinance_option, value_misc_adjuster, value_state, value_loan_type, value_loan_size, value_result, value_interest, value_loan_amount, value_ltv, value_cltv, value_term, value_credit_score, value_dti)
     hash_obj = {
       :bank_name => "",
       :loan_category => "",
@@ -38,6 +38,15 @@ extend ActiveSupport::Concern
           value_freddie_mac_product = pro.freddie_mac_product
           value_loan_purpose = pro.loan_purpose
           value_loan_size = pro.loan_size
+          pro_term = pro.term
+          if (pro_term.to_s.length <=2 )
+            value_term = pro_term.to_s
+          else
+            first = pro_term/100
+            last = pro_term%100
+            value_term = first.to_s+"-"+last.to_s
+          end
+
         end
       end
 
@@ -2313,22 +2322,55 @@ extend ActiveSupport::Concern
     else
       term_keys.each do |term_key|
         if term_key.include?("-")
+          first_range = term_key.split("-").first.strip.to_i
           if term_key.include?("Inf") || term_key.include?("Infinite")
-            if (term_key.split("-").first.strip.to_i <= value_term)
-              term_key2 = term_key
+            if value_term.include?("-")
+              # first_term = value_term.split("-").first.strip.to_i
+              last_term = value_term.split("-").last.strip.to_i
+              if (first_range < last_term)
+                term_key2 = term_key
+              end
             else
-              break
+              if (first_range <= value_term.to_i)
+                term_key2 = term_key
+              else
+                break
+              end
             end
-          elsif term_key.include?("-")
-            if (term_key.split("-").first.strip.to_i <= value_term && value_term <= term_key.split("-").second.strip.to_i)
-              term_key2 = term_key
-            else
-              break
-            end
+          else
+            first_range = term_key.split("-").first.strip.to_i
+            last_range = term_key.split("-").last.strip.to_i
+              if value_term.include?("-")
+                first_term = value_term.split("-").first.strip.to_i
+                last_term = value_term.split("-").last.strip.to_i
+
+                value_range = (first_term..last_term).to_a
+                term_range = (first_range..last_range).to_a
+                if (value_range & term_range).present?
+                  term_key2 = term_key
+                end
+              else
+                if (value_term.to_i.between?(first_range, last_range))
+                  term_key2 = term_key
+                else
+                  break
+                end
+              end
           end
         else
-          if (term_key.to_i == value_term)
-            term_key2 = term_key
+          if value_term.include?("-")
+            first_term = value_term.split("-").first.strip.to_i
+            last_term = value_term.split("-").last.strip.to_i
+            # value_range = (first_term..last_term).to_a
+            if (term_key.to_i.between?(first_term, last_term) ).present?
+              term_key2 = term_key
+            end
+          else
+            if (term_key.to_i == value_term.to_i)
+              term_key2 = term_key
+            else
+              break
+            end
           end
         end
       end

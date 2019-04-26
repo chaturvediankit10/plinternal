@@ -39,13 +39,13 @@ class Program < ApplicationRecord
 
   PROGRAM_CATEGORY_LIST =[["7900"], ["6900"]]
 
-  PROPERTY_TYPE_VALUES = [["Manufactured Home"],["2nd Home"],["3-4 Unit"],["Non-Owner Occupied"],["Condo"],["2-Unit"], ["2-4 Unit"],["Investment Property"], ["Gov'n Non Owner"], ["NOO"]]
+  PROPERTY_TYPE_VALUES = [["Manufactured Home"],["2nd Home"],["3-4 Unit"],["Non-Owner Occupied"],["Condo"],["1 Unit"], ["2-Unit"], ["2-4 Unit"],["Investment Property"], ["Gov'n Non Owner"], ["NOO"]]
 
   FINANCING_TYPE_VALUES = [["Subordinate Financing"], ["Home Possible"]]
 
   REFINANCE_OPTION_VALUES = [["Cash Out"], ["Rate and Term"], ["IRRRL"]]
 
-  MISC_ADJUSTER_VALUES = [["CA Escrow Waiver (Full or Taxes Only)"], ["CA Escrow Waiver (Insurance Only)"], ["Miscellaneous"], ["Escrow Waiver Fee"], ["Escrow Waiver (LTVs >80%; CA only)"], ["Escrow Waiver (N/A for: CA, CT, ME, MT, NY, RI, SD, UT, VT, WV)"]]
+  MISC_ADJUSTER_VALUES = [["Escrow Waiver"], ["CA Escrow Waiver (Full or Taxes Only)"], ["CA Escrow Waiver (Insurance Only)"], ["Miscellaneous"], ["Escrow Waiver Fee"], ["Escrow Waiver (LTVs >80%; CA only)"], ["Escrow Waiver (N/A for: CA, CT, ME, MT, NY, RI, SD, UT, VT, WV)"], ["Escrow Waiver - except CA"]]
 
   PATMENT_TYPE_VALUES = [["Principal and Interest"], ["Interest Only"]]
 

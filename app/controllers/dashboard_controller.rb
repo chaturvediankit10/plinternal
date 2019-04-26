@@ -72,7 +72,7 @@ class DashboardController < ApplicationController
     @lock_period ="30"
     @loan_size = "High-Balance"
     @loan_type = "Fixed"
-    @term = 30
+    @term = "30"
     @ltv = []
     @credit_score = []
     @cltv = []
@@ -142,7 +142,7 @@ class DashboardController < ApplicationController
   end
 
   def modified_variables
-    %w[state property_type financing_type refinance_option refinance_option misc_adjuster premium_type interest lock_period loan_amount program_category payment_type].each do |key|
+    %w[state property_type financing_type refinance_option refinance_option misc_adjuster premium_type interest lock_period loan_amount program_category payment_type dti].each do |key|
       key_value = params[key.to_sym]
       instance_variable_set("@#{key}", key_value) if key_value.present?
     end
@@ -152,10 +152,9 @@ class DashboardController < ApplicationController
     if params[:term].present?
       if (params[:term] == "All")
         @filter_not_nil[:term] = nil
-        @term = params[:term]
       else
         @filter_data[:term] = params[:term].to_i
-        @term = params[:term].to_i
+        @term = params[:term]
         @program_term = params[:term].to_i
       end
     end
@@ -166,9 +165,9 @@ class DashboardController < ApplicationController
       if (params[:arm_basic] == "All")
         @filter_not_nil[:arm_basic] = nil
       else
-        @arm_basic = params[:arm_basic]
         if params[:arm_basic].include?("/")
           @filter_data[:arm_basic] = params[:arm_basic].split("/").first
+          @arm_basic = params[:arm_basic]
         end
       end
     end
@@ -376,7 +375,7 @@ class DashboardController < ApplicationController
 
     @result= []
     if total_searched_program.present?
-      @result = find_adjustments_by_searched_programs(total_searched_program, @lock_period, @arm_basic, @arm_advanced, @fannie_mae_product, @freddie_mac_product, @loan_purpose, @program_category, @property_type, @financing_type, @premium_type, @refinance_option, @misc_adjuster, @state, @loan_type, @loan_size, @result, @interest, @loan_amount, @ltv, @cltv, @term, @credit_score )
+      @result = find_adjustments_by_searched_programs(total_searched_program, @lock_period, @arm_basic, @arm_advanced, @fannie_mae_product, @freddie_mac_product, @loan_purpose, @program_category, @property_type, @financing_type, @premium_type, @refinance_option, @misc_adjuster, @state, @loan_type, @loan_size, @result, @interest, @loan_amount, @ltv, @cltv, @term, @credit_score, @dti )
     end
   end
 
@@ -417,7 +416,7 @@ class DashboardController < ApplicationController
       end
       @result= []
       if @programs.present?
-        @result = find_adjustments_by_searched_programs(@programs, @lock_period, @arm_basic, @arm_advanced, @fannie_mae_product, @freddie_mac_product, @loan_purpose, @program_category, @property_type, @financing_type, @premium_type, @refinance_option, @misc_adjuster, @state, @loan_type, @loan_size, @result, @interest, @loan_amount, @ltv, @cltv, @term, @credit_score )
+        @result = find_adjustments_by_searched_programs(@programs, @lock_period, @arm_basic, @arm_advanced, @fannie_mae_product, @freddie_mac_product, @loan_purpose, @program_category, @property_type, @financing_type, @premium_type, @refinance_option, @misc_adjuster, @state, @loan_type, @loan_size, @result, @interest, @loan_amount, @ltv, @cltv, @term, @credit_score, @dti )
       end
     end
   end
