@@ -2383,7 +2383,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 # title
                 @title = sheet_data.cell(r,cc)
                 @program = @sheet_obj.programs.find_or_create_by(program_name: @title)
-                p_name = @title + " " + sheet + " " program_heading
+                p_name = @title + " " + sheet + " " + program_heading
                 @program.update_fields p_name
                 program_property @title
                 if @title.include?("20/25/30")
