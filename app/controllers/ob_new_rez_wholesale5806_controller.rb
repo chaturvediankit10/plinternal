@@ -2371,6 +2371,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
         primary_key = ''
         fixed_key = ''
         ltv_key = ''
+        program_heading = sheet_data.cell(1,10)
         (1..33).each do |r|
           row = sheet_data.row(r)
           if ((row.compact.count > 1) && (row.compact.count <= 3)) && (!row.compact.include?("Dream Big Jumbo"))
@@ -2382,7 +2383,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 # title
                 @title = sheet_data.cell(r,cc)
                 @program = @sheet_obj.programs.find_or_create_by(program_name: @title)
-                p_name = @title + " " + sheet
+                p_name = @title + " " + sheet + " " program_heading
                 @program.update_fields p_name
                 program_property @title
                 if @title.include?("20/25/30")
