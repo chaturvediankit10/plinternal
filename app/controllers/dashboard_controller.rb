@@ -10,14 +10,14 @@ class DashboardController < ApplicationController
       set_variable
       find_base_rate
     end
-    fetch_programs_by_bank(true)
+    fetch_program_info_dropdown_list(true)
   end
 
   def banks
     @banks = Bank.all
   end
 
-  def fetch_programs_by_bank(html_type=false)
+  def fetch_program_info_dropdown_list(html_type=false)
     @all_programs = Program.all
     @program_names = @all_programs.pluck(:program_name).uniq.compact.sort
     @loan_categories = @all_programs.pluck(:loan_category).uniq.compact.sort

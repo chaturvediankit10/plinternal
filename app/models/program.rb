@@ -39,7 +39,7 @@ class Program < ApplicationRecord
 
   PROGRAM_CATEGORY_LIST =[["7900"], ["6900"]]
 
-  PROPERTY_TYPE_VALUES = [["Manufactured Home"],["2nd Home"],["3-4 Unit"],["Non-Owner Occupied"],["Condo"],["1 Unit"], ["2-Unit"], ["3-Unit"], ["4-Unit"], ["2-4 Unit"],["Investment Property"], ["Gov'n Non Owner"], ["NOO"]]
+  PROPERTY_TYPE_VALUES = [["Manufactured Home"],["2nd Home"],["3-4 Unit"],["Non-Owner Occupied"],["Condo"],["1 Unit"], ["2 Unit"], ["3 Unit"], ["4 Unit"], ["2-3 Unit"], ["2-4 Unit"], ["3-4 Unit"], ["Investment Property"], ["Gov'n Non Owner"], ["NOO"]]
 
   FINANCING_TYPE_VALUES = [["Subordinate Financing"], ["Home Possible"]]
 

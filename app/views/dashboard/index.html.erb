@@ -442,7 +442,7 @@
 
       $.ajax({
         type:'GET',
-        url:'/dashboard/fetch_programs_by_bank',
+        url:'/dashboard/fetch_program_info_dropdown_list',
         data: {bank_name : bank_name, loan_category: loan_category, pro_category: pro_category },
         success:function(response){
           var selectBox = document.getElementById('program_name');
@@ -473,7 +473,7 @@
       var pro_category ="All"
       $.ajax({
         type:'GET',
-        url:'/dashboard/fetch_programs_by_bank',
+        url:'/dashboard/fetch_program_info_dropdown_list',
         data: {loan_category : loan_category, bank_name : bank_name, pro_category: pro_category },
         success:function(response){
           var selectBox = document.getElementById('program_name');
@@ -498,7 +498,7 @@
       var loan_category = $('#loan_category').val()
       $.ajax({
         type:'GET',
-        url:'/dashboard/fetch_programs_by_bank',
+        url:'/dashboard/fetch_program_info_dropdown_list',
         data: {loan_category : loan_category, bank_name : bank_name, pro_category: pro_category },
         success:function(response){
           var selectBox = document.getElementById('program_name');

@@ -19,11 +19,8 @@ extend ActiveSupport::Concern
 
       if pro.base_rate.present?
         base_rate_keys = pro.base_rate.keys.map{ |k| ActionController::Base.helpers.number_with_precision(k, :precision => 3)}
-
-        interest_rate = ActionController::Base.helpers.number_with_precision(value_interest.to_f.to_s, :precision => 3)
-
-        key_list = pro.base_rate.keys
-
+          interest_rate = ActionController::Base.helpers.number_with_precision(value_interest.to_f.to_s, :precision => 3)
+          key_list = pro.base_rate.keys
         if(base_rate_keys.include?(interest_rate))
           rate_index = base_rate_keys.index(interest_rate)
           if(pro.base_rate[key_list[rate_index]].keys.include?(value_lock_period))
@@ -46,7 +43,6 @@ extend ActiveSupport::Concern
             last = pro_term%100
             value_term = first.to_s+"-"+last.to_s
           end
-
         end
       end
 
@@ -56,7 +52,6 @@ extend ActiveSupport::Concern
           first_key = adj.data.keys.first
           key_list = first_key.split("/")
           adj_key_hash = {}
-
           key_list.each_with_index do |key_name, key_index|
             if(Adjustment::INPUT_VALUES.include?(key_name))
               if key_index==0
@@ -2178,16 +2173,15 @@ extend ActiveSupport::Concern
       end
 
       hash_obj = {
-      :bank_name => "",
-      :loan_category => "",
-      :program_category => "",
-      :program_name => "",
-      :base_rate => 0.0,
-      :adj_points => [],
-      :adj_primary_key => [],
-      :final_rate => []
-    }
-
+        :bank_name => "",
+        :loan_category => "",
+        :program_category => "",
+        :program_name => "",
+        :base_rate => 0.0,
+        :adj_points => [],
+        :adj_primary_key => [],
+        :final_rate => []
+      }
     end
     return value_result
   end
@@ -2260,20 +2254,21 @@ extend ActiveSupport::Concern
   end
 
   def ltv_key_of_adjustment(ltv_keys, value_ltv)
-    ltv_key2 = ''
+    ltv_key2 = []
+    return_ltv_key = ''
     ltv_keys.each do |ltv_key|
       if (ltv_key.include?("Any") || ltv_key.include?("All"))
-        ltv_key2 = ltv_key
+        ltv_key2 << ltv_key
       end
       if ltv_key.include?("-")
         ltv_key_range =[]
         if ltv_key.include?("Inf") || ltv_key.include?("Infinity")
           first_range = ltv_key.split("-").first.strip.to_f
           if params[:ltv].include?("+")
-              ltv_key2 = ltv_key
+              ltv_key2 << ltv_key
           else
             if first_range <= value_ltv.last
-              ltv_key2 = ltv_key
+              ltv_key2 << ltv_key
             end
           end
         else
@@ -2282,36 +2277,49 @@ extend ActiveSupport::Concern
           if params[:ltv].include?("+")
             full_range = params[:ltv].split("+").first.strip.to_f
             if (full_range >= first_range && full_range < last_range )
-              ltv_key2 = ltv_key
+              ltv_key2 << ltv_key
             end
           else
             (first_range..last_range).step(0.01) { |f| ltv_key_range << f }
             ltv_key_range = ltv_key_range.uniq
             if (ltv_key_range & value_ltv).present?
-              ltv_key2 = ltv_key
+              ltv_key2 << ltv_key
             end
           end
         end
       end
     end
-    return ltv_key2
+    if ltv_key2.present?
+      if ltv_key2.count > 1
+        ltv_keys3 = ltv_keys2.map{ |a| a unless a.split("-").first.to_i == 0 || a.include?("Inf")}.compact
+        if ltv_keys3.present?
+          return_ltv_key = ltv_keys3.first
+        else
+          return_ltv_key = ltv_key2[0]
+        end
+      else
+        return_ltv_key = ltv_key2[0]
+      end
+    end
+    return return_ltv_key
   end
 
   def cltv_key_of_adjustment(cltv_keys, value_cltv)
-    cltv_key2 = ''
+    cltv_key2 = []
+    return_cltv_key = ''
     cltv_keys.each do |cltv_key|
       if (cltv_key.include?("Any") || cltv_key.include?("All"))
-        cltv_key2 = cltv_key
+        cltv_key2 << cltv_key
       end
       if cltv_key.include?("-")
         cltv_key_range =[]
         if cltv_key.include?("Inf") || cltv_key.include?("Infinity")
           first_range = cltv_key.split("-").first.strip.to_f
           if params[:cltv].include?("+")
-              cltv_key2 = cltv_key
+              cltv_key2 << cltv_key
           else
             if first_range <= value_cltv.last
-              cltv_key2 = cltv_key
+              cltv_key2 << cltv_key
             end
           end
         else
@@ -2320,19 +2328,31 @@ extend ActiveSupport::Concern
           if params[:cltv].include?("+")
             full_range = params[:cltv].split("+").first.strip.to_f
             if (full_range >= first_range && full_range < last_range )
-              cltv_key2 = cltv_key
+              cltv_key2 << cltv_key
             end
           else
             (first_range..last_range).step(0.01) { |f| cltv_key_range << f }
             cltv_key_range = cltv_key_range.uniq
             if (cltv_key_range & value_cltv).present?
-              cltv_key2 = cltv_key
+              cltv_key2 << cltv_key
             end
           end
         end
       end
     end
-    return cltv_key2
+    if cltv_key2.present?
+      if cltv_key2.count > 1
+        cltv_keys3 = cltv_key2.map{ |a| a unless a.split("-").first.to_i == 0 || a.include?("Inf")}.compact
+        if cltv_keys3.present?
+          return_cltv_key = cltv_keys3[0]
+        else
+          return_cltv_key = cltv_key2[0]
+        end
+      else
+        return_cltv_key = cltv_key2[0]
+      end
+    end
+    return return_cltv_key
   end
 
   def term_key_of_adjustment(term_keys, value_term)
@@ -2399,20 +2419,21 @@ extend ActiveSupport::Concern
   end
 
   def fico_key_of_adjustment(fico_keys, value_credit_score)
-    fico_key2 = ''
+    fico_key2 = []
+    return_fico_key = ''
     fico_keys.each do |fico_key|
       if (fico_key.include?("Any") || fico_key.include?("All"))
-        fico_key2 = fico_key
+        fico_key2 << fico_key
       end
       if fico_key.include?("-")
         fico_key_range =[]
         if fico_key.include?("Inf") || fico_key.include?("Infinity")
           first_range = fico_key.split("-").first.strip.to_i
           if params[:credit_score].include?("+")
-              fico_key2 = fico_key
+              fico_key2 << fico_key
           else
             if first_range <= value_credit_score.last
-              fico_key2 = fico_key
+              fico_key2 << fico_key
             end
           end
         else
@@ -2421,17 +2442,29 @@ extend ActiveSupport::Concern
           if params[:credit_score].include?("+")
             full_range = params[:credit_score].split("+").first.strip.to_i
             if (full_range >= first_range && full_range < last_range )
-              fico_key2 = fico_key
+              fico_key2 << fico_key
             end
           else
             if (value_credit_score & (first_range..last_range).to_a).present?
-              fico_key2 = fico_key
+              fico_key2 << fico_key
             end
           end
         end
       end
     end
-    return fico_key2
+    if fico_key2.present?
+      if fico_key2.count > 1
+        fico_keys3 = fico_key2.map{ |a| a unless a.split("-").first.to_i == 0 || a.include?("Inf")}.compact
+        if fico_keys3.present?
+          return_fico_key = fico_keys3[0]
+        else
+          return_fico_key = fico_key2[0]
+        end
+      else
+        return_fico_key = fico_key2[0]
+      end
+    end
+    return return_fico_key
   end
 
   def dti_key_of_adjustment(dti_keys, value_dti)

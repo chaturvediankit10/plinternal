@@ -195,11 +195,11 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     @property_hash[primary_key][secondary_key][ltv_key][new_key] =  (new_value*100).to_s
                   end
                   if r == 112 && cc == 11
-                    @multiunit_hash["PropertyType/LTV"]["2-Unit"] = {}
-                    @multiunit_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = {}
+                    @multiunit_hash["PropertyType/LTV"]["2 Unit"] = {}
+                    @multiunit_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 2
                     new_value = sheet_data.cell(r,cc)
-                    @multiunit_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = (new_value*100).to_s
+                    @multiunit_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = (new_value*100).to_s
                   end
                   if r == 113 && cc == 11
                     @multiunit_hash["PropertyType/LTV"]["3-4 Unit"] = {}
@@ -652,11 +652,11 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 90 && cc == 9
                     @property_hash["PropertyType/LTV"] = {}
-                    @property_hash["PropertyType/LTV"]["2-Unit"] = {}
-                    @property_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = {}
+                    @property_hash["PropertyType/LTV"]["2 Unit"] = {}
+                    @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 1
                     new_value = sheet_data.cell(r,cc)
-                    @property_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = new_value*100
+                    @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = new_value*100
                   end
                   if r == 91 && cc == 5
                     @property_hash["PropertyType"] = {}
@@ -869,11 +869,11 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 67 && cc == 10
                     @property_hash["PropertyType/LTV"] = {}
-                    @property_hash["PropertyType/LTV"]["2-Unit"] = {}
-                    @property_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = {}
+                    @property_hash["PropertyType/LTV"]["2 Unit"] = {}
+                    @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 2
                     new_value = sheet_data.cell(r,cc)
-                    @property_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = new_value*100
+                    @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = new_value*100
                   end
                   if r == 68 && cc == 5
                     @property_hash["PropertyType"] = {}
@@ -1080,11 +1080,11 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 61 && cc == 10
                     @property_hash["PropertyType/LTV"] = {}
-                    @property_hash["PropertyType/LTV"]["2-Unit"] = {}
-                    @property_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = {}
+                    @property_hash["PropertyType/LTV"]["2 Unit"] = {}
+                    @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 2
                     new_value = sheet_data.cell(r,cc)
-                    @property_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = new_value*100
+                    @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = new_value*100
                   end
                   if r == 62 && cc == 10
                     @property_hash["PropertyType/LTV"]["3-4 Unit"] = {}
@@ -1262,11 +1262,11 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 59 && cc == 10
                     @property_hash["PropertyType/LTV"] = {}
-                    @property_hash["PropertyType/LTV"]["2-Unit"] = {}
-                    @property_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = {}
+                    @property_hash["PropertyType/LTV"]["2 Unit"] = {}
+                    @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 2
                     new_value = sheet_data.cell(r,cc)
-                    @property_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = new_value*100
+                    @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = new_value*100
                   end
                   if r == 60 && cc == 5
                     @property_hash["PropertyType"] = {}
@@ -1437,11 +1437,11 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 55 && cc == 10
                     @property_hash["PropertyType/LTV"] = {}
-                    @property_hash["PropertyType/LTV"]["2-Unit"] = {}
-                    @property_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = {}
+                    @property_hash["PropertyType/LTV"]["2 Unit"] = {}
+                    @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 2
                     new_value = sheet_data.cell(r,cc)
-                    @property_hash["PropertyType/LTV"]["2-Unit"]["0-85"] = new_value*100
+                    @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = new_value*100
                   end
                   if r == 56 && cc == 5
                     @property_hash["PropertyType"] = {}
@@ -1705,12 +1705,12 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 45 && cc == 10
                     @other_hash["PropertyType/LTV"] = {}
-                    @other_hash["PropertyType/LTV"]["2-Unit"] = {}
+                    @other_hash["PropertyType/LTV"]["2 Unit"] = {}
                   end
                   if r == 45 && cc >= 11 && cc <= 15
                     ltv_key = get_value @ltv_data[cc-3]
-                    @other_hash["PropertyType/LTV"]["2-Unit"][ltv_key] = {}
-                    @other_hash["PropertyType/LTV"]["2-Unit"][ltv_key] = value
+                    @other_hash["PropertyType/LTV"]["2 Unit"][ltv_key] = {}
+                    @other_hash["PropertyType/LTV"]["2 Unit"][ltv_key] = value
                   end
                   if r == 46 && cc == 10
                     @other_hash["PropertyType/LTV"]["Condo"] = {}

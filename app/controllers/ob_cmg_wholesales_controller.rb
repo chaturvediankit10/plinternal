@@ -630,7 +630,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 # LENDER PAID MI
                 if r >= 71 && r <= 74 && cc == 3
-                  primary_key1 = "True"
+                  primary_key1 = "true"
                   secondary_key = "Fixed"
                   ltv_key = "ARM"
                   @lpmi_hash[primary_key][primary_key1] = {}
@@ -642,7 +642,7 @@ class ObCmgWholesalesController < ApplicationController
                   ["25", "30"].each{|num| @lpmi_adj[first_key][primary_key1][secondary_key][num] = {}}
                 end
                 if r >= 75 && r <= 78 && cc == 3
-                  primary_key1 = "True"
+                  primary_key1 = "true"
                   secondary_key = "Fixed"
                   ltv_key = "ARM"
                   @lpmi_adj[primary_key][primary_key1] = {}
@@ -703,7 +703,7 @@ class ObCmgWholesalesController < ApplicationController
                   @home_ready[cash_key][primary_key1][cltv_key][ltv_key]["20"] = {}
                 end
                 if r >= 83 && r <= 86 && cc == 3
-                  primary_key1 = "True"
+                  primary_key1 = "true"
                   secondary_key = "HomeReady"
                   cltv_key = "Home Possible"
                   ltv_key = "Fixed"
