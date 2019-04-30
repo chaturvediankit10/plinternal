@@ -154,8 +154,10 @@ extend ActiveSupport::Concern
 
                 if key_name == "PropertyType"
                   begin
-                    if adj.data[first_key][value_property_type].present?
-                      adj_key_hash[key_index] = value_property_type
+                    property_type2 = ''
+                    property_type2 = property_type_of_adjustment(adj.data[first_key].keys , value_property_type)
+                    if property_type2.present?
+                      adj_key_hash[key_index] = property_type2
                     else
                       break
                     end
@@ -440,8 +442,10 @@ extend ActiveSupport::Concern
 
                 if key_name == "PropertyType"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-1]][value_property_type].present?
-                      adj_key_hash[key_index] = value_property_type
+                    property_type2 = ''
+                    property_type2 = property_type_of_adjustment(adj.data[first_key][adj_key_hash[key_index-1]].keys, value_property_type)
+                    if property_type2.present?
+                      adj_key_hash[key_index] = property_type2
                     else
                       break
                     end
@@ -727,8 +731,10 @@ extend ActiveSupport::Concern
 
                 if key_name == "PropertyType"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]][value_property_type].present?
-                      adj_key_hash[key_index] = value_property_type
+                    property_type2 = ''
+                    property_type2 = property_type_of_adjustment(adj.data[first_key][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_property_type)
+                    if property_type2.present?
+                      adj_key_hash[key_index] = property_type2
                     else
                       break
                     end
@@ -764,7 +770,6 @@ extend ActiveSupport::Concern
                     if adj.data[first_key][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].present?
                       ltv_key2 = ''
                       ltv_key2 = ltv_key_of_adjustment(adj.data[first_key][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_ltv)
-
                       if ltv_key2.present?
                         adj_key_hash[key_index] = ltv_key2
                       else
@@ -1012,8 +1017,10 @@ extend ActiveSupport::Concern
 
                 if key_name == "PropertyType"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]][value_property_type].present?
-                      adj_key_hash[key_index] = value_property_type
+                    property_type2 = ''
+                    property_type2 = property_type_of_adjustment(adj.data[first_key][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_property_type)
+                    if property_type2.present?
+                      adj_key_hash[key_index] = property_type2
                     else
                       break
                     end
@@ -1049,7 +1056,6 @@ extend ActiveSupport::Concern
                     if adj.data[first_key][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].present?
                       ltv_key2 = ''
                       ltv_key2 = ltv_key_of_adjustment(adj.data[first_key][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_ltv)
-
                       if ltv_key2.present?
                         adj_key_hash[key_index] = ltv_key2
                       else
@@ -1297,8 +1303,10 @@ extend ActiveSupport::Concern
 
                 if key_name == "PropertyType"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]][value_property_type].present?
-                      adj_key_hash[key_index] = value_property_type
+                    property_type2 = ''
+                    property_type2 = property_type_of_adjustment(adj.data[first_key][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_property_type)
+                    if property_type2.present?
+                      adj_key_hash[key_index] = property_type2
                     else
                       break
                     end
@@ -1582,8 +1590,10 @@ extend ActiveSupport::Concern
 
                 if key_name == "PropertyType"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-5]][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]][value_property_type].present?
-                      adj_key_hash[key_index] = value_property_type
+                    property_type2 = ''
+                    property_type2 = property_type_of_adjustment(adj.data[first_key][adj_key_hash[key_index-5]][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_property_type)
+                    if property_type2.present?
+                      adj_key_hash[key_index] = property_type2
                     else
                       break
                     end
@@ -1867,8 +1877,10 @@ extend ActiveSupport::Concern
 
                 if key_name == "PropertyType"
                   begin
-                    if adj.data[first_key][adj_key_hash[key_index-6]][adj_key_hash[key_index-5]][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]][value_property_type].present?
-                      adj_key_hash[key_index] = value_property_type
+                    property_type2 = ''
+                    property_type2 = property_type_of_adjustment(adj.data[first_key][adj_key_hash[key_index-6]][adj_key_hash[key_index-5]][adj_key_hash[key_index-4]][adj_key_hash[key_index-3]][adj_key_hash[key_index-2]][adj_key_hash[key_index-1]].keys, value_property_type)
+                    if property_type2.present?
+                      adj_key_hash[key_index] = property_type2
                     else
                       break
                     end
@@ -2257,9 +2269,6 @@ extend ActiveSupport::Concern
     ltv_key2 = []
     return_ltv_key = ''
     ltv_keys.each do |ltv_key|
-      if (ltv_key.include?("Any") || ltv_key.include?("All"))
-        ltv_key2 << ltv_key
-      end
       if ltv_key.include?("-")
         ltv_key_range =[]
         if ltv_key.include?("Inf") || ltv_key.include?("Infinity")
@@ -2367,7 +2376,7 @@ extend ActiveSupport::Concern
             if value_term.include?("-")
               # first_term = value_term.split("-").first.strip.to_i
               last_term = value_term.split("-").last.strip.to_i
-              if (first_range < last_term)
+              if (first_range <= last_term)
                 term_key2 = term_key
               end
             else
@@ -2475,5 +2484,23 @@ extend ActiveSupport::Concern
       end
     end
     return dti_key_2
+  end
+
+  def property_type_of_adjustment(property_type_keys, value_property_type)
+    property_type2 = ''
+    property_type_keys.each do |property_type|
+      if property_type.downcase.include?("unit") && property_type.downcase.include?("-") && value_property_type.present?
+          first_range = property_type.split("-").first.to_i
+          last_range = property_type.split("-").last.to_i
+          if (first_range..last_range).to_a.include?(value_property_type.to_i)
+            property_type2 = property_type
+          end
+      else
+        if(property_type.downcase == value_property_type.downcase)
+          property_type2 = property_type
+        end
+      end
+    end
+    return property_type2
   end
 end
