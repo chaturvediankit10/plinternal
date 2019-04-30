@@ -73,4 +73,13 @@ gem "select2-rails"
 gem 'csv'
 gem 'jquery-validation-rails'
 
-gem 'search_api', :git => 'https://ENV['GITHUB_USERNAME']:ENV['GITHUB_USERPASSWORD']@github.com/PureLoan/APIHookup.git'
+# gem 'search_api', git: 'https://github.com/PureLoan/APIRead.git'
+
+
+  private_repo_credentials = %w(GITHUB_USERNAME GITHUB_USERPASSWORD).
+  map { |var| ENV[var] }.compact.join(':')
+private_repo_credentials << '@' unless private_repo_credentials.empty?
+# private_repo_credentials will be "" if neither var is set
+# private_repo_credentials will be "username:password@" if they are set
+gem 'search_api',
+  :git => "https://#{private_repo_credentials}github.com/PureLoan/APIRead.git"
