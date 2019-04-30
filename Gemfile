@@ -72,5 +72,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "select2-rails"
 gem 'csv'
 gem 'jquery-validation-rails'
-
-gem 'search_api', path: "/home/yuva/Rails/pure-loan"
+gem 'search_api', git: 'https://github.com/PureLoan/APIRead.git'
