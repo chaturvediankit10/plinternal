@@ -5,7 +5,7 @@ development:
   username: postgres
   password: 12345678
   pool: 5
-  database: pure_loan_development_new_1
+  database: rate_sheet_26april
 
 production:
   host: localhost
@@ -14,4 +14,4 @@ production:
   username: root
   password: root
   pool: 5
-  database: pure_loan_development
+  database: rate_sheet_26april
