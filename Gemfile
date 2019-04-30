@@ -72,4 +72,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "select2-rails"
 gem 'csv'
 gem 'jquery-validation-rails'
-gem 'search_api', git: 'https://github.com/PureLoan/APIRead.git'
+
+gem 'search_api', :git => 'https://ENV['GITHUB_USERNAME']:ENV['GITHUB_USERPASSWORD']@github.com/PureLoan/APIHookup.git'
