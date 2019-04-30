@@ -73,4 +73,4 @@ gem "select2-rails"
 gem 'csv'
 gem 'jquery-validation-rails'
 
-gem 'search_api', path: "/home/richa-yuva/richa_new/search_api"
+gem 'search_api', path: "/home/yuva/Rails/pure-loan"
