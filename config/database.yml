@@ -1,17 +1,14 @@
-development:
-  host: localhost
+default: &default
   adapter: postgresql
   encoding: unicode
-  username: postgres
-  password: 12345678
   pool: 5
-  database: rate_sheet_26april
 
-production:
-  host: localhost
-  adapter: postgresql
-  encoding: unicode
-  username: root
-  password: root
-  pool: 5
-  database: rate_sheet_26april
+development:
+  <<: *default
+  database: pureloan
+  username: relativity
+  password: plruby00$$
+  host: pureloan.cvsru2cdh1jm.us-east-1.rds.amazonaws.com
+  port: 5432
+
+
