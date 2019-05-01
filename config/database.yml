@@ -10,5 +10,3 @@ development:
   password: plruby00$$
   host: pureloan.cvsru2cdh1jm.us-east-1.rds.amazonaws.com
   port: 5432
-
-

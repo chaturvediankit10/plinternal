@@ -72,13 +72,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "select2-rails"
 gem 'csv'
 gem 'jquery-validation-rails'
-
-#   private_repo_credentials = %w(GITHUB_USERNAME GITHUB_USERPASSWORD).
-#   map { |var| ENV[var] }.compact.join(':')
-# private_repo_credentials << '@' unless private_repo_credentials.empty?
-
-# gem 'search_api', :git => "https://#{private_repo_credentials}github.com/PureLoan/APIRead.git"
-
 gem "search_api", git: "https://github.com/PureLoan/APIRead.git"
-
-# gem "search_api", path: "/home/hp/personal/kevin_projects/APIRead"
