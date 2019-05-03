@@ -1,5 +1,6 @@
-PATH
-  remote: /home/hp/personal/kevin_projects/APIRead
+GIT
+  remote: https://github.com/PureLoan/APIRead.git
+  revision: 97ac70d3bb278e5bd2dcf99041aa8b6d97c1036e
   specs:
     search_api (0.1.0)
       activesupport
