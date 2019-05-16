@@ -1,4 +1,5 @@
 class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
+  include ProgramAdj
   before_action :read_sheet, only: [:index,:fha, :va, :conf_fixed]
   before_action :get_sheet, only: [:programs, :va, :fha, :conf_fixed]
   before_action :get_program, only: [:single_program]
@@ -129,13 +130,13 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                     @fha_adjustment["FHA/USDA/LoanSize/FICO"]["true"]["true"]["High-Balance"]["0-680"] = new_val
                   end
                   if r == 49 && cc == 17
-                    @fha_adjustment["FHA/StreamLine/CLTV"] = {}
-                    @fha_adjustment["FHA/StreamLine/CLTV"]["true"] = {}
-                    @fha_adjustment["FHA/StreamLine/CLTV"]["true"]["true"] = {}
-                    @fha_adjustment["FHA/StreamLine/CLTV"]["true"]["true"]["100-125"] = {}
+                    @fha_adjustment["FHA/Streamline/CLTV"] = {}
+                    @fha_adjustment["FHA/Streamline/CLTV"]["true"] = {}
+                    @fha_adjustment["FHA/Streamline/CLTV"]["true"]["true"] = {}
+                    @fha_adjustment["FHA/Streamline/CLTV"]["true"]["true"]["100-125"] = {}
                     cc = cc + 3
                     new_val = sheet_data.cell(r,cc)
-                    @fha_adjustment["FHA/StreamLine/CLTV"]["true"]["true"]["100-125"] = new_val
+                    @fha_adjustment["FHA/Streamline/CLTV"]["true"]["true"]["100-125"] = new_val
                   end
                   if r == 50 && cc == 17
                     @fha_adjustment["FHA/USDA/PropertyType"] = {}
@@ -221,7 +222,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
         end
         adjustment = [@fha_adjustment,@loan_adj]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_allied_mortgage_group_wholesale8570_path(@sheet_obj)
@@ -410,7 +411,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
         end
         adjustment = [@adjustment_hash,@loan_amount]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_allied_mortgage_group_wholesale8570_path(@sheet_obj)
@@ -684,7 +685,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
         end
         adjustment = [@adjustment_hash,@cash_out,@subordinate_hash,@property_hash,@other_adjustment,@loan_amount]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_allied_mortgage_group_wholesale8570_path(@sheet_obj)
@@ -818,45 +819,8 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
         hash.each do |key|
           data = {}
           data[key[0]] = key[1]
-          Adjustment.create(data: data,loan_category: sheet)
-        end
-      end
-    end
-
-    def create_program_association_with_adjustment(sheet)
-      adjustment_list = Adjustment.where(loan_category: sheet)
-      program_list = Program.where(loan_category: sheet)
-      adjustment_list.each_with_index do |adj_ment, index|
-        key_list = adj_ment.data.keys.first.split("/")
-        program_filter1={}
-        program_filter2={}
-        include_in_input_values = false
-        if key_list.present?
-          key_list.each_with_index do |key_name, key_index|
-            if (Program.column_names.include?(key_name.underscore))
-              unless (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                program_filter1[key_name.underscore] = nil
-              else
-                if (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                  program_filter2[key_name.underscore] = true
-                end
-              end
-              include_in_input_values = true
-            else
-              if(Adjustment::INPUT_VALUES.include?(key_name))
-                include_in_input_values = true
-              end
-            end
-          end
-
-          if (include_in_input_values)
-            program_list1 = program_list.where.not(program_filter1)
-            program_list2 = program_list1.where(program_filter2)
-
-            if program_list2.present?
-              program_list2.map{ |program| program.adjustments << adj_ment unless program.adjustments.include?(adj_ment) }
-            end
-          end
+          adj_ment = Adjustment.create(data: data,loan_category: sheet)
+          link_adj_with_program(adj_ment, sheet)
         end
       end
     end

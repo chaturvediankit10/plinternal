@@ -1,4 +1,5 @@
 class ObQuickenLoans3571Controller < ApplicationController
+  include ProgramAdj
   before_action :read_sheet, only: [:index,:ws_du_lp_pricing, :durp_lp_relief_pricing, :fha_usda_full_doc_pricing, :fha_streamline_pricing, :va_full_doc_pricing, :va_irrrl_pricing_govy_llpas, :na_jumbo_pricing_llpas, :du_lp_llpas, :durp_lp_relief_llpas, :lpmi]
 	before_action :get_sheet, only: [:programs, :ws_du_lp_pricing, :durp_lp_relief_pricing, :fha_usda_full_doc_pricing, :fha_streamline_pricing, :va_full_doc_pricing, :va_irrrl_pricing_govy_llpas, :na_jumbo_pricing_llpas, :du_lp_llpas, :durp_lp_relief_llpas, :lpmi]
   before_action :get_program, only: [:single_program]
@@ -365,7 +366,6 @@ class ObQuickenLoans3571Controller < ApplicationController
         end
         adjustment = [@adjustment_hash,@subordinate_hash,@property_hash,@cashout_hash,@other_adjustment]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_quicken_loans3571_path(@sheet_obj)
@@ -870,7 +870,6 @@ class ObQuickenLoans3571Controller < ApplicationController
         end
         adjustment = [@adjustment_hash,@lp_adjustment,@subordinate_hash,@property_hash,@pricing_cap,@other_adjustment]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_quicken_loans3571_path(@sheet_obj)
@@ -1213,7 +1212,6 @@ class ObQuickenLoans3571Controller < ApplicationController
         end
         adjustment = [@adjustment_hash,@government_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_quicken_loans3571_path(@sheet_obj)
@@ -1313,7 +1311,6 @@ class ObQuickenLoans3571Controller < ApplicationController
         end
         adjustment = [@adjustment_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_quicken_loans3571_path(@sheet_obj)
@@ -1426,7 +1423,6 @@ class ObQuickenLoans3571Controller < ApplicationController
         end
         adjustment = [@adjustment_hash,@additional_adjustment]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_quicken_loans3571_path(@sheet_obj)
@@ -1472,7 +1468,8 @@ class ObQuickenLoans3571Controller < ApplicationController
         hash.each do |key|
           data = {}
           data[key[0]] = key[1]
-          Adjustment.create(data: data,loan_category: sheet)
+          adj_ment = Adjustment.create(data: data,loan_category: sheet)
+          link_adj_with_program(adj_ment, sheet)
         end
       end
     end
@@ -1499,44 +1496,5 @@ class ObQuickenLoans3571Controller < ApplicationController
         arm_basic = title.scan(/\d+/)[0]
       end
       @program.update(term: term,arm_basic: arm_basic)
-    end
-
-    def create_program_association_with_adjustment(sheet)
-      adjustment_list = Adjustment.where(loan_category: sheet)
-      program_list = Program.where(loan_category: sheet)
-
-      adjustment_list.each_with_index do |adj_ment, index|
-        key_list = adj_ment.data.keys.first.split("/")
-        program_filter1={}
-        program_filter2={}
-        include_in_input_values = false
-        if key_list.present?
-          key_list.each_with_index do |key_name, key_index|
-            if (Program.column_names.include?(key_name.underscore))
-              unless (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                program_filter1[key_name.underscore] = nil
-              else
-                if (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                  program_filter2[key_name.underscore] = true
-                end
-              end
-              include_in_input_values = true
-            else
-              if(Adjustment::INPUT_VALUES.include?(key_name))
-                include_in_input_values = true
-              end
-            end
-          end
-
-          if (include_in_input_values)
-            program_list1 = program_list.where.not(program_filter1)
-            program_list2 = program_list1.where(program_filter2)
-
-            if program_list2.present?
-              program_list2.map{ |program| program.adjustments << adj_ment unless program.adjustments.include?(adj_ment) }
-            end
-          end
-        end
-      end
     end
 end

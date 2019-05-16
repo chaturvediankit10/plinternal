@@ -1,4 +1,5 @@
 class ObNewRezWholesale5806Controller < ApplicationController
+  include ProgramAdj
   method_names = [:government, :programs, :freddie_fixed_rate, :conforming_fixed_rate, :home_possible, :conforming_arms, :lp_open_acces_arms, :lp_open_access_105, :lp_open_access, :du_refi_plus_arms, :du_refi_plus_fixed_rate_105, :du_refi_plus_fixed_rate, :dream_big, :high_balance_extra, :freddie_arms, :jumbo_series_d,:jumbo_series_f, :jumbo_series_h, :jumbo_series_i, :jumbo_series_jqm, :homeready, :homeready_hb]
   before_action :read_sheet, only: method_names + [:index]
   before_action :get_sheet, only: method_names
@@ -283,8 +284,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@spe_hash,@hb_hash,@credit_hash,@bpc_loan_hash,@govt_hash,@loan_hash,@second_hash]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
 
@@ -587,8 +587,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@property_hash,@sub_hash,@loan_amount]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     # create adjustment for each program
@@ -877,8 +876,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@property_hash,@sub_hash,@loan_amount]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
 
@@ -1152,8 +1150,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@property_hash,@sub_hash,@loan_amount]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -1383,8 +1380,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@property_hash,@state]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -1608,8 +1604,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@refinance_hash,@loan_amount,@state,@property_hash]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -1757,8 +1752,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@property_hash]
-        create_adjust(adjustment,@sheet_name) 
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name) 
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -2034,8 +2028,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@property_hash,@state]
-        create_adjust(adjustment,@sheet_name)        
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)        
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -2350,8 +2343,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@refinance_hash,@loan_amount,@state,@property_hash]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -2621,8 +2613,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@jumbo_adjustment,@cash_out,@other_hash]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -2791,8 +2782,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@sub_hash,@cash_out]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -3085,8 +3075,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@property_hash,@sub_hash,@loan_amount]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -3351,8 +3340,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@property_hash,@sub_hash,@loan_amount]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -3622,8 +3610,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@property_hash,@sub_hash,@loan_amount]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -3901,8 +3888,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@property_hash,@sub_hash,@loan_amount]
-        create_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        make_adjust(adjustment,@sheet_name)
       end
     end
     redirect_to programs_ob_new_rez_wholesale5806_path(@sheet_obj)
@@ -3982,23 +3968,23 @@ class ObNewRezWholesale5806Controller < ApplicationController
   end
 
 
-  def make_adjust(block_hash, sheet)
-    block_hash.keys.each do |key|
-      unless ["Lender Paid MI Adj.", "Term/LTV/FICO"].include?(key)
-        hash = {}
-        hash[key] = block_hash[key]
-        Adjustment.create(data: hash,loan_category: @sheet_name)
-      else
-        unless block_hash[key].empty?
-          block_hash[key].keys.each do |s_key|
-            h1 = {}
-            h1[s_key] = block_hash[key][s_key]
-            Adjustment.create(data: h1,loan_category: @sheet_name)
-          end
-        end
-      end
-    end
-  end
+  # def make_adjust(block_hash, sheet)
+  #   block_hash.keys.each do |key|
+  #     unless ["Lender Paid MI Adj.", "Term/LTV/FICO"].include?(key)
+  #       hash = {}
+  #       hash[key] = block_hash[key]
+  #       Adjustment.create(data: hash,loan_category: @sheet_name)
+  #     else
+  #       unless block_hash[key].empty?
+  #         block_hash[key].keys.each do |s_key|
+  #           h1 = {}
+  #           h1[s_key] = block_hash[key][s_key]
+  #           Adjustment.create(data: h1,loan_category: @sheet_name)
+  #         end
+  #       end
+  #     end
+  #   end
+  # end
 
   def find_key(title)
     if title.eql?("FICO/LTV Adjustments - Loan Amount ≤ $1MM") or title.eql?("FICO/LTV Adjustments - Loan Amount > $1MM")
@@ -4068,45 +4054,6 @@ class ObNewRezWholesale5806Controller < ApplicationController
     end
   end
 
-  def create_program_association_with_adjustment(sheet)
-    adjustment_list = Adjustment.where(loan_category: sheet)
-    program_list = Program.where(loan_category: sheet)
-
-    adjustment_list.each_with_index do |adj_ment, index|
-      key_list = adj_ment.data.keys.first.split("/")
-      program_filter1={}
-      program_filter2={}
-      include_in_input_values = false
-      if key_list.present?
-        key_list.each_with_index do |key_name, key_index|
-          if (Program.column_names.include?(key_name.underscore))
-            unless (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-              program_filter1[key_name.underscore] = nil
-            else
-              if (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                program_filter2[key_name.underscore] = true
-              end
-            end
-            include_in_input_values = true
-          else
-            if(Adjustment::INPUT_VALUES.include?(key_name))
-              include_in_input_values = true
-            end
-          end
-        end
-
-        if (include_in_input_values)
-          program_list1 = program_list.where.not(program_filter1)
-          program_list2 = program_list1.where(program_filter2)
-
-          if program_list2.present?
-            program_list2.map{ |program| program.adjustments << adj_ment unless program.adjustments.include?(adj_ment) }
-          end
-        end
-      end
-    end
-  end
-
   def program_property title
       @arm_advanced = ''
       if title.downcase.exclude?("arm")
@@ -4145,13 +4092,14 @@ class ObNewRezWholesale5806Controller < ApplicationController
       @program.update(term: term, arm_basic: arm_basic, arm_advanced: @arm_advanced)
     end
 
-  def create_adjust(block_hash, sheet)
+  def make_adjust(block_hash, sheet)
     block_hash.each do |hash|
       if hash.present?
         hash.each do |key|
           data = {}
           data[key[0]] = key[1]
-          Adjustment.create(data: data,loan_category: sheet)
+          adj_ment = Adjustment.create(data: data,loan_category: sheet)
+          link_adj_with_program(adj_ment, sheet)
         end
       end
     end

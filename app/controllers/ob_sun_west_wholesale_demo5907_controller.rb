@@ -1,4 +1,5 @@
 class ObSunWestWholesaleDemo5907Controller < ApplicationController
+  include ProgramAdj
   before_action :read_sheet, only: [:index,:ak, :agency_conforming_programs, :fhlmc_home_possible, :non_conforming_sigma_qm_prime_jumbo, :non_conforming_jw, :government_programs, :hecm_reverse_mortgage, :non_qm_sigma_seasoned_credit_event, :non_qm_sigma_no_credit_event_plus, :non_qm_real_prime_advantage, :non_qm_real_credit_advantage_a, :non_qm_real_credit_advantage_bbc, :non_qm_real_investor_income_a, :non_qm_real_investor_income_bb, :non_qm_real_dsc_ratio]
   before_action :get_sheet, only: [:programs, :ratesheet, :agency_conforming_programs, :fhlmc_home_possible, :non_conforming_sigma_qm_prime_jumbo, :non_conforming_jw, :government_programs, :hecm_reverse_mortgage, :non_qm_sigma_seasoned_credit_event, :non_qm_sigma_no_credit_event_plus, :non_qm_real_prime_advantage, :non_qm_real_credit_advantage_a, :non_qm_real_credit_advantage_bbc, :non_qm_real_investor_income_a, :non_qm_real_investor_income_bb, :non_qm_real_dsc_ratio]
   before_action :get_program, only: [:single_program]
@@ -274,7 +275,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@adj_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -466,7 +466,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@property_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -649,7 +648,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@jumbo_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -816,7 +814,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@price_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -960,7 +957,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@gov_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -1144,7 +1140,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@spec_adjustment5]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -1337,7 +1332,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@day_adjustment,@adj_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -1450,7 +1444,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@spec_adjustment12,@day_adjustment6]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -1586,7 +1579,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@spec_adjustment8,@day_adjustment2]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -1708,7 +1700,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@spec_adjustment9,@day_adjustment3]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -1822,7 +1813,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@spec_adjustment10,@day_adjustment4]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -1934,7 +1924,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         end
         adjustment = [@spec_adjustment11,@day_adjustment5]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_sun_west_wholesale_demo5907_path(@sheet_obj)
@@ -2054,7 +2043,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
       end
       adjustment = [@adjustment_hash]
       make_adjust(adjustment,sheet)
-      create_program_association_with_adjustment(sheet)
     end
 
     def cash_adjustment range1, range2, sheet_data, first_row, end_row, sheet, first_column, last_column, ltv_row, primary_key
@@ -2091,7 +2079,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
       end
       adjustment = [@adjustment_hash]
       make_adjust(adjustment,sheet)
-      create_program_association_with_adjustment(sheet)
     end
 
     def lpmi_adjustment range1, range2, sheet_data, first_row, end_row, sheet, first_column, last_column, ltv_row, primary_key
@@ -2128,7 +2115,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
       end
       adjustment = [@adjustment_hash]
       make_adjust(adjustment,sheet)
-      create_program_association_with_adjustment(sheet)
     end
 
     def sub_adjustment range1, range2, sheet_data, first_row, end_row, sheet, first_column, cltv_column, last_column, ltv_row, primary_key
@@ -2170,7 +2156,6 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
       end
       adjustment = [@adjustment_hash]
       make_adjust(adjustment,sheet)
-      create_program_association_with_adjustment(sheet)
     end
 
     def make_adjust(block_hash, sheet)
@@ -2179,54 +2164,17 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
           hash.keys.each do |key|
             second_hash = {}
             second_hash[key] = hash[key]
-            Adjustment.create(data: second_hash,loan_category: sheet)
+            adj_ment = Adjustment.create(data: second_hash,loan_category: sheet)
+            link_adj_with_program(adj_ment, sheet)
           end
         else
-          Adjustment.create(data: hash,loan_category: sheet)
+          adj_ment = Adjustment.create(data: hash,loan_category: sheet)
+          link_adj_with_program(adj_ment, sheet)
         end
       end
     end
 
     def get_sheets_names
       return ["AGENCY CONFORMING PROGRAMS","FHLMC HOME POSSIBLE","NON CONFORMING SIGMA QM PRIME JUMBO","NON CONFORMING JW","GOVERNMENT PROGRAMS","HECM REVERSE MORTGAGE", "NON QM SIGMA SEASONED CREDIT EVENT","NON QM SIGMA NO CREDIT EVENT PLUS","NON QM REAL PRIME ADVANTAGE","NON QM REAL CREDIT ADVANTAGE A","NON QM REAL CREDIT ADVANTAGE BBC","NON QM REAL INVESTOR INCOME A","NON QM REAL INVESTOR INCOME BB","NON QM REAL DSC RATIO"]
-    end
-
-    def create_program_association_with_adjustment(sheet)
-      adjustment_list = Adjustment.where(loan_category: sheet)
-      program_list = Program.where(loan_category: sheet)
-
-      adjustment_list.each_with_index do |adj_ment, index|
-        key_list = adj_ment.data.keys.first.split("/")
-        program_filter1={}
-        program_filter2={}
-        include_in_input_values = false
-        if key_list.present?
-          key_list.each_with_index do |key_name, key_index|
-            if (Program.column_names.include?(key_name.underscore))
-              unless (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                program_filter1[key_name.underscore] = nil
-              else
-                if (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                  program_filter2[key_name.underscore] = true
-                end
-              end
-              include_in_input_values = true
-            else
-              if(Adjustment::INPUT_VALUES.include?(key_name))
-                include_in_input_values = true
-              end
-            end
-          end
-
-          if (include_in_input_values)
-            program_list1 = program_list.where.not(program_filter1)
-            program_list2 = program_list1.where(program_filter2)
-
-            if program_list2.present?
-              program_list2.map{ |program| program.adjustments << adj_ment unless program.adjustments.include?(adj_ment) }
-            end
-          end
-        end
-      end
     end
 end

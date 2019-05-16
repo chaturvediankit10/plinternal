@@ -1,4 +1,5 @@
 class ObNewfiWholesale7019Controller < ApplicationController
+  include ProgramAdj
   before_action :read_sheet, only: [:index, :program, :biscayne_delegated_jumbo, :sequoia_portfolio_plus_products, :sequoia_expanded_products, :sequoia_investor_pro, :fha_buydown_fixed_rate_products, :fha_fixed_arm_products, :fannie_mae_homeready_products, :fnma_buydown_products, :fnma_conventional_fixed_rate, :fnma_conventional_high_balance, :fnma_conventional_arm, :olympic_piggyback_fixed, :olympic_piggyback_high_balance, :olympic_piggyback_arm]
   before_action :get_sheet, only: [:programs, :biscayne_delegated_jumbo, :sequoia_portfolio_plus_products, :sequoia_expanded_products, :sequoia_investor_pro, :fha_buydown_fixed_rate_products, :fha_fixed_arm_products, :fannie_mae_homeready_products, :fnma_buydown_products, :fnma_conventional_fixed_rate, :fnma_conventional_high_balance, :fnma_conventional_arm, :olympic_piggyback_fixed, :olympic_piggyback_high_balance, :olympic_piggyback_arm]
   before_action :get_program, only: [:single_program]
@@ -236,7 +237,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@adjustment_hash, @purpose_adjustment, @purpose_adjustment2, @purpose_adjustment3, @purpose_adjustment4, @purpose_adjustment5, @purpose_adjustment6, @highAdjustment, @highAdjustment1, @highAdjustment2]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -483,7 +483,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@adjustment_hash,@cashout,@additional_hash,@rate_hash,@cashout_hash,@other_adjustment]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -732,7 +731,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@adjustment_hash,@cashout,@additional_hash,@rate_hash,@cashout_hash,@other_adjustment]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -874,7 +872,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@adjustment_hash, @other_adjustment, @other_adjustment1]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -1004,7 +1001,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@adjustment_hash, @other_adjustment, @other_adjustment1]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -1152,7 +1148,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@adjustment_hash,@state]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -1336,7 +1331,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@price_adjustment,@family_adjustment,@high_adjustment]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -1572,7 +1566,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@secondary_hash,@other_adjustment]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -1862,7 +1855,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@cashout_hash,@lpmi_hash,@secondary_hash,@other_adjustment]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -2153,7 +2145,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@cashout_hash,@secondary_hash,@other_adjustment,@lpmi_hash]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -2435,7 +2426,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@secondary_hash,@cashout_hash,@other_adjustment]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -2679,7 +2669,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@secondary_hash,@cashout_hash,@other_adjustment,@property_hash]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -2883,7 +2872,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@secondary_hash,@other_adjustment,@property_hash,@cashout_hash]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -3113,7 +3101,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
         end
         adjustment = [@cashout_hash,@secondary_hash,@other_adjustment,@property_hash]
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_newfi_wholesale7019_path(@sheet_obj)
@@ -3191,7 +3178,8 @@ class ObNewfiWholesale7019Controller < ApplicationController
         hash.each do |key|
           data = {}
           data[key[0]] = key[1]
-          Adjustment.create(data: data,loan_category: sheet)
+          adj_ment = Adjustment.create(data: data,loan_category: sheet)
+          link_adj_with_program(adj_ment, sheet)
         end
       end
     end
@@ -3234,45 +3222,5 @@ class ObNewfiWholesale7019Controller < ApplicationController
     end
     adjustment = [@adjustment_hash]
     make_adjust(adjustment,sheet)
-    create_program_association_with_adjustment(sheet)
-  end
-
-  def create_program_association_with_adjustment(sheet)
-    adjustment_list = Adjustment.where(loan_category: sheet)
-    program_list = Program.where(loan_category: sheet)
-
-    adjustment_list.each_with_index do |adj_ment, index|
-      key_list = adj_ment.data.keys.first.split("/")
-      program_filter1={}
-      program_filter2={}
-      include_in_input_values = false
-      if key_list.present?
-        key_list.each_with_index do |key_name, key_index|
-          if (Program.column_names.include?(key_name.underscore))
-            unless (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-              program_filter1[key_name.underscore] = nil
-            else
-              if (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                program_filter2[key_name.underscore] = true
-              end
-            end
-            include_in_input_values = true
-          else
-            if(Adjustment::INPUT_VALUES.include?(key_name))
-              include_in_input_values = true
-            end
-          end
-        end
-
-        if (include_in_input_values)
-          program_list1 = program_list.where.not(program_filter1)
-          program_list2 = program_list1.where(program_filter2)
-
-          if program_list2.present?
-            program_list2.map{ |program| program.adjustments << adj_ment unless program.adjustments.include?(adj_ment) }
-          end
-        end
-      end
-    end
   end
 end

@@ -1,4 +1,5 @@
 class ObCardinalFinancialWholesale10742Controller < ApplicationController
+  include ProgramAdj
   before_action :read_sheet, only: [:index,:ak, :fannie_mae_products, :freddie_mac_products, :fha_va_usda_products, :non_conforming_jumbo_core, :non_conforming_jumbo_x]
   # before_action :check_sheet_empty , only:[:ak, :sheet1]
   before_action :get_sheet, only: [:programs, :ak, :fannie_mae_products, :freddie_mac_products, :fha_va_usda_products, :non_conforming_jumbo_core, :non_conforming_jumbo_x]
@@ -84,7 +85,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   p_name = @title + @sheet_name
                   @program.update_fields p_name
                   program_property @title
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..50).each do |max_row|
@@ -393,7 +394,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
         end
         adjustment = [@adjustment_hash,@cashout_adjustment,@product_hash,@subordinate_hash,@additional_hash,@lpmi_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        #create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_cardinal_financial_wholesale10742_path(@sheet_obj)
@@ -429,7 +430,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   p_name = @title + @sheet_name
                   @program.update_fields p_name
                   program_property @title
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..50).each do |max_row|
@@ -745,7 +746,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
         end
         adjustment = [@freddie_adjustment_hash,@cashout_hash,@sub_hash,@property_hash,@sub_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        #create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_cardinal_financial_wholesale10742_path(@sheet_obj)
@@ -776,7 +777,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   p_name = @title + @sheet_name
                   @program.update_fields p_name
                   program_property @title
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..50).each do |max_row|
@@ -908,7 +909,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
         end
         adjustment = [@relief_cashout_adjustment]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        #create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_cardinal_financial_wholesale10742_path(@sheet_obj)
@@ -941,7 +942,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   p_name = @title + @sheet_name
                   @program.update_fields p_name
                   program_property @title
-                  @program.adjustments.destroy_all
+                  
                 end
                 @block_hash = {}
                 key = ''
@@ -1089,7 +1090,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
         end
         adjustment = [@jumbo_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        #create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_cardinal_financial_wholesale10742_path(@sheet_obj)
@@ -1120,7 +1121,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                 p_name = @title + @sheet_name
                 @program.update_fields p_name
                 program_property @title
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -1212,7 +1213,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
         end
         adjustment = [@non_jumbo_hash]
         make_adjust(adjustment,@sheet_name)
-        create_program_association_with_adjustment(@sheet_name)
+        #create_program_association_with_adjustment(@sheet_name)
       end
     end
     redirect_to programs_ob_cardinal_financial_wholesale10742_path(@sheet_obj)
@@ -1324,46 +1325,8 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
           hash.each do |key|
             data = {}
             data[key[0]] = key[1]
-            Adjustment.create(data: data,loan_category: sheet)
-          end
-        end
-      end
-    end
-
-    def create_program_association_with_adjustment(sheet)
-      adjustment_list = Adjustment.where(loan_category: sheet)
-      program_list = Program.where(loan_category: sheet)
-
-      adjustment_list.each_with_index do |adj_ment, index|
-        key_list = adj_ment.data.keys.first.split("/")
-        program_filter1={}
-        program_filter2={}
-        include_in_input_values = false
-        if key_list.present?
-          key_list.each_with_index do |key_name, key_index|
-            if (Program.column_names.include?(key_name.underscore))
-              unless (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                program_filter1[key_name.underscore] = nil
-              else
-                if (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                  program_filter2[key_name.underscore] = true
-                end
-              end
-              include_in_input_values = true
-            else
-              if(Adjustment::INPUT_VALUES.include?(key_name))
-                include_in_input_values = true
-              end
-            end
-          end
-
-          if (include_in_input_values)
-            program_list1 = program_list.where.not(program_filter1)
-            program_list2 = program_list1.where(program_filter2)
-
-            if program_list2.present?
-              program_list2.map{ |program| program.adjustments << adj_ment unless program.adjustments.include?(adj_ment) }
-            end
+            adj_ment = Adjustment.create(data: data,loan_category: sheet)
+            link_adj_with_program(adj_ment, sheet)
           end
         end
       end

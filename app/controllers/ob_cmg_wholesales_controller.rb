@@ -1,4 +1,5 @@
 class ObCmgWholesalesController < ApplicationController
+  include ProgramAdj
   before_action :read_sheet, only: [:index,:gov, :agency, :durp, :oa, :jumbo_700,:jumbo_7200_6700, :jumbo_6600, :jumbo_6200, :jumbo_7600, :jumbo_6800, :jumbo_6900_7900, :programs, :jumbo_6400,:mi_llpas]
   before_action :get_sheet, only: [:gov, :agency, :durp, :oa, :jumbo_700,:jumbo_7200_6700, :jumbo_6600, :jumbo_6200, :jumbo_7600, :jumbo_6800, :jumbo_6900_7900, :programs, :jumbo_6400, :mi_llpas, :program_property]
   before_action :get_program, only: [:single_program, :program_property]
@@ -273,8 +274,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@data_hash,@misc_hash,@state_hash]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_cmg_wholesale_path(@sheet_obj)
@@ -868,8 +870,8 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@adjustment_fico,@cashout_adjustment,@subordinate_hash,@adjustment_cap,@loan_adjustment,@state_adjustments,@other_adjustment,@lpmi_hash,@lpmi_adj,@home_ready,@home_possible,@property_hash]
+        
         make_adjust(adjustment,"AGENCY")
-        create_program_association_with_adjustment("AGENCY")
       end
 
     end
@@ -1161,8 +1163,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@subordinate_hash,@adjustment_cap,@misc_adjustment,@state_adjustment]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_cmg_wholesale_path(@sheet_obj)
@@ -1455,8 +1458,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@subordinate_hash,@adjustment_cap,@misc_adjustment,@state_adjustment]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
 
@@ -1821,7 +1825,7 @@ class ObCmgWholesalesController < ApplicationController
         end
         adjustment = [@adjustment_hash,@subordinate_hash,@adjustment_cap,@standard_hash,@home_hash,@property_hash]
         make_adjust(adjustment,program_sheet)
-        create_program_association_with_adjustment(program_sheet)
+        # create_program_association_with_adjustment(program_sheet)
       end
     end
     redirect_to programs_ob_cmg_wholesale_path(@sheet_obj)
@@ -2054,8 +2058,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@state_adjustment]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
 
@@ -2316,8 +2321,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@data_hash]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
 
@@ -2653,6 +2659,7 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@purchase_adjustment,@rate_adjustment,@other_adjustment]
+        
         make_adjust(adjustment,sheet)
         (56..77).each do |r|
           row = sheet_data.row(r)
@@ -2791,8 +2798,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@jumbo_purchase_adjustment,@jumbo_rate_adjustment,@jumbo_other_adjustment]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
         end
       end
     redirect_to programs_ob_cmg_wholesale_path(@sheet_obj)
@@ -3033,8 +3041,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@purchase_adjustment,@rate_adjustment,@adjustment_hash,@other_adjustment]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
     redirect_to programs_ob_cmg_wholesale_path(@sheet_obj)
@@ -3276,8 +3285,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@purchase_adjustment,@rate_adjustment,@adjustment_hash,@other_adjustment]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
     # redirect_to programs_import_file_path(@bank)
@@ -3447,6 +3457,7 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@flex_hash]
+        
         make_adjust(adjustment,sheet)
 
         (21..38).each do |r|
@@ -3564,8 +3575,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@jumbo_flex_hash]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
     # redirect_to programs_import_file_path(@bank)
@@ -3709,8 +3721,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@misc_adjustment,@block_adjustment]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
 
@@ -3969,6 +3982,7 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@adjustment_hash,@other_adjustment]
+        
         make_adjust(adjustment,sheet)
 
         #second adjustment
@@ -4105,8 +4119,9 @@ class ObCmgWholesalesController < ApplicationController
           end
         end
         adjustment = [@jumbo_adjustment_hash,@jumbo_other_adjustment]
+        
         make_adjust(adjustment,sheet)
-        create_program_association_with_adjustment(sheet)
+        # create_program_association_with_adjustment(sheet)
       end
     end
     # redirect_to programs_import_file_path(@bank)
@@ -4139,45 +4154,6 @@ class ObCmgWholesalesController < ApplicationController
   end
 
   def single_program
-  end
-
-  def create_program_association_with_adjustment(sheet)
-    adjustment_list = Adjustment.where(loan_category: sheet)
-    program_list = Program.where(loan_category: sheet)
-
-    adjustment_list.each_with_index do |adj_ment, index|
-      key_list = adj_ment.data.keys.first.split("/")
-      program_filter1={}
-      program_filter2={}
-      include_in_input_values = false
-      if key_list.present?
-        key_list.each_with_index do |key_name, key_index|
-          if (Program.column_names.include?(key_name.underscore))
-            unless (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-              program_filter1[key_name.underscore] = nil
-            else
-              if (Program.column_for_attribute(key_name.underscore).type.to_s == "boolean")
-                program_filter2[key_name.underscore] = true
-              end
-            end
-            include_in_input_values = true
-          else
-            if(Adjustment::INPUT_VALUES.include?(key_name))
-              include_in_input_values = true
-            end
-          end
-        end
-
-        if (include_in_input_values)
-          program_list1 = program_list.where.not(program_filter1)
-          program_list2 = program_list1.where(program_filter2)
-
-          if program_list2.present?
-            program_list2.map{ |program| program.adjustments << adj_ment unless program.adjustments.include?(adj_ment) }
-          end
-        end
-      end
-    end
   end
 
   private
@@ -4222,7 +4198,8 @@ class ObCmgWholesalesController < ApplicationController
         hash.each do |key|
           data = {}
           data[key[0]] = key[1]
-          Adjustment.create(data: data,loan_category: sheet)
+          adj_ment = Adjustment.create(data: data,loan_category: sheet)
+          link_adj_with_program(adj_ment, sheet)
         end
       end
     end
