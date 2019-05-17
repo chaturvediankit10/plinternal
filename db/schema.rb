@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_01_040426) do
+ActiveRecord::Schema.define(version: 2019_05_15_131350) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -1665,7 +1665,7 @@ ActiveRecord::Schema.define(version: 2019_05_01_040426) do
     t.boolean "usda", default: false
     t.boolean "streamline", default: false
     t.boolean "full_doc", default: false
-    t.text "adjustments"
+    t.text "adjustment_ids"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "loan_category"
@@ -1685,10 +1685,11 @@ ActiveRecord::Schema.define(version: 2019_05_01_040426) do
     t.string "fannie_mae_product"
     t.string "freddie_mac_product"
     t.integer "sub_sheet_id"
-    t.boolean "du"
-    t.boolean "lp"
+    t.boolean "fannie_mae_du"
+    t.boolean "freddie_mac_lp"
     t.string "arm_benchmark"
     t.float "arm_margin"
+    t.string "arm_caps"
   end
 
   create_table "sheets", force: :cascade do |t|
