@@ -45,7 +45,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                   @term = program_property @title
                   @program.update(loan_category: @sheet_name, term: @term )
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   key = ''
                   @block_hash = {}
                   (1..50).each do |max_row|
@@ -255,7 +255,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                   @term = program_property @title
                   @program.update(loan_category: @sheet_name, term: @term )
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   key = ''
                   @block_hash = {}
                   (1..50).each do |max_row|
@@ -450,7 +450,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                 @term = program_property @title
                 @program.update(loan_category: @sheet_name, term: @term )
                 @programs_ids << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 @block_hash = {}

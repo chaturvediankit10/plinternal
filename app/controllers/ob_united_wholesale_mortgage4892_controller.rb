@@ -346,7 +346,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   program_property @title
                   @programs_ids << @program.id
                 end
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..11).each do |max_row|
@@ -439,7 +439,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   program_property @title
                   @programs_ids << @program.id
                 end
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..11).each do |max_row|
@@ -660,7 +660,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   @programs_ids << @program.id
                 end
 
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..11).each do |max_row|
@@ -708,7 +708,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   @programs_ids << @program.id
                 end
 
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..11).each do |max_row|
@@ -1102,7 +1102,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
               program_property @title
               @programs_ids << @program.id
               # Base rate
-              @program.adjustments.destroy_all
+              
               @block_hash = {}
               key = ''
               (1..row_count).each do |max_row|

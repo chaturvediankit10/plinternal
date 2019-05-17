@@ -219,7 +219,7 @@ class ObAmericanFinancialResourcesWholesale5513Controller < ApplicationControlle
               @program.update(arm_basic: arm_basic,term: term, loan_size: loan_size, jumbo_high_balance: jumbo_high_balance,loan_type: loan_type,fha: fha, va: va, usda: usda, streamline: streamline, full_doc: full_doc)
 
               # Base rate
-              @program.adjustments.destroy_all
+              
               @block_hash = {}
               key = ''
               (1..row_count).each do |max_row|

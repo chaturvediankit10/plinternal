@@ -66,7 +66,7 @@ class ObCmgWholesalesController < ApplicationController
                 program_property sheet
 
                 @programs_ids << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -304,7 +304,7 @@ class ObCmgWholesalesController < ApplicationController
                 @program.update_fields p_name
                 program_property sheet
                 @programs_ids << @program.id
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..17).each do |max_row|
@@ -915,7 +915,7 @@ class ObCmgWholesalesController < ApplicationController
                 @program.update_fields p_name
                 program_property sheet
                 @programs_ids << @program.id
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -1209,7 +1209,7 @@ class ObCmgWholesalesController < ApplicationController
                 @program.update_fields p_name
                 program_property sheet
                 @programs_ids << @program.id
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -1868,7 +1868,7 @@ class ObCmgWholesalesController < ApplicationController
                 @program.update_fields p_name
                 program_property sheet
                 @programs_ids << @program.id
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -2095,7 +2095,7 @@ class ObCmgWholesalesController < ApplicationController
                 @program.update_fields p_name
                 program_property sheet
                 @programs_ids << @program.id
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -2368,7 +2368,7 @@ class ObCmgWholesalesController < ApplicationController
                   @program.update_fields p_name
                   program_property sheet
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..50).each do |max_row|
@@ -2426,7 +2426,7 @@ class ObCmgWholesalesController < ApplicationController
                   program_property sheet
                   @programs_ids << @program.id
 
-                  # @program.adjustments.destroy_all
+                  # 
                   @block_hash = {}
                   key = ''
                   (1..50).each do |max_row|
@@ -2835,7 +2835,7 @@ class ObCmgWholesalesController < ApplicationController
                 @program.update_fields p_name
                 program_property sheet
                 @programs_ids << @program.id
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -3078,7 +3078,7 @@ class ObCmgWholesalesController < ApplicationController
                 @program.update_fields p_name
                 program_property sheet
                 @programs_ids << @program.id
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -3320,7 +3320,7 @@ class ObCmgWholesalesController < ApplicationController
                   @program.update_fields p_name
                   program_property sheet
                   @programs_ids << @program.id
-                  # @program.adjustments.destroy_all
+                  # 
 
                   @block_hash = {}
                   key = ''
@@ -3381,7 +3381,7 @@ class ObCmgWholesalesController < ApplicationController
                   @program = @sheet_obj.programs.find_or_create_by(program_name: @title)
                   program_property sheet
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
 
                   @block_hash = {}
                   key = ''
@@ -3609,7 +3609,7 @@ class ObCmgWholesalesController < ApplicationController
               @program.update_fields p_name
               program_property sheet
               @programs_ids << @program.id
-              # @program.adjustments.destroy_all
+              # 
               @block_hash = {}
               key = ''
               (1..50).each do |max_row|
@@ -3764,7 +3764,7 @@ class ObCmgWholesalesController < ApplicationController
               program_property sheet
               @programs_ids << @program.id
               if @title.present?
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -3814,7 +3814,7 @@ class ObCmgWholesalesController < ApplicationController
                 program_property sheet
                 @programs_ids << @program.id
               if @title.present?
-                # @program.adjustments.destroy_all
+                # 
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|

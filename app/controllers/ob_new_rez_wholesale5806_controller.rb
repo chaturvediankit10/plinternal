@@ -13,7 +13,6 @@ class ObNewRezWholesale5806Controller < ApplicationController
     # HardWorker.perform_async(1)
     @banks = Bank.all
     @sheetlist =[]
-
       @xlsx.sheets.each do |sheet|
         @sheetlist.push(sheet)
         if (sheet == "Cover Zone 1")
@@ -96,7 +95,6 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 if @title.present?
                   @program = @sheet_obj.programs.find_or_create_by(program_name: @title)
                   @program_ids << @program.id
-                  @program.adjustments.destroy_all
                   p_name = @title + " " + sheet
                   @program.update_fields p_name
                   program_property @title                                                 
@@ -321,7 +319,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 @program.update_fields p_name
                 program_property @title 
                 @program_ids << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (0..50).each do |max_row|
@@ -624,7 +622,6 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 @program.update_fields p_name
                 program_property @title 
                 program_ids << @program.id
-                @program.adjustments.destroy_all
                 @block_hash = {}
                 key = ''
                 (0..50).each do |max_row|
@@ -913,7 +910,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 @program.update_fields p_name
                 program_property @title 
                 @program_ids << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (0..50).each do |max_row|
@@ -1182,7 +1179,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 @program.update_fields p_name
                 program_property @title
                 @programs_ids  << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (0..50).each do |max_row|
@@ -1638,7 +1635,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                   @program.update_fields p_name
                   program_property @title
                   @program_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (0..50).each do |max_row|
@@ -1789,7 +1786,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                   @program.update_fields p_name
                   program_property @title
                   @program_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (0..50).each do |max_row|
@@ -2072,7 +2069,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                   end           
                   @program_ids << @program.id
                   @program.update(term: term)
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (0..50).each do |max_row|
@@ -2383,7 +2380,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                   @program.update(term: term)
                 end
                 @program_ids << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (0..50).each do |max_row|
@@ -2654,7 +2651,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                   @program.update_fields p_name
                   program_property @title                         
                   @program_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (0..19).each do |max_row|
@@ -2817,7 +2814,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 @program.update_fields p_name
                 program_property @title    
                 @program_ids << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (0..50).each do |max_row|
@@ -3110,7 +3107,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 @program.update_fields p_name
                 program_property @title    
                 @program_ids << @program.id  
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (0..50).each do |max_row|
@@ -3374,7 +3371,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 @program.update_fields p_name
                 program_property @title              
                 program_ids << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (0..50).each do |max_row|
@@ -3644,7 +3641,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                 @program.update_fields p_name
                 program_property @title   
                 program_ids << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (0..50).each do |max_row|

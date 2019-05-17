@@ -46,7 +46,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -107,7 +107,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -169,7 +169,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -231,7 +231,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -292,7 +292,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -357,7 +357,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -422,7 +422,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -490,7 +490,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -554,7 +554,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                     @program.update(arm_margin: 2.00, arm_advanced: "1-1-5")
                   end
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -615,7 +615,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -676,7 +676,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -737,7 +737,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -803,7 +803,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|

@@ -90,7 +90,7 @@
   #               end
   #               @program.save
   #               @program.update(term: term,loan_type: loan_type,conforming: conforming, arm_basic: arm_basic, loan_category: sheet, jumbo_high_balance: jumbo_high_balance)
-  #               @program.adjustments.destroy_all
+  #               
   #               @block_hash = {}
   #               key = ''
   #               main_key = ''
@@ -358,7 +358,7 @@
   #               end
   #               @program.save
   #               @program.update(term: term,loan_type: loan_type,conforming: conforming,freddie_mac: freddie_mac, fannie_mae: fannie_mae, arm_basic: arm_basic, loan_category: sheet)
-  #               @program.adjustments.destroy_all
+  #               
   #               @block_hash = {}
   #               key = ''
   #               main_key = ''
@@ -852,7 +852,7 @@
   #               end
   #               @program.save
   #               @program.update(term: term,loan_type: loan_type,conforming: conforming,freddie_mac: freddie_mac, fannie_mae: fannie_mae, arm_basic: arm_basic, loan_category: sheet, jumbo_high_balance: jumbo_high_balance)
-  #               @program.adjustments.destroy_all
+  #               
   #               @block_hash = {}
   #               key = ''
   #               # main_key = ''
@@ -1128,7 +1128,7 @@
   #               end
   #               @program.save
   #               @program.update(term: term,loan_type: loan_type,conforming: conforming,freddie_mac: freddie_mac, fannie_mae: fannie_mae, arm_basic: arm_basic, loan_category: sheet)
-  #               @program.adjustments.destroy_all
+  #               
   #               @block_hash = {}
   #               key = ''
   #               # main_key = ''
@@ -1429,7 +1429,7 @@
   #               end
   #               @program.save
   #               @program.update(term: term,loan_type: loan_type,conforming: conforming,freddie_mac: freddie_mac, fannie_mae: fannie_mae, arm_basic: arm_basic, loan_category: sheet)
-  #               @program.adjustments.destroy_all
+  #               
   #               @block_hash = {}
   #               key = ''
   #               # main_key = ''
@@ -1727,7 +1727,7 @@
   #               end
   #               @program.save
   #               @program.update(term: term,loan_type: loan_type,conforming: conforming,freddie_mac: freddie_mac, fannie_mae: fannie_mae, arm_basic: arm_basic, loan_category: sheet)
-  #               @program.adjustments.destroy_all
+  #               
   #               @block_hash = {}
   #               key = ''
   #               # main_key = ''

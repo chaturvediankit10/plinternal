@@ -51,7 +51,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 p_name = @title + sheet
                 @program.update_fields p_name
                 @programs_ids << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -273,10 +273,10 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   @program.update_fields p_name
                   @programs_ids << @program.id
                 end
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -521,14 +521,14 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     @programs_ids << @program.id
                   end
 
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                 rescue Exception => e
                   error_log = ErrorLog.new(details: e.backtrace_locations[0], row: rr, column: cc, loan_category: sheet, error_detail: e.message)
                   error_log.save
                 end
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -766,7 +766,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   @program.update(arm_advanced: nil)
                   @programs_ids << @program.id
 
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                 rescue Exception => e
@@ -774,7 +774,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   error_log.save
                 end
               end
-              @program.adjustments.destroy_all
+              
               @block_hash = {}
               key = ''
               (1..50).each do |max_row|
@@ -905,7 +905,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     @program.update_fields p_name
                 @programs_ids << @program.id
 
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -1033,7 +1033,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     @programs_ids << @program.id
                   end
 
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                 rescue Exception => e
@@ -1041,7 +1041,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   error_log.save
                 end
 
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -1184,7 +1184,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     @program.update_fields p_name
                   @programs_ids << @program.id
 
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   (1..50).each do |max_row|
@@ -1367,7 +1367,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     @program.update_fields p_name
                   @programs_ids << @program.id
 
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                 rescue Exception => e
@@ -1375,7 +1375,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   error_log.save
                 end
 
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -1604,7 +1604,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 @programs_ids << @program.id
               end
 
-              @program.adjustments.destroy_all
+              
               @block_hash = {}
               key = ''
               (1..50).each do |max_row|
@@ -1894,12 +1894,12 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     @program.update_fields p_name
                     @programs_ids << @program.id
                   end
-                  @program.adjustments.destroy_all
+                  
                 rescue Exception => e
                   error_log = ErrorLog.new(details: e.backtrace_locations[0], row: rr, column: cc, loan_category: sheet, error_detail: e.message)
                   error_log.save
                 end
-              @program.adjustments.destroy_all
+              
               @block_hash = {}
               key = ''
               (1..50).each do |max_row|
@@ -2183,7 +2183,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     @programs_ids << @program.id
                   end
 
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                   lock_hash = {}
@@ -2191,7 +2191,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   error_log = ErrorLog.new(details: e.backtrace_locations[0], row: r, column: cc, loan_category: sheet, error_detail: e.message)
                   error_log.save
                 end
-              @program.adjustments.destroy_all
+              
               @block_hash = {}
               key = ''
               lock_hash = {}
@@ -2466,7 +2466,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     @programs_ids << @program.id
                   end
 
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                 rescue Exception => e
@@ -2474,7 +2474,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   error_log.save
                 end
 
-              @program.adjustments.destroy_all
+              
               @block_hash = {}
               key = ''
               (1..50).each do |max_row|
@@ -2704,7 +2704,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 p_name = @title + sheet
                     @program.update_fields p_name
                 @programs_ids << @program.id
-                @program.adjustments.destroy_all
+                
                 @block_hash = {}
                 key = ''
                 (1..50).each do |max_row|
@@ -2911,14 +2911,14 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     @programs_ids << @program.id
                   end
 
-                  @program.adjustments.destroy_all
+                  
                   @block_hash = {}
                   key = ''
                 rescue Exception => e
                   error_log = ErrorLog.new(details: e.backtrace_locations[0], row: rr, column: cc, loan_category: sheet, error_detail: e.message)
                   error_log.save
                 end
-              @program.adjustments.destroy_all
+              
               @block_hash = {}
               key = ''
               (1..50).each do |max_row|
