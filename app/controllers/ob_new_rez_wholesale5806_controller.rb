@@ -4052,7 +4052,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
   end
 
   def program_property title
-      @arm_advanced = ''
+      @arm_caps = ''
       if title.downcase.exclude?("arm")
         term = title.downcase.split("fixed").first.tr('A-Za-z-™/® ','')
         if term.length == 4 && term.last(2).to_i < term.first(2).to_i
@@ -4077,16 +4077,16 @@ class ObNewRezWholesale5806Controller < ApplicationController
       if title.downcase.include?("arm")
         title.split.each do |arm|
           if arm.tr('1-9A-Za-z()|.% ','') == "//" || arm.tr('1-9A-za-z() ','') == "--"
-            @arm_advanced = arm.tr('A-Za-z()|.% , ','')[0,5]
-            if @arm_advanced.include?('/')
-              @arm_advanced = @arm_advanced.tr('/','-')
+            @arm_caps = arm.tr('A-Za-z()|.% , ','')[0,5]
+            if @arm_caps.include?('/')
+              @arm_caps = @arm_caps.tr('/','-')
             else
-              @arm_advanced
+              @arm_caps
             end
           end
         end
       end
-      @program.update(term: term, arm_basic: arm_basic, arm_advanced: @arm_advanced)
+      @program.update(term: term, arm_basic: arm_basic, arm_caps: @arm_caps)
     end
 
   def make_adjust(block_hash, sheet)

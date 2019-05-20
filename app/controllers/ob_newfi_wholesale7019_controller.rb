@@ -762,11 +762,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   @program = @sheet_obj.programs.find_or_create_by(program_name: @title)
                   @term = program_property @title
                   p_name = @title + sheet
-                    @program.update_fields p_name
-                  @program.update(arm_advanced: nil)
-                  @programs_ids << @program.id
-
-                  
+                  @program.update_fields p_name
+                  @program.update(arm_caps: nil)
+                  @programs_ids << @program.id      
                   @block_hash = {}
                   key = ''
                 rescue Exception => e
@@ -3162,14 +3160,14 @@ class ObNewfiWholesale7019Controller < ApplicationController
     end
     # Arm_advanced
     if title.downcase.include?("arm")
-      arm_advanced = title.downcase.split("arm").last.tr('A-Za-z ','')
-      if arm_advanced.include?('/')
-        arm_advanced = arm_advanced.tr('/','-')
+      arm_caps = title.downcase.split("arm").last.tr('A-Za-z ','')
+      if arm_caps.include?('/')
+        arm_caps = arm_caps.tr('/','-')
       else
-        arm_advanced
+        arm_caps
       end
     end
-    @program.update(term: term, arm_basic: arm_basic, arm_advanced: arm_advanced) 
+    @program.update(term: term, arm_basic: arm_basic, arm_caps: arm_caps) 
   end
 
   def make_adjust(block_hash, sheet)

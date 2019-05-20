@@ -24,6 +24,10 @@
           <td><%= @program.arm_basic %></td>
         </tr>
         <tr>
+          <th>Arm Caps</th>
+          <td><%= @program.arm_caps %></td>
+        </tr>
+        <tr>
           <th>Arm Advanced</th>
           <td><%= @program.arm_advanced %></td>
         </tr>
@@ -91,13 +95,13 @@
           <th>Base Rate</th>
           <td><%= @program.base_rate.to_json %></td>
         </tr>
-       <tr>
+       <!-- <tr>
         <th>Adjustment</th>
-        <td><% @program.adjustments.each do |adj| %>
-            <%= adj.data %>
-          <%end%>
+        <td><%# @program.adjustments.each do |adj| %>
+            <%#= adj.data %>
+          <%#end%>
         </td>
-      </tr>
+      </tr> -->
       </tbody>
     </table>
   </div>

@@ -51,13 +51,6 @@
           <th>Base Rate</th>
           <td><%= @program.base_rate.to_json %></td>
         </tr>
-         <tr>
-          <th>Adjustment</th>
-          <td><% @program.adjustments.each do |adj| %>
-              <%= adj.data %>
-            <%end%>
-          </td>
-        </tr>
       </tbody>
     </table>
   </div>
