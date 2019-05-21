@@ -1084,7 +1084,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
   #   end
   #   @program.save
   #   @program.update(term: term, loan_type: loan_type, fha: fha, va: va, usda: usda, full_doc: full_doc, streamline: streamline, jumbo_high_balance: jumbo_high_balance, arm_basic: arm_basic, arm_advanced: arm_advanced)
->>>>>>> origin/virendra-work
+
   end
 
   # create programs
