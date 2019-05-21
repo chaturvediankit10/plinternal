@@ -1012,77 +1012,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
           end
         end
       end
-    @program.update(term: term,arm_basic: arm_basic, arm_advanced: @arm_advanced, arm_caps: arm_caps)
-  #   if @program.program_name.include?("30") || @program.program_name.include?("30/25 Year")
-  #     term = 30
-  #   elsif @program.program_name.include?("20")
-  #     term = 20
-  #   elsif @program.program_name.include?("15")
-  #     term = 15
-  #   elsif @program.program_name.include?("10 Year")
-  #     term = 10
-  #   else
-  #     term = nil
-  #   end
-
-  #   # Loan-Type
-  #   if @program.program_name.include?("Fixed") || @program.program_name.include?("FIXED")
-  #     loan_type = "Fixed"
-  #   elsif @program.program_name.include?("ARM")
-  #     loan_type = "ARM"
-  #   elsif @program.program_name.include?("Floating")
-  #     loan_type = "Floating"
-  #   elsif @program.program_name.include?("Variable")
-  #     loan_type = "Variable"
-  #   else
-  #     loan_type = nil
-  #   end
-
-  #   # Streamline Vha, Fha, Usda
-  #   fha = false
-  #   va = false
-  #   usda = false
-  #   streamline = false
-  #   full_doc = false
-  #   if @program.program_name.include?("FHA")
-  #     streamline = true
-  #     fha = true
-  #     full_doc = true
-  #   elsif @program.program_name.include?("VA")
-  #     streamline = true
-  #     va = true
-  #     full_doc = true
-  #   elsif @program.program_name.include?("USDA")
-  #     streamline = true
-  #     usda = true
-  #     full_doc = true
-  #   end
-
-  #   # High Balance
-  #   jumbo_high_balance = false
-  #   if @program.program_name.include?("High Bal") || @program.program_name.include?("High Balance")
-  #     jumbo_high_balance = true
-  #   end
-
-  #   # Arm Advanced
-  #   if @program.program_name.include?("2-2-5 ")
-  #     arm_advanced = "2-2-5"
-  #   end
-  #   # Loan Limit Type
-  #   if @program.program_name.include?("Non-Conforming")
-  #     @program.loan_limit_type << "Non-Conforming"
-  #   end
-  #   if @program.program_name.include?("Conforming")
-  #     @program.loan_limit_type << "Conforming"
-  #   end
-  #   if @program.program_name.include?("Jumbo")
-  #     @program.loan_limit_type << "Jumbo"
-  #   end
-  #   if @program.program_name.include?("High Balance")
-  #     @program.loan_limit_type << "High Balance"
-  #   end
-  #   @program.save
-  #   @program.update(term: term, loan_type: loan_type, fha: fha, va: va, usda: usda, full_doc: full_doc, streamline: streamline, jumbo_high_balance: jumbo_high_balance, arm_basic: arm_basic, arm_advanced: arm_advanced)
+    @program.update(term: term,arm_basic: arm_basic, arm_advanced: @arm_advanced, arm_caps: @arm_caps)
   end
 
   # create programs
