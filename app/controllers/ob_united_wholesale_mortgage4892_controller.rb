@@ -999,12 +999,12 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
     end
     # Arm Advanced
     @arm_advanced = nil
-    @arm_caps = ''
+    @arm_caps = nil
     if title.downcase.include?("arm")
         title.split.each do |arm|
           if arm.tr('1-9A-Za-z(|.% ','') == "//"
             @arm_caps = arm.tr('A-Za-z()|.% , ','')[0,5]
-          elsif arm.split('/').last == "5"
+          elsif arm.include?("/") && arm.split('/').last == "5"
             arm_advanced = arm.tr('A-Za-z()|.% , ','')[0,3]
             @arm_advanced = arm_advanced.tr('/','-')
           elsif arm == "2-2-5"
@@ -1012,7 +1012,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
           end
         end
       end
-    @program.update(term: term,arm_basic: arm_basic, arm_advanced: @arm_advanced, arm_caps: arm_caps)
+    @program.update(term: term,arm_basic: arm_basic, arm_advanced: @arm_advanced, arm_caps: @arm_caps)
   #   if @program.program_name.include?("30") || @program.program_name.include?("30/25 Year")
   #     term = 30
   #   elsif @program.program_name.include?("20")
