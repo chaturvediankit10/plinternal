@@ -41,4 +41,10 @@ module ProgramAdj
 			end
 		end
 	end
+
+	def get_cell_number main_key, row, col
+    main_key["cell_number"] = {}
+    main_key["cell_number"] = row,col
+    return
+  end
 end
