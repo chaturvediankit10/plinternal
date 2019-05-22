@@ -43,8 +43,14 @@ module ProgramAdj
 	end
 
 	def get_cell_number main_key, row, col
+		col = alph col
     main_key["cell_number"] = {}
-    main_key["cell_number"] = row,col
+    main_key["cell_number"] = row.to_s+" "+col.to_s
     return
+  end
+  def alph cc
+  	h = {}
+  	('A'..'ZZZ').each_with_index{|w, i| h[i+1] = w }
+  	h[cc]
   end
 end
