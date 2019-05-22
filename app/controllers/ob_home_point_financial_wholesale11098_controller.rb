@@ -551,7 +551,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   if @title.downcase.include?("arm")
-                    @program.update(arm_margin: 2.00, arm_advanced: "1-1-5")
+                    @program.update(arm_margin: 2.00, arm_caps: "1-1-5")
                   end
                   @programs_ids << @program.id
                   

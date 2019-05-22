@@ -1004,7 +1004,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
         title.split.each do |arm|
           if arm.tr('1-9A-Za-z(|.% ','') == "//"
             @arm_caps = arm.tr('A-Za-z()|.% , ','')[0,5]
-          elsif arm.include?("/") && arm.split('/').last == "5"
+          elsif (arm.include?('/') && arm.split('/').last == "5")
             arm_advanced = arm.tr('A-Za-z()|.% , ','')[0,3]
             @arm_advanced = arm_advanced.tr('/','-')
           elsif arm == "2-2-5"
