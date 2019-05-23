@@ -296,7 +296,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     if r == 132
                       get_cell_number @spe_hash["LoanType"],r,cc
                     end
-                    @spe_hash["LoanType"]["fixed"] = new_val if value == "Fixed"
+                    @spe_hash["LoanType"]["Fixed"] = new_val if value == "Fixed"
                     @spe_hash["LoanType"]["ARM"] = new_val if value == "ARM"
                   end
                 end
