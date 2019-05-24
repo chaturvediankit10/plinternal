@@ -109,7 +109,6 @@ class ObQuickenLoans3571Controller < ApplicationController
                 if value.present?
                   if value == "DU & LP LTV/FICO; Terms > 15 Years, Including ARMs"
                     @adjustment_hash["LoanType/Term/FICO/LTV"] = {}
-                    @adjustment_hash["LoanType/Term/FICO/LTV"] = {}
                     @adjustment_hash["LoanType/Term/FICO/LTV"]["Fixed"] = {}
                     @adjustment_hash["LoanType/Term/FICO/LTV"]["Fixed"]["15-Inf"] = {}
                     @adjustment_hash["LoanType/FICO/LTV"] = {}
@@ -148,6 +147,10 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # DU & LP LTV/FICO; Terms > 15 Years, Including ARMs
                   if r >= 29 && r <= 35 && cc == 3
                     secondary_key = get_value value
+                    if r == 29
+                      get_cell_number @adjustment_hash["LoanType/Term/FICO/LTV"],r,cc
+                      get_cell_number @adjustment_hash["LoanType/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["LoanType/Term/FICO/LTV"]["Fixed"]["15-Inf"][secondary_key] = {}
                     @adjustment_hash["LoanType/FICO/LTV"]["ARM"][secondary_key] = {}
                   end
@@ -160,6 +163,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   # Subordinate Financing
                   if r >= 39 && r <= 42 && cc == 3
+                    if r == 39
+                      get_cell_number @subordinate_hash["FinancingType/FannieMae/LTV/CLTV/FICO"],r,cc
+                    end
                     @subordinate_hash["FinancingType/FannieMae/LTV/CLTV/FICO"]["Subordinate Financing"]["true"] = {}
                   end
                   if r >= 39 && r <= 42 && cc == 4
@@ -176,6 +182,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                     @subordinate_hash["FinancingType/FannieMae/LTV/CLTV/FICO"]["Subordinate Financing"]["true"][secondary_key][cltv_key][ltv_key] = value
                   end
                   if r >= 43 && r <= 46 && cc == 3
+                    if r == 43
+                      get_cell_number @subordinate_hash["FinancingType/FreddieMac/LTV/CLTV/FICO"],r,cc
+                    end
                     @subordinate_hash["FinancingType/FreddieMac/LTV/CLTV/FICO"]["Subordinate Financing"]["true"] = {}
                   end
                   if r >= 43 && r <= 46 && cc == 4
@@ -194,6 +203,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   if r == 47 && cc == 4
                     secondary_key = get_value value
                     @subordinate_hash["FinancingType/LTV/FICO"] = {}
+                    get_cell_number @subordinate_hash["FinancingType/LTV/FICO"],r,cc
                     @subordinate_hash["FinancingType/LTV/FICO"]["Subordinate Financing"] = {}
                     @subordinate_hash["FinancingType/LTV/FICO"]["Subordinate Financing"][secondary_key] = {}
                   end
@@ -205,6 +215,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # ARM Structure
                   if r >= 49 && r <= 51 && cc == 13
                     secondary_key = value.split('/').first
+                    if r == 49
+                      get_cell_number @other_adjustment["LoanType/ArmBasic/ArmAdvanced/Margin"],r,cc
+                    end
                     @other_adjustment["LoanType/ArmBasic/ArmAdvanced/Margin"]["ARM"][secondary_key] = {}
                   end
                   if r >= 49 && r <= 51 && cc == 17
@@ -220,6 +233,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 55 && cc == 13
                     @other_adjustment["PropertyType/FannieMae/FreddieMac/LTV"] = {}
+                    get_cell_number @other_adjustment["PropertyType/FannieMae/FreddieMac/LTV"],r,cc
                     @other_adjustment["PropertyType/FannieMae/FreddieMac/LTV"]["Investment Property"] = {}
                     @other_adjustment["PropertyType/FannieMae/FreddieMac/LTV"]["Investment Property"]["true"] = {}
                     @other_adjustment["PropertyType/FannieMae/FreddieMac/LTV"]["Investment Property"]["true"]["true"] = {}
@@ -232,6 +246,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 58 && cc == 13
                     @other_adjustment["FannieMae/FreddieMac/Term/LTV"] = {}
+                    get_cell_number @other_adjustment["FannieMae/FreddieMac/Term/LTV"],r,cc
                     @other_adjustment["FannieMae/FreddieMac/Term/LTV"]["true"] = {}
                     @other_adjustment["FannieMae/FreddieMac/Term/LTV"]["true"]["true"] = {}
                     @other_adjustment["FannieMae/FreddieMac/Term/LTV"]["true"]["true"]["15-Inf"] = {}
@@ -242,6 +257,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 62 && cc == 13
                     @other_adjustment["LoanSize/LoanType/RefinanceOption"] = {}
+                    get_cell_number @other_adjustment["LoanSize/LoanType/RefinanceOption"],r,cc
                     @other_adjustment["LoanSize/LoanType/RefinanceOption"]["High-Balance"] = {}
                     @other_adjustment["LoanSize/LoanType/RefinanceOption"]["High-Balance"]["ARM"] = {}
                     @other_adjustment["LoanSize/LoanType/RefinanceOption"]["High-Balance"]["ARM"]["Cash Out"] = {}
@@ -251,6 +267,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 63 && cc == 13
                     @other_adjustment["LoanSize/LoanType/FannieMaeProduct"] = {}
+                    get_cell_number @other_adjustment["LoanSize/LoanType/FannieMaeProduct"],r,cc
                     @other_adjustment["LoanSize/LoanType/FannieMaeProduct"]["High-Balance"] = {}
                     @other_adjustment["LoanSize/LoanType/FannieMaeProduct"]["High-Balance"]["ARM"] = {}
                     @other_adjustment["LoanSize/LoanType/FannieMaeProduct"]["High-Balance"]["ARM"]["HomeReady"] = {}
@@ -260,6 +277,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r >= 64 && r <= 65 && cc == 13
                     secondary_key = get_value value
+                    if r == 64
+                      get_cell_number @other_adjustment["LoanSize/LoanType/LTV"],r,cc
+                    end
                     @other_adjustment["LoanSize/LoanType/LTV"]["High-Balance"]["ARM"][secondary_key] = {}
                     cc = cc + 8
                     new_value = sheet_data.cell(r,cc)
@@ -267,6 +287,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 66 && cc == 13
                     @other_adjustment["LoanSize/LoanType/LTV"] = {}
+                    get_cell_number @other_adjustment["LoanSize/LoanType/LTV"],r,cc
                     @other_adjustment["LoanSize/LoanType/LTV"]["High-Balance"] = {}
                     @other_adjustment["LoanSize/LoanType/LTV"]["High-Balance"]["ARM"] = {}
                     @other_adjustment["LoanSize/LoanType/LTV"]["High-Balance"]["ARM"]["90-Inf"] = {}
@@ -277,6 +298,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # Cash Out
                   if r >= 39 && r <= 45 && cc == 13
                     secondary_key1 = get_value value
+                    if r == 39
+                      get_cell_number @cashout_hash["RefinanceOption/FICO/LTV"],r,cc
+                    end
                     @cashout_hash["RefinanceOption/FICO/LTV"]["Cash Out"][secondary_key1] = {}
                   end
                   if r >= 39 && r <= 45 && cc >= 15 && cc <= 21
@@ -288,6 +312,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   if r == 50 && cc == 3
                     secondary_key = value.split("Property").first.try(:squish)
                     @property_hash["FannieMae/FreddieMac/PropertyType"] = {}
+                    get_cell_number @property_hash["FannieMae/FreddieMac/PropertyType"],r,cc
                     @property_hash["FannieMae/FreddieMac/PropertyType"]["true"] = {}
                     @property_hash["FannieMae/FreddieMac/PropertyType"]["true"]["true"] = {}
                     @property_hash["FannieMae/FreddieMac/PropertyType"]["true"]["true"][secondary_key] = {}
@@ -298,6 +323,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   if r == 51 && cc == 3
                     secondary_key = value.split("Property").first
                     @property_hash["FannieMae/PropertyType"] = {}
+                    get_cell_number @property_hash["FannieMae/PropertyType"],r,cc
                     @property_hash["FannieMae/PropertyType"]["true"] = {}
                     @property_hash["FannieMae/PropertyType"]["true"][secondary_key] = {}
                     cc = cc + 6
@@ -312,6 +338,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                     else
                       secondary_key = value.split('LTV').last.tr('()A-Z ','')
                     end
+                    if r == 52
+                      get_cell_number @property_hash["FreddieMac/PropertyType/LTV"],r,cc
+                    end
                     @property_hash["FreddieMac/PropertyType/LTV"]["true"]["3-4 Unit"][secondary_key] = {}
                     cc = cc + 6
                     new_value = sheet_data.cell(r,cc)
@@ -319,6 +348,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r >= 58 && r <= 59 && cc == 3
                     secondary_key = get_value value
+                    if r == 58
+                      get_cell_number @property_hash["FannieMaeProduct/FreddieMacProduct/LTV/FICO"],r,cc
+                    end
                     @property_hash["FannieMaeProduct/FreddieMacProduct/LTV/FICO"]["HomeReady"]["Home Possible"][secondary_key] = {}
                   end
                   if r >= 58 && r <= 59 && cc == 5
@@ -341,6 +373,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 65  && cc == 3
                     @property_hash["FreddieMac/LoanType"] = {}
+                    get_cell_number @property_hash["FreddieMac/LoanType"],r,cc
                     @property_hash["FreddieMac/LoanType"]["true"] = {}
                     @property_hash["FreddieMac/LoanType"]["true"]["ARM"] = {}
                     cc = cc + 6
@@ -349,6 +382,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 66  && cc == 3
                     @property_hash["FreddieMac/PropertyType/LTV"] = {}
+                    get_cell_number @property_hash["FreddieMac/PropertyType/LTV"],r,cc
                     @property_hash["FreddieMac/PropertyType/LTV"]["true"] = {}
                     @property_hash["FreddieMac/PropertyType/LTV"]["true"]["2nd Home"] = {}
                     @property_hash["FreddieMac/PropertyType/LTV"]["true"]["2nd Home"]["75-Inf"] = {}
@@ -518,6 +552,10 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # DURP LTV/FICO; Terms > 15 Years, Including ARMs
                   if r >= 31 && r <= 37 && cc == 3
                     secondary_key = get_value value
+                    if r == 31
+                      get_cell_number @adjustment_hash["FannieMae/Term/FICO/LTV"],r,cc
+                      get_cell_number @adjustment_hash["FannieMae/LoanType/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["FannieMae/Term/FICO/LTV"]["true"]["15-Inf"][secondary_key] = {}
                     @adjustment_hash["FannieMae/LoanType/FICO/LTV"]["true"]["ARM"][secondary_key] = {}
                   end
@@ -531,6 +569,10 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # LP Relief LTV/FICO; Terms > 15 Years, Including ARMs
                   if r >= 41 && r <= 47 && cc == 3
                     secondary_key = get_value value
+                    if r == 41
+                      get_cell_number @lp_adjustment["FreddieMac/Term/FICO/LTV"],r,cc
+                      get_cell_number @lp_adjustment["FreddieMac/LoanType/FICO/LTV"],r,cc
+                    end
                     @lp_adjustment["FreddieMac/Term/FICO/LTV"]["true"]["15-Inf"][secondary_key] = {}
                     @lp_adjustment["FreddieMac/LoanType/FICO/LTV"]["true"]["ARM"][secondary_key] = {}
                   end
@@ -544,6 +586,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # DURP Pricing Caps
                   if r == 50 && cc == 16
                     @other_adjustment["FannieMae/LoanType/LTV"] = {}
+                    get_cell_number @other_adjustment["FannieMae/LoanType/LTV"],r,cc
                     @other_adjustment["FannieMae/LoanType/LTV"]["true"] = {}
                     @other_adjustment["FannieMae/LoanType/LTV"]["true"]["Fixed"] = {}
                     @other_adjustment["FannieMae/LoanType/LTV"]["true"]["ARM"] = {}
@@ -555,6 +598,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                     @other_adjustment["FannieMae/LoanType/LTV"]["true"]["ARM"]["0-80"] = new_value
                   end
                   if r == 51 && cc == 18
+                    get_cell_number @other_adjustment["FannieMae/LoanType/Term/LTV"],r,cc
                     @other_adjustment["FannieMae/LoanType/Term/LTV"]["true"]["Fixed"]["0-20"] = {}
                     @other_adjustment["FannieMae/LoanType/Term/LTV"]["true"]["ARM"]["0-20"] = {}
                     @other_adjustment["FannieMae/LoanType/Term/LTV"]["true"]["Fixed"]["0-20"]["80-Inf"] = {}
@@ -576,6 +620,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 53 && cc == 18
                     @other_adjustment["FannieMae/LoanType/PropertyType/LTV"] = {}
+                    get_cell_number @other_adjustment["FannieMae/LoanType/PropertyType/LTV"],r,cc
                     @other_adjustment["FannieMae/LoanType/PropertyType/LTV"]["true"] = {}
                     @other_adjustment["FannieMae/LoanType/PropertyType/LTV"]["true"]["Fixed"] = {}
                     @other_adjustment["FannieMae/LoanType/PropertyType/LTV"]["true"]["Fixed"]["2nd Home"] = {}
@@ -595,6 +640,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                     @other_adjustment["FannieMae/LoanType/PropertyType/LTV"]["true"]["ARM"]["Investment Property"]["80-105"] = new_value
                   end
                   if r == 54 && cc == 18
+                    get_cell_number @other_adjustment["FannieMae/LoanType/PropertyType/Term/LTV"],r,cc
                     @other_adjustment["FannieMae/LoanType/PropertyType/Term/LTV"]["true"]["Fixed"]["2nd Home"] = {}
                     @other_adjustment["FannieMae/LoanType/PropertyType/Term/LTV"]["true"]["Fixed"]["Investment Property"] = {}
                     @other_adjustment["FannieMae/LoanType/PropertyType/Term/LTV"]["true"]["Fixed"]["2nd Home"]["26-Inf"] = {}
@@ -632,6 +678,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 56 && cc == 18
                     @other_adjustment["FannieMae/LoanSize/LoanType/LTV"] = {}
+                    get_cell_number @other_adjustment["FannieMae/LoanSize/LoanType/LTV"],r,cc
                     @other_adjustment["FannieMae/LoanSize/LoanType/LTV"]["true"] = {}
                     @other_adjustment["FannieMae/LoanSize/LoanType/LTV"]["true"]["High-Balance"] = {}
                     @other_adjustment["FannieMae/LoanSize/LoanType/LTV"]["true"]["High-Balance"]["ARM"] = {}
@@ -648,6 +695,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 58 && cc == 18
                     @other_adjustment["FannieMae/LoanSize/PropertyType/LTV"] = {}
+                    get_cell_number @other_adjustment["FannieMae/LoanSize/PropertyType/LTV"],r,cc
                     @other_adjustment["FannieMae/LoanSize/PropertyType/LTV"]["true"] = {}
                     @other_adjustment["FannieMae/LoanSize/PropertyType/LTV"]["true"]["High-Balance"] = {}
                     @other_adjustment["FannieMae/LoanSize/PropertyType/LTV"]["true"]["High-Balance"]["2nd Home"] = {}
@@ -661,6 +709,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r >= 61 && r <= 63 && cc == 16
                     secondary_key = get_value value
+                    if r == 61
+                      get_cell_number @other_adjustment["LoanSize/LoanType/LTV"],r,cc
+                    end
                     @other_adjustment["LoanSize/LoanType/LTV"]["High-Balance"]["ARM"][secondary_key] = {}
                     cc = cc + 9
                     new_value = sheet_data.cell(r,cc)
@@ -668,6 +719,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 64 && cc == 16
                     @other_adjustment["FreddieMac/LoanType"] = {}
+                    get_cell_number @other_adjustment["FreddieMac/LoanType"],r,cc
                     @other_adjustment["FreddieMac/LoanType"]["true"] = {}
                     @other_adjustment["FreddieMac/LoanType"]["true"]["ARM"] = {}
                     cc = cc + 9
@@ -677,6 +729,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # High LTV
                   if r >= 67 && r <= 68 && cc == 16
                     secondary_key = value.tr('A-Za-z()&% ','')
+                    if r == 67
+                      get_cell_number @other_adjustment["FannieMae/FreddieMac/LTV"],r,cc
+                    end
                     @other_adjustment["FannieMae/FreddieMac/LTV"]["true"]["true"][secondary_key] = {}
                     cc = cc + 9
                     new_value = sheet_data.cell(r,cc)
@@ -685,6 +740,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   if r >= 69 && r <= 70 && cc == 16
                     secondary_key = value.split("DU").last.tr('A-Za-z) ','')
                     ltv_key = value.split("DU").first.tr('A-Za-z%(<> ','')+"-Inf"
+                    if r == 69
+                      get_cell_number @other_adjustment["FannieMae/Term/LTV"],r,cc
+                    end
                     @other_adjustment["FannieMae/Term/LTV"]["true"][secondary_key] = {}
                     @other_adjustment["FannieMae/Term/LTV"]["true"][secondary_key][ltv_key] = {}
                     cc = cc + 9
@@ -693,6 +751,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 71 && cc == 16
                     @other_adjustment["FreddieMac/LTV"] = {}
+                    get_cell_number @other_adjustment["FreddieMac/LTV"],r,cc
                     @other_adjustment["FreddieMac/LTV"]["true"] = {}
                     @other_adjustment["FreddieMac/LTV"]["true"]["105-Inf"] = {}
                     cc = cc + 9
@@ -701,6 +760,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 74 && cc == 16
                     @other_adjustment["FreddieMac/PropertyType"] = {}
+                    get_cell_number @other_adjustment["FreddieMac/PropertyType"],r,cc
                     @other_adjustment["FreddieMac/PropertyType"]["true"] = {}
                     @other_adjustment["FreddieMac/PropertyType"]["true"]["2nd Home"] = {}
                     cc = cc + 9
@@ -709,6 +769,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 75 && cc == 16
                     @other_adjustment["PropertyType/LTV"] = {}
+                    get_cell_number @other_adjustment["PropertyType/LTV"],r,cc
                     @other_adjustment["PropertyType/LTV"]["Condo"] = {}
                     @other_adjustment["PropertyType/LTV"]["Condo"]["75-Inf"] = {}
                     cc = cc + 9
@@ -717,6 +778,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 79 && cc == 16
                     @other_adjustment["FannieMae/FreddieMac/PropertyType/LTV"] = {}
+                    get_cell_number @other_adjustment["FannieMae/FreddieMac/PropertyType/LTV"],r,cc
                     @other_adjustment["FannieMae/FreddieMac/PropertyType/LTV"]["true"] = {}
                     @other_adjustment["FannieMae/FreddieMac/PropertyType/LTV"]["true"]["true"] = {}
                     @other_adjustment["FannieMae/FreddieMac/PropertyType/LTV"]["true"]["true"]["Investment Property"] = {}
@@ -728,6 +790,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   # Subordinate Financing
                   if r >= 51 && r <= 53 && cc == 3
+                    if r == 51
+                      get_cell_number @subordinate_hash["FinancingType/FannieMae/LTV/CLTV/FICO"],r,cc
+                    end
                     @subordinate_hash["FinancingType/FannieMae/LTV/CLTV/FICO"]["Subordinate Financing"]["true"] = {}
                   end
                   if r >= 51 && r <= 53 && cc == 5
@@ -744,6 +809,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                     @subordinate_hash["FinancingType/FannieMae/LTV/CLTV/FICO"]["Subordinate Financing"]["true"][secondary_key][cltv_key][ltv_key] = value
                   end
                   if r >= 54 && r <= 59 && cc == 3
+                    if r == 54
+                      get_cell_number @subordinate_hash["FinancingType/FreddieMac/LTV/CLTV/FICO"],r,cc
+                    end
                     @subordinate_hash["FinancingType/FreddieMac/LTV/CLTV/FICO"]["Subordinate Financing"]["true"] = {}
                   end
                   if r >= 54 && r <= 59 && cc == 5
@@ -766,6 +834,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                       secondary_key = get_value value
                     end
                     @subordinate_hash["FinancingType/LTV/CLTV/FICO"] = {}
+                    get_cell_number @subordinate_hash["FinancingType/LTV/CLTV/FICO"],r,cc
                     @subordinate_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"] = {}
                     @subordinate_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"][secondary_key] = {}
                   end
@@ -782,6 +851,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   if r == 63 && cc == 3
                     secondary_key = value.split("Property").first.try(:squish)
                     @property_hash["FannieMae/FreddieMac/PropertyType"] = {}
+                    get_cell_number @property_hash["FannieMae/FreddieMac/PropertyType"],r,cc
                     @property_hash["FannieMae/FreddieMac/PropertyType"]["true"] = {}
                     @property_hash["FannieMae/FreddieMac/PropertyType"]["true"]["true"] = {}
                     @property_hash["FannieMae/FreddieMac/PropertyType"]["true"]["true"][secondary_key] = {}
@@ -792,6 +862,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   if r == 64 && cc == 3
                     secondary_key = value.split("Property").first.try(:squish)
                     @property_hash["FannieMae/PropertyType"] = {}
+                    get_cell_number @property_hash["FannieMae/PropertyType"],r,cc
                     @property_hash["FannieMae/PropertyType"]["true"] = {}
                     @property_hash["FannieMae/PropertyType"]["true"][secondary_key] = {}
                     cc = cc + 9
@@ -806,6 +877,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                     else
                       secondary_key = value.split('LTV').last.tr('()A-Za-z% ','')
                     end
+                    if r == 65
+                      get_cell_number @property_hash["FreddieMac/PropertyType/LTV"],r,cc
+                    end
                     @property_hash["FreddieMac/PropertyType/LTV"]["true"]["3-4 Unit"][secondary_key] = {}
                     cc = cc + 9
                     new_value = sheet_data.cell(r,cc)
@@ -813,6 +887,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   # LP Relief Pricing Caps
                   if r == 70 && cc == 3
+                    get_cell_number @pricing_cap["FreddieMac/PropertyType/LTV"],r,cc
                     @pricing_cap["FreddieMac/PropertyType/LTV"]["true"]["2nd Home"] = {}
                     @pricing_cap["FreddieMac/PropertyType/LTV"]["true"]["2nd Home"]["0-80"] = {}
                     cc = cc + 9
@@ -821,6 +896,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 71 && cc == 3
                     @pricing_cap["FreddieMac/PropertyType/Term/LTV"] = {}
+                    get_cell_number @pricing_cap["FreddieMac/PropertyType/Term/LTV"],r,cc
                     @pricing_cap["FreddieMac/PropertyType/Term/LTV"]["true"] = {}
                     @pricing_cap["FreddieMac/PropertyType/Term/LTV"]["true"]["2nd Home"] = {}
                     @pricing_cap["FreddieMac/PropertyType/Term/LTV"]["true"]["2nd Home"]["0-20"] = {}
@@ -838,6 +914,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   end
                   if r == 73 && cc == 3
                     @pricing_cap["FreddieMac/PropertyType"] = {}
+                    get_cell_number @pricing_cap["FreddieMac/PropertyType"],r,cc
                     @pricing_cap["FreddieMac/PropertyType"]["true"] = {}
                     @pricing_cap["FreddieMac/PropertyType"]["true"][value] = {}
                     cc = cc + 9
@@ -847,6 +924,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # ARM Caps
                   if r >= 77 && r <= 79 && cc == 3
                     secondary_key = value.split('/').first
+                    if r == 77
+                      get_cell_number @other_adjustment["LoanType/ArmBasic/ArmAdvanced/Margin"],r,cc
+                    end
                     @other_adjustment["LoanType/ArmBasic/ArmAdvanced/Margin"]["ARM"][secondary_key] = {}
                   end
                   if r >= 77 && r <= 79 && cc == 5
@@ -1136,6 +1216,7 @@ class ObQuickenLoans3571Controller < ApplicationController
           			if r == 76 && cc == 5
           				primary_key = "LockDay"
           				@adjustment_hash[primary_key] = {}
+                  get_cell_number @adjustment_hash[primary_key],r,cc
                   @adjustment_hash[primary_key]["60"] = {}
         					cc = cc +10
         					new_value = sheet_data.cell(r,cc)
@@ -1144,6 +1225,9 @@ class ObQuickenLoans3571Controller < ApplicationController
           			# Loan Ladder
           			if r >= 88 && r <= 91 && cc == 5
           				primary_key = get_value value
+                  if r == 88
+                    get_cell_number @adjustment_hash["LoanAmount"],r,cc
+                  end
           				@adjustment_hash["LoanAmount"][primary_key] = {}
         					cc = cc + 10
         					new_value = sheet_data.cell(r,cc)
@@ -1152,6 +1236,9 @@ class ObQuickenLoans3571Controller < ApplicationController
           			# Government FICO Adjusters
           			if r >= 76 && r <= 79 && cc == 19
           				secondary_key = get_value value
+                  if r == 76
+                    get_cell_number @government_hash[primary_key1],r,cc
+                  end
           				@government_hash[primary_key1][secondary_key] = {}
           				if @government_hash[primary_key1][secondary_key] = {}
           					cc = cc + 10
@@ -1162,6 +1249,7 @@ class ObQuickenLoans3571Controller < ApplicationController
           			# Geography
           			if r == 82 && cc == 19
                   @government_hash["State"] = {}
+                  get_cell_number @government_hash["State"],r,cc
                   @government_hash["State"]["NJ"] = {}
         					cc = cc + 10
         					new_value = sheet_data.cell(r,cc)
@@ -1175,11 +1263,13 @@ class ObQuickenLoans3571Controller < ApplicationController
           			end
           			if r == 86 && cc == 19
           				@government_hash["VA/LoanPurpose/LTV"] = {}
+                  get_cell_number @government_hash["VA/LoanPurpose/LTV"],r,cc
                   @government_hash["VA/LoanPurpose/LTV"]["true"] = {}
                   @government_hash["VA/LoanPurpose/LTV"]["true"]["Purchase"] = {}
                   @government_hash["VA/LoanPurpose/LTV"]["true"]["Purchase"]["95-Inf"] = {}
 
                   @government_hash["VA/RefinanceOption/LTV"] = {}
+                  get_cell_number @government_hash["VA/RefinanceOption/LTV"],r,cc
                   @government_hash["VA/RefinanceOption/LTV"]["true"] = {}
                   @government_hash["VA/RefinanceOption/LTV"]["true"]["Rate and Term"] = {}
                   @government_hash["VA/RefinanceOption/LTV"]["true"]["Rate and Term"]["95-Inf"] = {}
@@ -1197,6 +1287,7 @@ class ObQuickenLoans3571Controller < ApplicationController
           			end
                 if r == 89 && cc == 19
                   @government_hash["VA/LTV"] = {}
+                  get_cell_number @government_hash["VA/LTV"],r,cc
                   @government_hash["VA/LTV"]["true"] = {}
                   @government_hash["VA/LTV"]["true"]["100-Inf"] = {}
                   cc = cc + 10
@@ -1284,6 +1375,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                 if r == 70 && cc == 5
                   secondary_key = value.tr('A-Za-z><=, ','')+"-Inf"
                   @adjustment_hash["LoanAmount"] = {}
+                  get_cell_number @adjustment_hash["LoanAmount"],r,cc
                   @adjustment_hash["LoanAmount"][secondary_key] = {}
                   cc = cc + 10
                   new_value = sheet_data.cell(r,cc)
@@ -1291,6 +1383,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                 end
                 if r == 73 && cc == 5
                   @adjustment_hash["PropertyType/Term/LTV"] = {}
+                  get_cell_number @adjustment_hash["PropertyType/Term/LTV"],r,cc
                   @adjustment_hash["PropertyType/Term/LTV"]["Investment Property"] = {}
                   @adjustment_hash["PropertyType/Term/LTV"]["Investment Property"]["30"] = {}
                   @adjustment_hash["PropertyType/Term/LTV"]["Investment Property"]["30"]["0-60"] = {}
@@ -1359,6 +1452,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # 30-26 Years Fixed & ARMs
                   if r >= 9 && r <= 12 && cc == 3
                     secondary_key = get_value value
+                    if r == 9
+                      get_cell_number @adjustment_hash["LPMI/LoanType/Term/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["LPMI/LoanType/Term/FICO/LTV"]["true"]["Fixed"]["30-26"][secondary_key] = {}
                     @adjustment_hash["LPMI/LoanType/Term/FICO/LTV"]["true"]["ARM"]["30-26"][secondary_key] = {}
                   end
@@ -1372,6 +1468,7 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # 30 Year Fixed: Freddie Home Possible
                   if r >= 18 && r <= 21 && cc == 3
                     secondary_key = get_value value
+                    get_cell_number @adjustment_hash["FreddieMacProduct/LoanType/Term/FICO/LTV"],r,cc
                     @adjustment_hash["FreddieMacProduct/LoanType/Term/FICO/LTV"]["Home Possible"]["Fixed"]["30"][secondary_key] = {}
                   end
                   if r >= 18 && r <= 21 && cc >= 4 && cc <= 13
@@ -1382,6 +1479,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                   # 25-21 Years Fixed
                   if r >= 27 && r <= 30 && cc == 3
                     secondary_key = get_value value
+                    if r == 27
+                      get_cell_number @additional_adjustment["LoanType/Term/FICO"],r,cc
+                    end
                     @additional_adjustment["LoanType/Term/FICO"]["Fixed"]["21-25"][secondary_key] = {}
                   end
                   if r >= 27 && r <= 30 && cc >= 4 && cc <= 13
@@ -1405,6 +1505,9 @@ class ObQuickenLoans3571Controller < ApplicationController
                       secondary_key = "Investment Property"
                     else
                       secondary_key = get_value value
+                    end
+                    if r == 47
+                      get_cell_number @additional_adjustment["PropertyType/FICO"],r,cc
                     end
                     @additional_adjustment["PropertyType/FICO"][secondary_key] = {}
                   end

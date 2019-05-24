@@ -113,6 +113,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 # CLTV
                 if r >= 110 && r <= 115 && cc == 4
                   ltv_key = value
+                  if r == 110
+                    get_cell_number @adjustment_hash[primary_key],r,cc
+                  end
                   @adjustment_hash[primary_key][ltv_key] = {}
                 end
                 if r >= 110 && r <= 115 && cc >= 5 && cc <= 12
@@ -123,6 +126,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 if r == 119 && cc == 4
                   @purpose_adjustment = {}
                   @purpose_adjustment["RefinanceOption/CLTV"] = {}
+                  get_cell_number @purpose_adjustment["RefinanceOption/CLTV"],r,cc
                   @purpose_adjustment["RefinanceOption/CLTV"]["Cash Out"] = {}
                 end
                 if r == 119 && cc >= 5 && cc <= 12
@@ -134,6 +138,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 if r == 120 && cc == 4
                   @purpose_adjustment2 ={}
                   @purpose_adjustment2["LoanPurpose/CLTV"] = {}
+                  get_cell_number @purpose_adjustment2["LoanPurpose/CLTV"],r,cc
                   @purpose_adjustment2["LoanPurpose/CLTV"]["Purchase"] = {}
                 end
                 if r == 120 && cc >= 5 && cc <= 12
@@ -145,6 +150,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 if r == 121 && cc == 4
                   @purpose_adjustment3 ={}
                   @purpose_adjustment3["LoanAmount/CLTV"] = {}
+                  get_cell_number @purpose_adjustment3["LoanAmount/CLTV"],r,cc
                   @purpose_adjustment3["LoanAmount/CLTV"]["0-1500000"] = {}
                 end
                 if r == 121 && cc >= 5 && cc <= 12
@@ -156,6 +162,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 if r == 122 && cc == 4
                   @purpose_adjustment4 ={}
                   @purpose_adjustment4["LoanAmount/CLTV"] = {}
+                  get_cell_number @purpose_adjustment4["LoanAmount/CLTV"],r,cc
                   @purpose_adjustment4["LoanAmount/CLTV"]["1500000-Inf"] = {}
                 end
                 if r == 122 && cc >= 5 && cc <= 12
@@ -167,6 +174,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 if r == 123 && cc == 4
                   @purpose_adjustment5 ={}
                   @purpose_adjustment5["LTV/CLTV"] = {}
+                  get_cell_number @purpose_adjustment5["LTV/CLTV"],r,cc
                   @purpose_adjustment5["LTV/CLTV"]["80-Inf"] = {}
                 end
                 if r == 123 && cc >= 5 && cc <= 12
@@ -178,6 +186,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 if r == 125 && cc == 4
                   @purpose_adjustment6 ={}
                   @purpose_adjustment6["PropertyType/CLTV"] = {}
+                  get_cell_number @purpose_adjustment6["PropertyType/CLTV"],r,cc
                   @purpose_adjustment6["PropertyType/CLTV"]["Non-Owner Occupied"] = {}
                 end
                 if r == 125 && cc >= 5 && cc <= 12
@@ -191,10 +200,11 @@ class ObNewfiWholesale7019Controller < ApplicationController
                  if r == 137 && cc==4
                   @highAdjustment ={}
                   @highAdjustment["LoanSize/FICO/CLTV"] = {}
+                  get_cell_number @highAdjustment["LoanSize/FICO/CLTV"],r,cc
                   @highAdjustment["LoanSize/FICO/CLTV"]["High-Balance"] = {}
                 end
 
-                if  r == 137 && cc==4
+                if r == 137 && cc==4
                   @fico_data.each do |fico_data|
                     @highAdjustment["LoanSize/FICO/CLTV"]["High-Balance"][fico_data] = {}
                   end
@@ -208,6 +218,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 if  r == 146 && cc==4
                   @highAdjustment1 ={}
                   @highAdjustment1["RefinanceOption/CLTV"] = {}
+                  get_cell_number @highAdjustment1["RefinanceOption/CLTV"],r,cc
                   @highAdjustment1["RefinanceOption/CLTV"]["Cash Out"] = {}
                 end
 
@@ -220,6 +231,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 if  r == 147 && cc==4
                   @highAdjustment2 ={}
                   @highAdjustment2["LoanPurpose/CLTV"] = {}
+                  get_cell_number @highAdjustment2["LoanPurpose/CLTV"],r,cc
                   @highAdjustment2["LoanPurpose/CLTV"]["Purchase"] = {}
                 end
 
@@ -336,6 +348,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 105 && r <= 110 && cc == 3
                 primary_key = get_value value
+                if r == 105
+                  get_cell_number @adjustment_hash["FICO/LTV"],r,cc
+                end
                 @adjustment_hash["FICO/LTV"][primary_key] = {}
               end
               if r >= 105 && r <= 110 && cc >= 5 && cc <= 19
@@ -345,6 +360,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 113 && r <= 118 && cc == 3
                 primary_key = get_value value
+                if r == 113
+                  get_cell_number @cashout["RefinanceOption/FICO/LTV"],r,cc
+                end
                 @cashout["RefinanceOption/FICO/LTV"]["Cash Out"][primary_key] = {}
               end
               if r >= 113 && r <= 118 && cc >= 5 && cc <= 19
@@ -354,6 +372,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 121 && cc == 3
                 @additional_hash["LoanAmount/LTV"] = {}
+                get_cell_number @additional_hash["LoanAmount/LTV"],r,cc
                 @additional_hash["LoanAmount/LTV"]["1500000-Inf"] = {}
               end
               if r == 121 && cc >= 5 && cc <= 19
@@ -363,8 +382,10 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 122 && cc == 3
                 @additional_hash["LoanType/LTV"] = {}
+                get_cell_number @additional_hash["LoanType/LTV"],r,cc
                 @additional_hash["LoanType/LTV"]["ARM"] = {}
                 @additional_hash["LoanType/Term/LTV"] = {}
+                get_cell_number @additional_hash["LoanType/Term/LTV"],r,cc
                 @additional_hash["LoanType/Term/LTV"]["Fixed"] = {}
                 @additional_hash["LoanType/Term/LTV"]["Fixed"]["30"] = {}
               end
@@ -380,6 +401,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   primary_key = "Investment Property"
                 else
                   primary_key = value
+                end
+                if r == 123
+                  get_cell_number @additional_hash["PropertyType/LTV"],r,cc
                 end
                 @additional_hash["PropertyType/LTV"][primary_key] = {}
               end
@@ -398,6 +422,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 128 && cc == 3
                 @additional_hash["FullDoc/LTV"] = {}
+                get_cell_number @additional_hash["FullDoc/LTV"],r,cc
                 @additional_hash["FullDoc/LTV"]["true"] = {}
               end
               if r == 128 && cc >= 5 && cc <= 19
@@ -407,6 +432,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 136 && r <= 141 && cc == 3
                 primary_key = get_value value
+                if r == 136
+                  get_cell_number @rate_hash["FICO/LTV"],r,cc
+                end
                 @rate_hash["FICO/LTV"][primary_key] = {}
               end
               if r >= 136 && r <= 141 && cc >= 5 && cc <= 19
@@ -416,6 +444,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 144 && r <= 149 && cc == 3
                 primary_key = get_value value
+                if r == 144
+                  get_cell_number @cashout_hash["RefinanceOption/FICO/LTV"],r,cc
+                end
                 @cashout_hash["RefinanceOption/FICO/LTV"]["Cash Out"][primary_key] = {}
               end
               if r >= 144 && r <= 149 && cc >= 5 && cc <= 19
@@ -425,6 +456,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 152 && cc == 3
                 @other_adjustment["LoanAmount/LTV"] = {}
+                get_cell_number @other_adjustment["LoanAmount/LTV"],r,cc
                 @other_adjustment["LoanAmount/LTV"]["1500000"] = {}
               end
               if r == 152 && cc >= 5 && cc <= 19
@@ -434,8 +466,10 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 153 && cc == 3
                 @other_adjustment["LoanType/LTV"] = {}
+                get_cell_number @other_adjustment["LoanType/LTV"],r,cc
                 @other_adjustment["LoanType/LTV"]["ARM"] = {}
                 @other_adjustment["LoanType/Term/LTV"] = {}
+                get_cell_number @other_adjustment["LoanType/Term/LTV"],r,cc
                 @other_adjustment["LoanType/Term/LTV"]["Fixed"] = {}
                 @other_adjustment["LoanType/Term/LTV"]["Fixed"]["30"] = {}
               end
@@ -452,6 +486,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 else
                   primary_key = value
                 end
+                if r == 154
+                  get_cell_number @other_adjustment["PropertyType/LTV"],r,cc
+                end
                 @other_adjustment["PropertyType/LTV"][primary_key] = {}
               end
               if r >= 154 && r <= 157 && cc >= 5 && cc <= 19
@@ -461,6 +498,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 158 && cc == 3
                 @other_adjustment["LoanType/Term"] = {}
+                get_cell_number @other_adjustment["LoanType/Term"],r,cc
                 @other_adjustment["LoanType/Term"]["Fixed"] = {}
                 @other_adjustment["LoanType/Term"]["Fixed"]["40"] = {}
               end
@@ -471,6 +509,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 159 && cc == 3
                 @other_adjustment["FullDoc/LTV"] = {}
+                get_cell_number @other_adjustment["FullDoc/LTV"],r,cc
                 @other_adjustment["FullDoc/LTV"]["true"] = {}
               end
               if r == 159 && cc >= 5 && cc <= 19
@@ -584,6 +623,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 105 && r <= 112 && cc == 3
                 primary_key = get_value value
+                if r == 105
+                  get_cell_number @adjustment_hash["FICO/LTV"],r,cc
+                end
                 @adjustment_hash["FICO/LTV"][primary_key] = {}
               end
               if r >= 105 && r <= 112 && cc >= 5 && cc <= 19
@@ -593,6 +635,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 115 && r <= 122 && cc == 3
                 primary_key = get_value value
+                if r == 115
+                  get_cell_number @cashout["RefinanceOption/FICO/LTV"],r,cc
+                end
                 @cashout["RefinanceOption/FICO/LTV"]["Cash Out"][primary_key] = {}
               end
               if r >= 115 && r <= 122 && cc >= 5 && cc <= 19
@@ -602,6 +647,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 125 && cc == 3
                 @additional_hash["LoanAmount/LTV"] = {}
+                get_cell_number @additional_hash["LoanAmount/LTV"],r,cc
                 @additional_hash["LoanAmount/LTV"]["1500000-Inf"] = {}
               end
               if r == 125 && cc >= 5 && cc <= 19
@@ -611,8 +657,10 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 126 && cc == 3
                 @additional_hash["LoanType/LTV"] = {}
+                get_cell_number @additional_hash["LoanType/LTV"],r,cc
                 @additional_hash["LoanType/LTV"]["ARM"] = {}
                 @additional_hash["LoanType/Term/LTV"] = {}
+                get_cell_number @additional_hash["LoanType/Term/LTV"],r,cc
                 @additional_hash["LoanType/Term/LTV"]["Fixed"] = {}
                 @additional_hash["LoanType/Term/LTV"]["Fixed"]["30"] = {}
               end
@@ -628,6 +676,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   primary_key = "Investment Property"
                 else
                   primary_key = value
+                end
+                if r == 127
+                  get_cell_number @additional_hash["PropertyType/LTV"],r,cc
                 end
                 @additional_hash["PropertyType/LTV"][primary_key] = {}
               end
@@ -646,6 +697,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 132 && cc == 3
                 @additional_hash["FullDoc/LTV"] = {}
+                get_cell_number @additional_hash["FullDoc/LTV"],r,cc
                 @additional_hash["FullDoc/LTV"]["true"] = {}
               end
               if r == 132 && cc >= 5 && cc <= 19
@@ -655,6 +707,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 140 && r <= 147 && cc == 3
                 primary_key = get_value value
+                if r == 140
+                  get_cell_number @rate_hash["FICO/LTV"],r,cc
+                end
                 @rate_hash["FICO/LTV"][primary_key] = {}
               end
               if r >= 140 && r <= 147 && cc >= 5 && cc <= 19
@@ -664,6 +719,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 150 && r <= 157 && cc == 3
                 primary_key = get_value value
+                if r == 150
+                  get_cell_number @cashout_hash["RefinanceOption/FICO/LTV"],r,cc
+                end
                 @cashout_hash["RefinanceOption/FICO/LTV"]["Cash Out"][primary_key] = {}
               end
               if r >= 150 && r <= 157 && cc >= 5 && cc <= 19
@@ -673,6 +731,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 160 && cc == 3
                 @other_adjustment["LoanAmount/LTV"] = {}
+                get_cell_number @other_adjustment["LoanAmount/LTV"],r,cc
                 @other_adjustment["LoanAmount/LTV"]["1500000"] = {}
               end
               if r == 160 && cc >= 5 && cc <= 19
@@ -682,8 +741,10 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 161 && cc == 3
                 @other_adjustment["LoanType/LTV"] = {}
+                get_cell_number @other_adjustment["LoanType/LTV"],r,cc
                 @other_adjustment["LoanType/LTV"]["ARM"] = {}
                 @other_adjustment["LoanType/Term/LTV"] = {}
+                get_cell_number @other_adjustment["LoanType/Term/LTV"],r,cc
                 @other_adjustment["LoanType/Term/LTV"]["Fixed"] = {}
                 @other_adjustment["LoanType/Term/LTV"]["Fixed"]["30"] = {}
               end
@@ -700,6 +761,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 else
                   primary_key = value
                 end
+                if r == 162
+                  get_cell_number @other_adjustment["PropertyType/LTV"],r,cc
+                end
                 @other_adjustment["PropertyType/LTV"][primary_key] = {}
               end
               if r >= 162 && r <= 165 && cc >= 5 && cc <= 19
@@ -709,6 +773,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 166 && cc == 3
                 @other_adjustment["LoanType/Term"] = {}
+                get_cell_number @other_adjustment["LoanType/Term"],r,cc
                 @other_adjustment["LoanType/Term"]["Fixed"] = {}
                 @other_adjustment["LoanType/Term"]["Fixed"]["40"] = {}
               end
@@ -719,6 +784,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 167 && cc == 3
                 @other_adjustment["FullDoc/LTV"] = {}
+                get_cell_number @other_adjustment["FullDoc/LTV"],r,cc
                 @other_adjustment["FullDoc/LTV"]["true"] = {}
               end
               if r == 167 && cc >= 5 && cc <= 19
@@ -823,6 +889,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   # FICO x LTV
                   if r >= 82 && r <= 89 && cc == 5
                     primary_key = get_value value
+                    if r == 82
+                      get_cell_number @adjustment_hash["FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["FICO/LTV"][primary_key] = {}
                   end
                   if r >= 82 && r <= 89 && cc >= 7 && cc <= 12
@@ -843,6 +912,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
 
                   if r == 93 && cc == 5
                     @other_adjustment["ArmBasic/LTV"] = {}
+                    get_cell_number @other_adjustment["ArmBasic/LTV"],r,cc
                     @other_adjustment["ArmBasic/LTV"]["5"] = {}
                   end
                   if r ==93 && cc >= 7 && cc <= 12
@@ -853,6 +923,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
 
                   if r >= 94 && r <= 98 && cc == 5
                     primary_key = get_value value
+                    if r == 94
+                      get_cell_number @other_adjustment1["LoanAmount/LTV"],r,cc
+                    end
                     @other_adjustment1["LoanAmount/LTV"][primary_key] = {}
                   end
                   if r >= 94 && r <= 98 && cc >= 7 && cc <= 12
@@ -958,6 +1031,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   # FICO - Loan Amount
                   if r >= 105 && r <= 110 && cc == 5
                     secondary_key = get_value value
+                    if r == 105
+                      get_cell_number @adjustment_hash["FICO/LoanAmount"],r,cc
+                    end
                     @adjustment_hash["FICO/LoanAmount"][secondary_key] = {}
                   end
 
@@ -973,6 +1049,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   # Other Adjustments
                   if r == 115 && cc == 14
                     primary_key = "Escrow Waiver Fee"
+                    get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                     @other_adjustment["MiscAdjuster"][primary_key] = {}
                     cc = cc + 4
                     new_value = sheet_data.cell(r,cc)
@@ -984,6 +1061,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     if primary_key.include?(",")
                       primary_key = primary_key.tr(',', '')
                     end
+                    get_cell_number @other_adjustment1["LoanAmount"],r,cc
                     @other_adjustment1["LoanAmount"]["0-"+primary_key] = {}
                     cc = cc + 4
                     new_value = sheet_data.cell(r,cc)
@@ -1089,6 +1167,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   end
                   if r >= 133 && r <= 141 && cc == 3
                     primary_key = get_value value
+                    if r == 133
+                      get_cell_number @adjustment_hash["FHA/FICO"],r,cc
+                    end
                     @adjustment_hash["FHA/FICO"][true][primary_key] = {}
                     cc = cc + 4
                     new_val = sheet_data.cell(r,cc)
@@ -1096,6 +1177,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   end
                   if r >= 133 && r <= 142 && cc == 15
                     primary_key = value
+                    if r == 133
+                      get_cell_number @state["State"],r,cc
+                    end
                     @state["State"][primary_key] = {}
                     cc = cc + 2
                     new_val = sheet_data.cell(r,cc)
@@ -1103,12 +1187,14 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   end
                   if r == 133 && cc == 13
                     @adjustment_hash["FHA/DTI"] = {}
+                    get_cell_number @adjustment_hash["FHA/DTI"],r,cc
                     @adjustment_hash["FHA/DTI"][true] = {}
                     @adjustment_hash["FHA/DTI"][true]["55%"] = {}
                     @adjustment_hash["FHA/DTI"][true]["55%"] = value
                   end
                   if r == 134 && cc == 13
                     @adjustment_hash["FHA/LoanSize/RefinanceOption"] = {}
+                    get_cell_number @adjustment_hash["FHA/LoanSize/RefinanceOption"],r,cc
                     @adjustment_hash["FHA/LoanSize/RefinanceOption"][true] = {}
                     @adjustment_hash["FHA/LoanSize/RefinanceOption"][true]["High-Balance"] = {}
                     @adjustment_hash["FHA/LoanSize/RefinanceOption"][true]["High-Balance"]["Cash Out"] = {}
@@ -1116,6 +1202,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   end
                   if r == 135 && cc == 13
                     @adjustment_hash["FHA/PropertyType/State"] = {}
+                    get_cell_number @adjustment_hash["FHA/PropertyType/State"],r,cc
                     @adjustment_hash["FHA/PropertyType/State"][true] = {}
                     @adjustment_hash["FHA/PropertyType/State"][true]["2 Unit"] = {}
                     @adjustment_hash["FHA/PropertyType/State"][true]["2 Unit"]["NJ"] = {}
@@ -1128,6 +1215,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   end
                   if r == 137 && cc == 13
                     @adjustment_hash["FHA/LoanAmount"] = {}
+                    get_cell_number @adjustment_hash["FHA/LoanAmount"],r,cc
                     @adjustment_hash["FHA/LoanAmount"][true] = {}
                     @adjustment_hash["FHA/LoanAmount"][true]["0-150000"] = {}
                     @adjustment_hash["FHA/LoanAmount"][true]["0-150000"] = value
@@ -1248,6 +1336,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 end
                 if r >= 105 && r <= 112 && cc == 7
                   secondary_key = get_value value
+                  if r == 105
+                    get_cell_number @price_adjustment[primary_key],r,cc
+                  end
                   @price_adjustment[primary_key][secondary_key] = {}
                 end
                 if r >= 105 && r <= 112 && cc > 7 && cc <= 112
@@ -1263,6 +1354,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 # Multi Family 2- 4 Unit LTV/FICO Adjusters
                 if r >= 115 && r <= 122 && cc == 6
                   ltv_key = get_value value
+                  if r == 115
+                    get_cell_number @family_adjustment["PropertyType/FICO/LTV"],r,cc
+                  end
                   @family_adjustment["PropertyType/FICO/LTV"]["2-4 Unit"][ltv_key] = {}
                 end
                 if r >= 115 && r <= 122 && cc > 6 && cc <= 10
@@ -1297,6 +1391,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   else
                     ltv_key = get_value value
                   end
+                  if r == 124
+                    get_cell_number @high_adjustment["LoanSize/LoanType/LTV"],r,cc
+                  end
                   @high_adjustment["LoanSize/LoanType/LTV"]["High-Balance"]["ARM"][ltv_key] = {}
                   cc = cc + 4
                   new_val = sheet_data.cell(r,cc)
@@ -1304,6 +1401,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 end
                 if r == 127 && cc == 9
                   ltv_key = "Rate and Term"
+                  get_cell_number @high_adjustment["LoanType/RefinanceOption"],r,cc
                   @high_adjustment["LoanType/RefinanceOption"]["Fixed"][ltv_key] = {}
                   @high_adjustment["LoanType/RefinanceOption"]["ARM"][ltv_key] = {}
                   cc = cc + 4
@@ -1435,6 +1533,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 118 && r <= 122 && cc == 5
                 cltv_key = get_value value
+                if r == 118
+                  get_cell_number @secondary_hash[primary_key],r,cc
+                end
                 @secondary_hash[primary_key][ltv_key][cltv_key] = {}
               end
               if r >= 118 && r <= 122 && cc > 5 && cc <= 7
@@ -1446,6 +1547,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Other Adjustments
               if r == 108 && cc == 15
                 @other_adjustment["PropertyType"] = {}
+                get_cell_number @other_adjustment["PropertyType"],r,cc
                 @other_adjustment["PropertyType"]["2-4 Unit"] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -1453,6 +1555,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 109 && cc == 15
                 @other_adjustment["PropertyType/Term/LTV"] = {}
+                get_cell_number @other_adjustment["PropertyType/Term/LTV"],r,cc
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -1462,6 +1565,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 110 && cc == 15
                 @other_adjustment["LoanSize/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanSize/RefinanceOption"],r,cc
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"]["Cash Out"] = {}
                 cc = cc + 1
@@ -1476,6 +1580,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 130 && cc == 14
                 @other_adjustment["MiscAdjuster"] = {}
+                get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                 @other_adjustment["MiscAdjuster"]["Escrow Waiver Fee"] = {}
                 cc = cc + 4
                 new_value = sheet_data.cell(r,cc)
@@ -1483,6 +1588,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 131 && cc == 14
                 @other_adjustment["LoanAmount"] = {}
+                get_cell_number @other_adjustment["LoanAmount"],r,cc
                 cc = cc + 4
                 new_value = sheet_data.cell(r,cc)
                 @other_adjustment["LoanAmount"]["0-150000"] = new_value
@@ -1503,6 +1609,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 118 && r <= 122 && cc == 4
                 ltv_key = get_value value
+                if r == 118
+                  get_cell_number @secondary_hash[primary_key],r,cc
+                end
                 @secondary_hash[primary_key][ltv_key] = {}
               end
               if r >= 118 && r <= 122 && cc == 5
@@ -1518,6 +1627,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Other Adjustments
               if r == 108 && cc == 15
                 @other_adjustment["PropertyType"] = {}
+                get_cell_number @other_adjustment["PropertyType"],r,cc
                 @other_adjustment["PropertyType"]["2-4 Unit"] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -1525,6 +1635,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 109 && cc == 15
                 @other_adjustment["PropertyType/Term/LTV"] = {}
+                get_cell_number @other_adjustment["PropertyType/Term/LTV"],r,cc
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -1534,6 +1645,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 110 && cc == 15
                 @other_adjustment["LoanSize/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanSize/RefinanceOption"],r,cc
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"]["Cash Out"] = {}
                 cc = cc + 1
@@ -1548,6 +1660,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 130 && cc == 14
                 @other_adjustment["MiscAdjuster"] = {}
+                get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                 @other_adjustment["MiscAdjuster"]["Escrow Waiver Fee"] = {}
                 cc = cc + 4
                 new_value = sheet_data.cell(r,cc)
@@ -1555,6 +1668,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 131 && cc == 14
                 @other_adjustment["LoanAmount"] = {}
+                get_cell_number @other_adjustment["LoanAmount"],r,cc
                 cc = cc + 4
                 new_value = sheet_data.cell(r,cc)
                 @other_adjustment["LoanAmount"]["0-150000"] = new_value
@@ -1667,6 +1781,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Cash Out Refinance
               if r >= 154 && r <= 160 && cc == 4
                 primary_key = get_value value
+                if r == 154
+                  get_cell_number @cashout_hash["RefinanceOption/FICO/LTV"],r,cc
+                end
                 @cashout_hash["RefinanceOption/FICO/LTV"]["Cash Out"][primary_key] = {}
               end
               if r >= 154 && r <= 160 && cc >= 5 && cc <= 8
@@ -1680,6 +1797,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   primary_key = "0-"+value.tr('a-z% ','')
                 else
                   primary_key = value.sub('to','-').tr('% ','')
+                end
+                if r == 167
+                  get_cell_number @lpmi_hash["LPMI/LoanType/RefinanceOption/Term/LTV/FICO"],r,cc
                 end
                 @lpmi_hash["LPMI/LoanType/RefinanceOption/Term/LTV/FICO"]["true"]["Fixed"]["Rate and Term"]["20-Inf"][primary_key] = {}
               end
@@ -1703,6 +1823,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 178 && cc == 2
                 @lpmi_hash["LPMI/LoanType/PropertyType/RefinanceOption/Term/FICO"] = {}
+                get_cell_number @lpmi_hash["LPMI/LoanType/PropertyType/RefinanceOption/Term/FICO"],r,cc
                 @lpmi_hash["LPMI/LoanType/PropertyType/RefinanceOption/Term/FICO"]["true"] = {}
                 @lpmi_hash["LPMI/LoanType/PropertyType/RefinanceOption/Term/FICO"]["true"]["Fixed"] = {}
                 @lpmi_hash["LPMI/LoanType/PropertyType/RefinanceOption/Term/FICO"]["true"]["Fixed"]["2nd Home"] = {}
@@ -1717,6 +1838,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Other Adjustments
               if r == 141 && cc == 14
                 @other_adjustment["PropertyType/LTV"] = {}
+                get_cell_number @other_adjustment["PropertyType/LTV"],r,cc
                 @other_adjustment["PropertyType/LTV"]["Investment Property"] = {}
                 @other_adjustment["PropertyType/LTV"]["Investment Property"]["0-75"] = {}
                 cc = cc + 1
@@ -1740,6 +1862,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 144 && cc == 14
                 @other_adjustment["PropertyType"] = {}
+                get_cell_number @other_adjustment["PropertyType"],r,cc
                 @other_adjustment["PropertyType"]["2-4 Unit"] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -1747,6 +1870,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 145 && cc == 14
                 @other_adjustment["PropertyType/LTV/Term"] = {}
+                get_cell_number @other_adjustment["PropertyType/LTV/Term"],r,cc
                 @other_adjustment["PropertyType/LTV/Term"]["Condo"] = {}
                 @other_adjustment["PropertyType/LTV/Term"]["Condo"]["75-Inf"] = {}
                 @other_adjustment["PropertyType/LTV/Term"]["Condo"]["75-Inf"]["15-Inf"] = {}
@@ -1756,6 +1880,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 146 && cc == 14
                 @other_adjustment["LoanSize/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanSize/RefinanceOption"],r,cc
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"]["Cash Out"] = {}
                 cc = cc + 1
@@ -1764,6 +1889,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 147 && cc == 14
                 @other_adjustment["LoanSize/LoanType/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanSize/LoanType/RefinanceOption"],r,cc
                 @other_adjustment["LoanSize/LoanType/RefinanceOption"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/LoanType/RefinanceOption"]["High-Balance"]["ARM"] = {}
                 @other_adjustment["LoanSize/LoanType/RefinanceOption"]["High-Balance"]["ARM"]["Rate and Term"] = {}
@@ -1773,6 +1899,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 166 && cc == 13
                 @other_adjustment["MiscAdjuster"] = {}
+                get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                 @other_adjustment["MiscAdjuster"]["Escrow Waiver Fee"] = {}
                 cc = cc + 4
                 new_value = sheet_data.cell(r,cc)
@@ -1780,6 +1907,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 167 && cc == 13
                 @other_adjustment["LoanAmount"] = {}
+                get_cell_number @other_adjustment["LoanAmount"],r,cc
                 @other_adjustment["LoanAmount"]["150000-Inf"] = {}
                 cc = cc + 4
                 new_value = sheet_data.cell(r,cc)
@@ -1801,6 +1929,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 primary_key = "FICO"
                 secondary_key =  "0-680"
                 if @other_adjustment[primary_key] = {}
+                  get_cell_number @other_adjustment[primary_key],r,cc
                   cc = cc + 4
                   new_value = sheet_data.cell(r,cc)
                   @other_adjustment[primary_key][secondary_key] = new_value
@@ -1808,6 +1937,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 171 && cc == 13
                 @other_adjustment["LoanAmount/State"] = {}
+                get_cell_number @other_adjustment["LoanAmount/State"],r,cc
                 @other_adjustment["LoanAmount/State"]["275000-Inf"] = {}
                 @other_adjustment["LoanAmount/State"]["275000-Inf"]["CA"] = {}
                 cc = cc + 4
@@ -1827,6 +1957,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 154 && r <= 158 && cc == 12
                 ltv_key = get_value value
+                if r == 154
+                  get_cell_number @secondary_hash["LTV/CLTV/FICO"],r,cc
+                end
                 @secondary_hash["LTV/CLTV/FICO"][ltv_key] = {}
               end
               if r >= 154 && r <= 158 && cc == 13
@@ -1838,12 +1971,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 ltv_data = ltv_data.tr('() ','')
                 @secondary_hash["LTV/CLTV/FICO"][ltv_key][cltv_key][ltv_data] = {}
                 @secondary_hash["LTV/CLTV/FICO"][ltv_key][cltv_key][ltv_data] = value
-                if r >= 154 && r <= 158 && cc > 13 && cc <= 15
-                  ltv_data = get_value @ltv_data[cc-1]
-                  ltv_data = ltv_data.tr('() ','')
-                  @secondary_hash["LTV/CLTV/FICO"][ltv_key][cltv_key][ltv_data] = {}
-                  @secondary_hash["LTV/CLTV/FICO"][ltv_key][cltv_key][ltv_data] = value
-                end
               end
             rescue Exception => e
               error_log = ErrorLog.new(details: e.backtrace_locations[0], row: r, column: cc, loan_category: sheet, error_detail: e.message)
@@ -1966,6 +2093,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Cash Out Refinance
               if r >= 154 && r <= 160 && cc == 4
                 primary_key = get_value value
+                if r == 154
+                  get_cell_number @cashout_hash["RefinanceOption/FICO/LTV"],r,cc
+                end
                 @cashout_hash["RefinanceOption/FICO/LTV"]["Cash Out"][primary_key] = {}
               end
               if r >= 154 && r <= 160 && cc >= 5 && cc <= 8
@@ -1979,6 +2109,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                   primary_key = "0-"+value.tr('a-z% ','')
                 else
                   primary_key = value.sub('to','-').tr('% ','')
+                end
+                if r == 173
+                  get_cell_number @lpmi_hash["LPMI/LoanType/RefinanceOption/Term/LTV/FICO"],r,cc
                 end
                 @lpmi_hash["LPMI/LoanType/RefinanceOption/Term/LTV/FICO"]["true"]["Fixed"]["Rate and Term"]["20-Inf"][primary_key] = {}
               end
@@ -2002,6 +2135,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 184 && cc == 2
                 @lpmi_hash["LPMI/LoanType/PropertyType/RefinanceOption/Term/FICO"] = {}
+                get_cell_number @lpmi_hash["LPMI/LoanType/PropertyType/RefinanceOption/Term/FICO"],r,cc
                 @lpmi_hash["LPMI/LoanType/PropertyType/RefinanceOption/Term/FICO"]["true"] = {}
                 @lpmi_hash["LPMI/LoanType/PropertyType/RefinanceOption/Term/FICO"]["true"]["Fixed"] = {}
                 @lpmi_hash["LPMI/LoanType/PropertyType/RefinanceOption/Term/FICO"]["true"]["Fixed"]["2nd Home"] = {}
@@ -2016,6 +2150,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Other Adjustments
               if r == 141 && cc == 14
                 @other_adjustment["PropertyType/LTV"] = {}
+                get_cell_number @other_adjustment["PropertyType/LTV"],r,cc
                 @other_adjustment["PropertyType/LTV"]["Investment Property"] = {}
                 @other_adjustment["PropertyType/LTV"]["Investment Property"]["0-75"] = {}
                 cc = cc + 1
@@ -2043,6 +2178,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 145 && cc == 14
                 @other_adjustment["PropertyType/LTV/Term"] = {}
+                get_cell_number @other_adjustment["PropertyType/LTV/Term"],r,cc
                 @other_adjustment["PropertyType/LTV/Term"]["Condo"] = {}
                 @other_adjustment["PropertyType/LTV/Term"]["Condo"]["75-Inf"] = {}
                 @other_adjustment["PropertyType/LTV/Term"]["Condo"]["75-Inf"]["15-Inf"] = {}
@@ -2052,6 +2188,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 146 && cc == 14
                 @other_adjustment["LoanSize/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanSize/RefinanceOption"],r,cc
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"]["Cash Out"] = {}
                 cc = cc + 1
@@ -2066,6 +2203,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 166 && cc == 14
                 @other_adjustment["MiscAdjuster"] = {}
+                get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                 @other_adjustment["MiscAdjuster"]["Escrow Waiver Fee"] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -2073,6 +2211,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 167 && cc == 14
                 @other_adjustment["LoanAmount"] = {}
+                get_cell_number @other_adjustment["LoanAmount"],r,cc
                 @other_adjustment["LoanAmount"]["0-150000"] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -2094,6 +2233,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 primary_key = "FICO"
                 secondary_key =  "640-679"
                 if @other_adjustment[primary_key] = {}
+                  get_cell_number @other_adjustment[primary_key],r,cc
                   cc = cc + 1
                   new_value = sheet_data.cell(r,cc)
                   @other_adjustment[primary_key][secondary_key] = new_value
@@ -2105,6 +2245,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 154 && r <= 158 && cc == 12
                 ltv_key = get_value value
+                get_cell_number @secondary_hash["LTV/CLTV/FICO"],r,cc
                 @secondary_hash["LTV/CLTV/FICO"][ltv_key] = {}
               end
               if r >= 154 && r <= 158 && cc == 13
@@ -2122,6 +2263,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 end
                 if r >= 154 && r <= 158 && cc == 12
                   ltv_key = get_value value
+                  if r == 154
+                    get_cell_number @secondary_hash["LTV/CLTV/FICO"],r,cc
+                  end
                   @secondary_hash["LTV/CLTV/FICO"][ltv_key] = {}
                 end
                 if r >= 154 && r <= 158 && cc == 13
@@ -2249,6 +2393,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Cash Out Refinance
               if r >= 155 && r <= 161 && cc == 4
                 primary_key = get_value value
+                if r == 155
+                  get_cell_number @cashout_hash["RefinanceOption/FICO/LTV"],r,cc
+                end
                 @cashout_hash["RefinanceOption/FICO/LTV"]["Cash Out"][primary_key] = {}
               end
               if r >= 155 && r <= 161 && cc >= 5 && cc <= 8
@@ -2259,6 +2406,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Other Adjustments
               if r == 141 && cc == 14
                 @other_adjustment["PropertyType/LTV"] = {}
+                get_cell_number @other_adjustment["PropertyType/LTV"],r,cc
                 @other_adjustment["PropertyType/LTV"]["Investment Property"] = {}
                 @other_adjustment["PropertyType/LTV"]["Investment Property"]["0-75"] = {}
                 cc = cc + 1
@@ -2279,6 +2427,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 144 && cc == 14
                 @other_adjustment["PropertyType"] = {}
+                get_cell_number @other_adjustment["PropertyType"],r,cc
                 @other_adjustment["PropertyType"]["2-4 Unit"] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -2286,6 +2435,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 145 && cc == 14
                 @other_adjustment["PropertyType/Term/LTV"] = {}
+                get_cell_number @other_adjustment["PropertyType/Term/LTV"],r,cc
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -2295,6 +2445,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 146 && cc == 14
                 @other_adjustment["LoanSize/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanSize/RefinanceOption"],r,cc
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"]["Cash Out"] = {}
                 cc = cc + 1
@@ -2303,6 +2454,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 147 && cc == 14
                 @other_adjustment["LoanSize/LoanType/LTV"] = {}
+                get_cell_number @other_adjustment["LoanSize/LoanType/LTV"],r,cc
                 @other_adjustment["LoanSize/LoanType/LTV"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/LoanType/LTV"]["High-Balance"]["ARM"] = {}
                 @other_adjustment["LoanSize/LoanType/LTV"]["High-Balance"]["ARM"]["0-75"] = {}
@@ -2324,6 +2476,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 150 && cc == 14
                 @other_adjustment["LoanSize/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanSize/RefinanceOption"],r,cc
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"]["Rate and Term"] = {}
                 cc = cc + 1
@@ -2332,6 +2485,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 165 && cc == 12
                 @other_adjustment["MiscAdjuster"] = {}
+                get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                 @other_adjustment["MiscAdjuster"]["Escrow Waiver Fee"] = {}
                 cc = cc + 4
                 new_value = sheet_data.cell(r,cc)
@@ -2339,6 +2493,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 166 && cc == 12
                 @other_adjustment["LoanAmount"] = {}
+                get_cell_number @other_adjustment["LoanAmount"],r,cc
                 @other_adjustment["LoanAmount"]["0-150000"] = {}
                 cc = cc + 4
                 new_value = sheet_data.cell(r,cc)
@@ -2360,6 +2515,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 primary_key = "FICO"
                 secondary_key =  "0-680"
                 if @other_adjustment[primary_key] = {}
+                  get_cell_number @other_adjustment[primary_key],r,cc
                   cc = cc + 4
                   new_value = sheet_data.cell(r,cc)
                   @other_adjustment[primary_key][secondary_key] = new_value
@@ -2367,6 +2523,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 170 && cc == 12
                 @other_adjustment["LoanAmount/State"] = {}
+                get_cell_number @other_adjustment["LoanAmount/State"],r,cc
                 @other_adjustment["LoanAmount/State"]["275000-Inf"] = {}
                 @other_adjustment["LoanAmount/State"]["275000-Inf"]["CA"] = {}
                 cc = cc + 4
@@ -2386,6 +2543,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 155 && r <= 159 && cc == 12
                 ltv_key = get_value value
+                if r == 155
+                  get_cell_number @secondary_hash["LTV/CLTV/FICO"],r,cc
+                end
                 @secondary_hash["LTV/CLTV/FICO"][ltv_key] = {}
               end
               if r >= 155 && r <= 159 && cc == 13
@@ -2532,6 +2692,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Cash Out Refinance
               if r >= 155 && r <= 158 && cc == 4
                 primary_key = get_value value
+                if r == 155
+                  get_cell_number @cashout_hash["RefinanceOption/FICO/LTV"],r,cc
+                end
                 @cashout_hash["RefinanceOption/FICO/LTV"]["Cash Out"][primary_key] = {}
               end
               if r >= 155 && r <= 158 && cc >= 5 && cc <= 8
@@ -2542,6 +2705,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # OLYMPIC FIXED 2ND MORTGAGE
               if r == 168 && cc == 4
                 @property_hash["LoanType/RefinanceOption/LoanAmount"] = {}
+                get_cell_number @property_hash["LoanType/RefinanceOption/LoanAmount"],r,cc
                 @property_hash["LoanType/RefinanceOption/LoanAmount"]["Fixed"] = {}
                 @property_hash["LoanType/RefinanceOption/LoanAmount"]["Fixed"]["Cash Out"] = {}
                 @property_hash["LoanType/RefinanceOption/LoanAmount"]["Fixed"]["Cash Out"]["100000-Inf"] = {}
@@ -2551,6 +2715,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 169 && cc == 4
                 @property_hash["LoanType/PropertyType"] = {}
+                get_cell_number @property_hash["LoanType/PropertyType"],r,cc
                 @property_hash["LoanType/PropertyType"]["Fixed"] = {}
                 @property_hash["LoanType/PropertyType"]["Fixed"]["2nd Home"] = {}
                 cc = cc + 2
@@ -2559,6 +2724,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 170 && r <= 173 && cc == 4
                 primary_key = value.tr('A-Z% ','')
+                if r == 170
+                  get_cell_number @property_hash["LoanType/CLTV"],r,cc
+                end
                 @property_hash["LoanType/CLTV"]["Fixed"][primary_key] = {}
                 cc = cc + 2
                 new_val = sheet_data.cell(r,cc)
@@ -2566,6 +2734,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 174 && cc == 4
                 @property_hash["LoanType/Term"] = {}
+                get_cell_number @property_hash["LoanType/Term"],r,cc
                 @property_hash["LoanType/Term"]["Fixed"] = {}
                 @property_hash["LoanType/Term"]["Fixed"]["15"] = {}
                 cc = cc + 2
@@ -2575,6 +2744,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Other Adjustments
               if r == 146 && cc == 14
                 @other_adjustment["PropertyType/Term/LTV"] = {}
+                get_cell_number @other_adjustment["PropertyType/Term/LTV"],r,cc
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -2584,6 +2754,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 147 && cc == 14
                 @other_adjustment["LoanSize/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanSize/RefinanceOption"],r,cc
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"]["Cash Out"] = {}
                 cc = cc + 1
@@ -2603,6 +2774,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
 
               if r >= 155 && r <= 158 && cc == 12
                 ltv_key = get_value value
+                if r == 155
+                  get_cell_number @secondary_hash["LTV/CLTV/FICO"],r,cc
+                end
                 @secondary_hash["LTV/CLTV/FICO"][ltv_key] = {}
               end
               if r >= 155 && r <= 158 && cc == 13
@@ -2618,6 +2792,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Other Adjustments
               if r == 168 && cc == 12
                 @other_adjustment["MiscAdjuster"] = {}
+                get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                 @other_adjustment["MiscAdjuster"]["Escrow Waiver Fee"] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -2625,6 +2800,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 169 && cc == 12
                 @other_adjustment["LoanAmount"] = {}
+                get_cell_number @other_adjustment["LoanAmount"],r,cc
                 @other_adjustment["LoanAmount"]["0-150000"] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -2646,6 +2822,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 # Other Adjustments
                 if r == 168 && cc == 12
                   @other_adjustment["MiscAdjuster"] = {}
+                  get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                   @other_adjustment["MiscAdjuster"]["Escrow Waiver Fee"] = {}
                   cc = cc + 1
                   new_value = sheet_data.cell(r,cc)
@@ -2653,6 +2830,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 end
                 if r == 169 && cc == 12
                   @other_adjustment["LoanAmount"] = {}
+                  get_cell_number @other_adjustment["LoanAmount"],r,cc
                   @other_adjustment["LoanAmount"]["0-150000"] = {}
                   cc = cc + 1
                   new_value = sheet_data.cell(r,cc)
@@ -2765,6 +2943,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Cash Out Refinance
               if r >= 154 && r <= 157 && cc == 4
                 primary_key = get_value value
+                if r == 154
+                  get_cell_number @cashout_hash["RefinanceOption/FICO/LTV"],r,cc
+                end
                 @cashout_hash["RefinanceOption/FICO/LTV"]["Cash Out"][primary_key] = {}
               end
               if r >= 154 && r <= 157 && cc >= 5 && cc <= 8
@@ -2775,6 +2956,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # OLYMPIC FIXED 2ND MORTGAGE
               if r == 166 && cc == 4
                 @property_hash["LoanType/RefinanceOption/LoanAmount"] = {}
+                get_cell_number @property_hash["LoanType/RefinanceOption/LoanAmount"],r,cc
                 @property_hash["LoanType/RefinanceOption/LoanAmount"]["Fixed"] = {}
                 @property_hash["LoanType/RefinanceOption/LoanAmount"]["Fixed"]["Cash Out"] = {}
                 @property_hash["LoanType/RefinanceOption/LoanAmount"]["Fixed"]["Cash Out"]["100000-Inf"] = {}
@@ -2784,6 +2966,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 167 && cc == 4
                 @property_hash["LoanType/PropertyType"] = {}
+                get_cell_number @property_hash["LoanType/PropertyType"],r,cc
                 @property_hash["LoanType/PropertyType"]["Fixed"] = {}
                 @property_hash["LoanType/PropertyType"]["Fixed"]["2nd Home"] = {}
                 cc = cc + 2
@@ -2792,6 +2975,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 168 && r <= 171 && cc == 4
                 primary_key = value.tr('A-Z% ','')
+                if r == 168
+                  get_cell_number @property_hash["LoanType/CLTV"],r,cc
+                end
                 @property_hash["LoanType/CLTV"]["Fixed"][primary_key] = {}
                 cc = cc + 2
                 new_val = sheet_data.cell(r,cc)
@@ -2799,6 +2985,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 172 && cc == 4
                 @property_hash["LoanType/Term"] = {}
+                get_cell_number @property_hash["LoanType/Term"],r,cc
                 @property_hash["LoanType/Term"]["Fixed"] = {}
                 @property_hash["LoanType/Term"]["Fixed"]["15"] = {}
                 cc = cc + 2
@@ -2808,6 +2995,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
                # Other Adjustments
               if r == 145 && cc == 14
                 @other_adjustment["PropertyType/Term/LTV"] = {}
+                get_cell_number @other_adjustment["PropertyType/Term/LTV"],r,cc
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -2817,6 +3005,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 146 && cc == 14
                 @other_adjustment["LoanSize/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanSize/RefinanceOption"],r,cc
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"]["Cash Out"] = {}
                 cc = cc + 1
@@ -2832,6 +3021,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Other Adjustments
               if r == 166 && cc == 12
                 @other_adjustment["MiscAdjuster"] = {}
+                get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                 @other_adjustment["MiscAdjuster"]["Escrow Waiver Fee"] = {}
                 cc = cc + 1
                 new_val = sheet_data.cell(r,cc)
@@ -2839,6 +3029,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 167 && cc == 12
                 @other_adjustment["LoanAmount"] = {}
+                get_cell_number @other_adjustment["LoanAmount"],r,cc
                 @other_adjustment["LoanAmount"]["0-100000"] = {}
                 cc = cc + 1
                 new_val = sheet_data.cell(r,cc)
@@ -2850,6 +3041,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 154 && r <= 157 && cc == 12
                 ltv_key = get_value value
+                if r == 154
+                  get_cell_number @secondary_hash["LTV/CLTV/FICO"],r,cc
+                end
                 @secondary_hash["LTV/CLTV/FICO"][ltv_key] = {}
               end
               if r >= 154 && r <= 157 && cc == 13
@@ -2908,10 +3102,6 @@ class ObNewfiWholesale7019Controller < ApplicationController
                     @program.update_fields p_name
                     @programs_ids << @program.id
                   end
-
-                  
-                  @block_hash = {}
-                  key = ''
                 rescue Exception => e
                   error_log = ErrorLog.new(details: e.backtrace_locations[0], row: rr, column: cc, loan_category: sheet, error_detail: e.message)
                   error_log.save
@@ -2981,6 +3171,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Cash Out Refinance
               if r >= 157 && r <= 160 && cc == 4
                 primary_key = get_value value
+                if r == 157
+                  get_cell_number @cashout_hash["RefinanceOption/FICO/LTV"],r,cc
+                end
                 @cashout_hash["RefinanceOption/FICO/LTV"]["Cash Out"][primary_key] = {}
               end
               if r >= 157 && r <= 160 && cc >= 5 && cc <= 8
@@ -2991,6 +3184,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # OLYMPIC FIXED 2ND MORTGAGE
               if r == 169 && cc == 4
                 @property_hash["LoanType/RefinanceOption/LoanAmount"] = {}
+                get_cell_number @property_hash["LoanType/RefinanceOption/LoanAmount"],r,cc
                 @property_hash["LoanType/RefinanceOption/LoanAmount"]["Fixed"] = {}
                 @property_hash["LoanType/RefinanceOption/LoanAmount"]["Fixed"]["Cash Out"] = {}
                 @property_hash["LoanType/RefinanceOption/LoanAmount"]["Fixed"]["Cash Out"]["100000-Inf"] = {}
@@ -3000,6 +3194,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 170 && cc == 4
                 @property_hash["LoanType/PropertyType"] = {}
+                get_cell_number @property_hash["LoanType/PropertyType"],r,cc
                 @property_hash["LoanType/PropertyType"]["Fixed"] = {}
                 @property_hash["LoanType/PropertyType"]["Fixed"]["2nd Home"] = {}
                 cc = cc + 2
@@ -3008,6 +3203,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 171 && r <= 174 && cc == 4
                 primary_key = value.tr('A-Z% ','')
+                if r == 171
+                  get_cell_number @property_hash["LoanType/CLTV"],r,cc
+                end
                 @property_hash["LoanType/CLTV"]["Fixed"][primary_key] = {}
                 cc = cc + 2
                 new_val = sheet_data.cell(r,cc)
@@ -3015,6 +3213,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 175 && cc == 4
                 @property_hash["LoanType/Term"] = {}
+                get_cell_number @property_hash["LoanType/Term"],r,cc
                 @property_hash["LoanType/Term"]["Fixed"] = {}
                 @property_hash["LoanType/Term"]["Fixed"]["15"] = {}
                 cc = cc + 2
@@ -3024,6 +3223,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               # Other Adjustments
               if r == 146 && cc == 14
                 @other_adjustment["PropertyType/Term/LTV"] = {}
+                get_cell_number @other_adjustment["PropertyType/Term/LTV"],r,cc
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                 @other_adjustment["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -3033,6 +3233,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 147 && cc == 14
                 @other_adjustment["LoanSize/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanSize/RefinanceOption"],r,cc
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"] = {}
                 @other_adjustment["LoanSize/RefinanceOption"]["High-Balance"]["Cash Out"] = {}
                 cc = cc + 1
@@ -3045,6 +3246,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
                 else
                   ltv_key = value.tr('A-Za-z%/ ','')
                 end
+                if r == 148
+                  get_cell_number @other_adjustment["LoanType/LoanSize/LTV"],r,cc
+                end
                 @other_adjustment["LoanType/LoanSize/LTV"]["ARM"]["High-Balance"][ltv_key] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -3052,6 +3256,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 151 && cc == 14
                 @other_adjustment["LoanType/LoanSize/RefinanceOption"] = {}
+                get_cell_number @other_adjustment["LoanType/LoanSize/RefinanceOption"],r,cc
                 @other_adjustment["LoanType/LoanSize/RefinanceOption"]["ARM"] = {}
                 @other_adjustment["LoanType/LoanSize/RefinanceOption"]["ARM"]["High-Balance"] = {}
                 @other_adjustment["LoanType/LoanSize/RefinanceOption"]["ARM"]["High-Balance"]["Rate and Term"] = {}
@@ -3061,6 +3266,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 170 && cc == 12
                 @other_adjustment["MiscAdjuster"] = {}
+                get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                 @other_adjustment["MiscAdjuster"]["Escrow Waiver Fee"] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -3068,6 +3274,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r == 171 && cc == 12
                 @other_adjustment["LoanAmount"] = {}
+                get_cell_number @other_adjustment["LoanAmount"],r,cc
                 @other_adjustment["LoanAmount"]["0-150000"] = {}
                 cc = cc + 1
                 new_value = sheet_data.cell(r,cc)
@@ -3079,6 +3286,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= 157 && r <= 160 && cc == 12
                 ltv_key = get_value value
+                get_cell_number @secondary_hash["LTV/CLTV/FICO"],r,cc
                 @secondary_hash["LTV/CLTV/FICO"][ltv_key] = {}
               end
               if r >= 157 && r <= 160 && cc == 13
@@ -3203,6 +3411,9 @@ class ObNewfiWholesale7019Controller < ApplicationController
               end
               if r >= first_row && r <= end_row && cc == first_column
                 ltv_key = get_value value
+                if r == first_row
+                  get_cell_number @adjustment_hash["Term/FICO/LTV"],r,cc
+                end
                 @adjustment_hash["Term/FICO/LTV"]["15-Inf"][ltv_key] = {}
               end
               if r >= first_row && r <= end_row && cc > first_column && cc <= last_column
