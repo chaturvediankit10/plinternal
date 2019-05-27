@@ -3300,7 +3300,7 @@ class ObCmgWholesalesController < ApplicationController
                 # 
                 @block_hash = {}
                 key = ''
-                (1..50).each do |max_row|
+                (1..13).each do |max_row|
                   @data = []
                   (0..3).each_with_index do |index, c_i|
                     rrr = rr + max_row -1
