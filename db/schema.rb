@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_17_131350) do
+ActiveRecord::Schema.define(version: 2019_05_29_100943) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
-  enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
   enable_extension "plpgsql"
 
@@ -43,11 +42,8 @@ ActiveRecord::Schema.define(version: 2019_05_17_131350) do
     t.json "data"
     t.string "program_title"
     t.string "loan_category"
-    t.integer "program_ids", default: [], array: true
-    t.integer "program_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "cell_number"
   end
 
   create_table "admin_users", force: :cascade do |t|
@@ -1646,13 +1642,6 @@ ActiveRecord::Schema.define(version: 2019_05_17_131350) do
     t.index ["updated_at"], name: "index_news_search_histories_on_updated_at"
   end
 
-  create_table "program_adjustments", force: :cascade do |t|
-    t.integer "program_id"
-    t.integer "adjustment_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "programs", force: :cascade do |t|
     t.integer "bank_id"
     t.integer "term"
@@ -1666,7 +1655,7 @@ ActiveRecord::Schema.define(version: 2019_05_17_131350) do
     t.boolean "usda", default: false
     t.boolean "streamline", default: false
     t.boolean "full_doc", default: false
-    t.text "adjustment_ids"
+    t.text "adjustments"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "loan_category"
@@ -1691,6 +1680,7 @@ ActiveRecord::Schema.define(version: 2019_05_17_131350) do
     t.string "arm_benchmark"
     t.float "arm_margin"
     t.string "arm_caps"
+    t.string "adjustment_ids"
   end
 
   create_table "sheets", force: :cascade do |t|
