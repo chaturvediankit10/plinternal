@@ -3,6 +3,7 @@ class ObAccMortgage9933Controller < ApplicationController
   before_action :get_program, only: [:single_program]
   before_action :read_sheet, only: [:index,:rates]
 
+
   def index
     begin
       @xlsx.sheets.each do |sheet|
