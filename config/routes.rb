@@ -1,5 +1,6 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
+  root 'dashboard#index'
   # get 'error_logs/index'
   # get 'ob_american_financial_resources_wholesale5513/index'
   # root :to => "dashboard#index"
