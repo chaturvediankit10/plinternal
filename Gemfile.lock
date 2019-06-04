@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/PureLoan/APIRead.git
-  revision: 7deff85314ddb5d5ab7ba546e69d17cd81f68d18
+  revision: 7ff8a2800762ec3ac81f43e408b6c8156e04758e
   specs:
     search_api (0.1.0)
       activesupport
@@ -184,6 +184,8 @@ GEM
     public_suffix (3.1.0)
     puma (3.12.1)
     rack (2.0.7)
+    rack-mini-profiler (1.0.2)
+      rack (>= 1.2.0)
     rack-protection (2.0.5)
       rack
     rack-test (1.1.0)
@@ -342,6 +344,7 @@ DEPENDENCIES
   pry-byebug
   pry-rails
   puma (~> 3.11)
+  rack-mini-profiler
   rails (~> 5.2.2)
   redis-rails
   roo (~> 2.7.0)

@@ -73,3 +73,4 @@ gem "select2-rails"
 gem 'csv'
 gem 'jquery-validation-rails'
 gem "search_api", git: "https://github.com/PureLoan/APIRead.git"
+gem 'rack-mini-profiler', require: false
