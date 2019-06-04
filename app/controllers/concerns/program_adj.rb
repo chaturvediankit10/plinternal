@@ -1,5 +1,6 @@
 module ProgramAdj
   extend ActiveSupport::Concern
+  $arr = ('A'..'ZZZ').to_a
 	def link_adj_with_program(adj_ment, sheet)
 		program_list = Program.where(loan_category: sheet)
 		key_list = adj_ment.data.keys.first.split("/")
@@ -43,8 +44,12 @@ module ProgramAdj
 	end
 
 	def get_cell_number main_key, row, col
-    main_key["cell_number"] = {}
-    main_key["cell_number"] = row,col
+		col = idxtoab col
+    main_key["cell_number"] = row.to_s+""+col.to_s
     return
+  end
+
+  def idxtoab cc
+  	$arr[cc-1]
   end
 end

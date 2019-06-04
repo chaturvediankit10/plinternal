@@ -132,6 +132,9 @@ class ObCmgWholesalesController < ApplicationController
                     end
                     ccc = cc + 6
                     c_val = sheet_data.cell(r,ccc)
+                    if r == 70
+                      get_cell_number @data_hash["FICO"],r,cc
+                    end
                     @data_hash["FICO"][secondary_key] = c_val
                   end
                   # if r == 77 && cc == 1
@@ -148,6 +151,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 78
+                      get_cell_number @data_hash["LoanAmount"],r,cc
+                    end
                     @data_hash["LoanAmount"][secondary_key] = {}
                     ccc = cc + 6
                     c_val = sheet_data.cell(r,ccc)
@@ -159,12 +165,16 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = value
                     end
+                    if r == 83
+                      get_cell_number @data_hash["PropertyType"],r,cc
+                    end
                     @data_hash["PropertyType"][secondary_key] = {}
                     ccc = cc + 6
                     c_val = sheet_data.cell(r,ccc)
                     @data_hash["PropertyType"][secondary_key] = c_val
                   end
                   if r == 86 && cc == 1
+                    get_cell_number @data_hash["LoanSize/Term"],r,cc
                     @data_hash["LoanSize/Term"]["High-Balance"]["15"] = {}
                     @data_hash["LoanSize/Term"]["High-Balance"]["20"] = {}
                     ccc = cc + 6
@@ -174,6 +184,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 87 && cc == 1
                     @data_hash["LoanSize/LoanType"] = {}
+                    get_cell_number @data_hash["LoanSize/LoanType"],r,cc
                     @data_hash["LoanSize/LoanType"]["High-Balance"] = {}
                     @data_hash["LoanSize/LoanType"]["High-Balance"]["ARM"] = {}
                     ccc = cc + 6
@@ -203,10 +214,12 @@ class ObCmgWholesalesController < ApplicationController
                   if r == 70 && cc == 10
                     ccc = cc + 6
                     c_val = sheet_data.cell(r,ccc)
+                    get_cell_number @misc_hash["MiscAdjuster/LockDay"],r,cc
                     @misc_hash["MiscAdjuster/LockDay"]["Miscellaneous"]["60"] = c_val
                   end
                   if r == 71 && cc == 10
                     @misc_hash["MiscAdjuster/FHA/Streamline"] = {}
+                    get_cell_number @misc_hash["MiscAdjuster/FHA/Streamline"],r,cc
                     @misc_hash["MiscAdjuster/FHA/Streamline"]["Miscellaneous"] = {}
                     @misc_hash["MiscAdjuster/FHA/Streamline"]["Miscellaneous"]["true"] = {}
                     @misc_hash["MiscAdjuster/FHA/Streamline"]["Miscellaneous"]["true"]["true"] = {}
@@ -220,6 +233,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 72
+                      get_cell_number @misc_hash["MiscAdjuster/VA/RefinanceOption"],r,cc
+                    end
                     @misc_hash["MiscAdjuster/VA/RefinanceOption"]["Miscellaneous"]["true"][secondary_key] = {}
                     ccc = cc + 6
                     c_val = sheet_data.cell(r,ccc)
@@ -227,6 +243,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 75 && cc == 10
                     @misc_hash["MiscAdjuster/RefinanceOption/VA/FICO"] = {}
+                    get_cell_number @misc_hash["MiscAdjuster/RefinanceOption/VA/FICO"],r,cc
                     @misc_hash["MiscAdjuster/RefinanceOption/VA/FICO"]["Miscellaneous"] = {}
                     @misc_hash["MiscAdjuster/RefinanceOption/VA/FICO"]["Miscellaneous"]["Cash Out"] = {}
                     @misc_hash["MiscAdjuster/RefinanceOption/VA/FICO"]["Miscellaneous"]["Cash Out"]["true"] = {}
@@ -237,6 +254,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 76 && cc == 10
                     @misc_hash["MiscAdjuster/LoanType"] = {}
+                    get_cell_number @misc_hash["MiscAdjuster/LoanType"],r,cc
                     @misc_hash["MiscAdjuster/LoanType"]["Miscellaneous"] = {}
                     @misc_hash["MiscAdjuster/LoanType"]["Miscellaneous"]["Fixed"] = {}
                     ccc = cc + 6
@@ -245,6 +263,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 77 && cc == 10
                     @misc_hash["MiscAdjuster/State"] = {}
+                    get_cell_number @misc_hash["MiscAdjuster/State"],r,cc
                     @misc_hash["MiscAdjuster/State"]["Miscellaneous"] = {}
                     @misc_hash["MiscAdjuster/State"]["Miscellaneous"]["NY"] = {}
                     ccc = cc + 6
@@ -262,6 +281,9 @@ class ObCmgWholesalesController < ApplicationController
                       key_val = f_key
                       ccc = cc + 5
                       k_val = sheet_data.cell(r,ccc)
+                      if r == 80
+                        get_cell_number @state_hash["State"],r,cc
+                      end
                       @state_hash["State"][key_val] = k_val
                     end
                   end
@@ -447,6 +469,7 @@ class ObCmgWholesalesController < ApplicationController
                   secondary_key = "Fixed"
                   primary_key1 = "ARM"
                   secondary_key1 = "Investment Property"
+                  get_cell_number @adjustment_hash[primary_key],r,cc
                   @adjustment_hash[primary_key][secondary_key] = {}
                   @adjustment_hash[primary_key][secondary_key][secondary_key1] = {}
                   @adjustment_hash[primary_key][primary_key1] = {}
@@ -487,6 +510,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 16 && cc == 1
                   @adjustment_hash["LoanType/PropertyType/Term/LTV"] = {}
+                  get_cell_number @adjustment_hash["LoanType/PropertyType/Term/LTV"],r,cc
                   @adjustment_hash["LoanType/PropertyType/Term/LTV"]["Fixed"] = {}
                   @adjustment_hash["LoanType/PropertyType/Term/LTV"]["Fixed"]["Condo"] = {}
                   @adjustment_hash["LoanType/PropertyType/Term/LTV"]["Fixed"]["Condo"]["15-Inf"] = {}
@@ -516,6 +540,9 @@ class ObCmgWholesalesController < ApplicationController
                   elsif value.include?("FICO")
                     cltv_key = value.split("(N/A for 15 Year Term or less)").first.tr('FICO ', '')
                   end
+                  if r == 18
+                    get_cell_number @adjustment_fico[primary_key2],r,cc
+                  end
                   @adjustment_fico[primary_key2][secondary_key][term_key][cltv_key] = {}
                   @adjustment_fico[primary_key2][primary_key1][term_key][cltv_key] = {}
                 end
@@ -533,6 +560,9 @@ class ObCmgWholesalesController < ApplicationController
                     cltv_key = value.split(">").last.tr('= ' , '') + "-Inf"
                   elsif value.include?("FICO")
                     cltv_key = value.split("FICO").last.tr(' ', '')
+                  end
+                  if r == 25
+                    get_cell_number @cashout_adjustment[cash_key],r,cc
                   end
                   @cashout_adjustment[cash_key][secondary_key][cash_key1][cltv_key] = {}
                   @cashout_adjustment[cash_key][primary_key1][cash_key1][cltv_key] = {}
@@ -561,6 +591,7 @@ class ObCmgWholesalesController < ApplicationController
                   primary_key2 = "Purchase"
                   secondary_key = "Rate and Term"
                   @cashout_adjustment[cash_key] = {}
+                  get_cell_number @cashout_adjustment[cash_key],r,cc
                   @cashout_adjustment[cash_key][primary_key1] = {}
                   @cashout_adjustment[cash_key][primary_key1][primary_key2] = {}
                   @cashout_adjustment[cash_key][primary_key1][primary_key2][secondary_key] = {}
@@ -573,9 +604,9 @@ class ObCmgWholesalesController < ApplicationController
 
                 # SUBORDINATE FINANCING
                 if r >= 39 && r <= 43 && cc == 1
-                  # if value.include?("%")
-                  #   secondary_key = value.split('.').first
-                  # end
+                  if r == 39
+                    get_cell_number @subordinate_hash[primary_key],r,cc
+                  end
                   secondary_key = get_value value
                   @subordinate_hash[primary_key][primary_key3][secondary_key] = {}
                 end
@@ -593,6 +624,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 44 && cc == 1
                   @subordinate_hash["FreddieMacProduct"] = {}
+                  get_cell_number @subordinate_hash["FreddieMacProduct"],r,cc
                   @subordinate_hash["FreddieMacProduct"]["Home Possible"] = {}
                 end
                 if r == 44 && cc == 5
@@ -601,6 +633,7 @@ class ObCmgWholesalesController < ApplicationController
 
                 # HOMEREADY ADJUSTMENT CAPS
                 if r == 48 && cc == 1
+                  get_cell_number @adjustment_cap[primary_key],r,cc
                   @adjustment_cap[primary_key]["HomeReady"]["680-Inf"] = {}
                   @adjustment_cap[primary_key]["HomeReady"]["680-Inf"]["80-Inf"] = {}
                 end
@@ -615,6 +648,7 @@ class ObCmgWholesalesController < ApplicationController
                   @adjustment_cap[primary_key]["HomeReady"]["0-679"]["0-79"] = value
                 end
                 if r == 54 && cc == 1
+                  get_cell_number @adjustment_cap[primary_key1],r,cc
                   @adjustment_cap[primary_key1]["Home Possible"]["680-Inf"] = {}
                   @adjustment_cap[primary_key1]["Home Possible"]["680-Inf"]["80-Inf"] = {}
                 end
@@ -623,6 +657,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 55 && cc == 1
                   @adjustment_cap["FreddieMacProduct/FICO/LTV"] = {}
+                  get_cell_number @adjustment_cap["FreddieMacProduct/FICO/LTV"],r,cc
                   @adjustment_cap["FreddieMacProduct/FICO/LTV"]["Home Possible"] = {}
                   @adjustment_cap["FreddieMacProduct/FICO/LTV"]["Home Possible"]["0-679"] = {}
                   @adjustment_cap["FreddieMacProduct/FICO/LTV"]["Home Possible"]["0-679"]["0-79"] = {}
@@ -635,6 +670,10 @@ class ObCmgWholesalesController < ApplicationController
                   primary_key1 = "true"
                   secondary_key = "Fixed"
                   ltv_key = "ARM"
+                  if r == 71
+                    get_cell_number @lpmi_hash[primary_key],r,cc
+                    get_cell_number @lpmi_adj[first_key],r,cc
+                  end
                   @lpmi_hash[primary_key][primary_key1] = {}
                   @lpmi_hash[primary_key][primary_key1][secondary_key] = {}
                   @lpmi_hash[primary_key][primary_key1][ltv_key] = {}
@@ -647,6 +686,9 @@ class ObCmgWholesalesController < ApplicationController
                   primary_key1 = "true"
                   secondary_key = "Fixed"
                   ltv_key = "ARM"
+                  if r == 75
+                    get_cell_number @lpmi_adj[primary_key],r,cc
+                  end
                   @lpmi_adj[primary_key][primary_key1] = {}
                   @lpmi_adj[primary_key][primary_key1][secondary_key] = {}
                   @lpmi_adj[primary_key][primary_key1][ltv_key] = {}
@@ -695,6 +737,9 @@ class ObCmgWholesalesController < ApplicationController
                   secondary_key = "HomeReady"
                   cltv_key = "Home Possible"
                   ltv_key = "Fixed"
+                  if r == 79
+                    get_cell_number @home_ready[cash_key],r,cc
+                  end
                   @home_ready[cash_key][primary_key1] = {}
                   @home_ready[cash_key][primary_key1][secondary_key] = {}
                   @home_ready[cash_key][primary_key1][secondary_key][ltv_key] = {}
@@ -709,6 +754,9 @@ class ObCmgWholesalesController < ApplicationController
                   secondary_key = "HomeReady"
                   cltv_key = "Home Possible"
                   ltv_key = "Fixed"
+                  if r == 83
+                    get_cell_number @home_possible[cash_key],r,cc
+                  end
                   @home_possible[cash_key][primary_key1] = {}
                   @home_possible[cash_key][primary_key1][secondary_key] = {}
                   @home_possible[cash_key][primary_key1][secondary_key][ltv_key] = {}
@@ -761,6 +809,9 @@ class ObCmgWholesalesController < ApplicationController
                   else
                     secondary_key = value
                   end
+                  if r == 88
+                    get_cell_number @property_hash[primary_key],r,cc
+                  end
                   @property_hash[primary_key]["true"][secondary_key] = {}
                 end
                 if r >= 88 && r <= 89 && cc >= 7 && cc <= 14
@@ -773,6 +824,9 @@ class ObCmgWholesalesController < ApplicationController
                     secondary_key = "Investment Property"
                   else
                     secondary_key = value.split('s').first
+                  end
+                  if r == 90
+                    get_cell_number @property_hash[primary_key1],r,cc
                   end
                   @property_hash[primary_key1]["true"][secondary_key] = {}
                 end
@@ -810,6 +864,9 @@ class ObCmgWholesalesController < ApplicationController
                   else
                     secondary_key1 = get_value value
                   end
+                  if r == 38
+                    get_cell_number @loan_adjustment[primary_key1],r,cc
+                  end
                   @loan_adjustment[primary_key1][secondary_key1] = {}
                 end
                 if r >= 38 && r <= 42 && cc == 16
@@ -817,6 +874,9 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 # STATE ADJUSTMENTS
                 if r >= 46 && r <= 52 && cc == 11
+                  if r == 46
+                    get_cell_number @state_adjustments[primary_key1],r,cc
+                  end
                   adj_key = value.split(', ')
                   adj_key.each do |f_key|
                     key = f_key
@@ -828,6 +888,7 @@ class ObCmgWholesalesController < ApplicationController
 
                 if r == 55 && cc == 10
                   @other_adjustment["LockDay"] = {}
+                  get_cell_number @other_adjustment["LockDay"],r,cc
                   @other_adjustment["LockDay"]["60"] = {}
                   cc = cc + 6
                   new_val = sheet_data.cell(r,cc)
@@ -835,6 +896,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 56 && cc == 10
                   @other_adjustment["MiscAdjuster"] = {}
+                  get_cell_number @other_adjustment["MiscAdjuster"],r,cc
                   @other_adjustment["MiscAdjuster"][value] = {}
                   cc = cc + 6
                   new_val = sheet_data.cell(r,cc)
@@ -842,6 +904,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 59 && cc == 10
                   @other_adjustment["FreddieMacProduct/LoanType"] = {}
+                  get_cell_number @other_adjustment["FreddieMacProduct/LoanType"],r,cc
                   @other_adjustment["FreddieMacProduct/LoanType"]["Home Possible"] = {}
                   @other_adjustment["FreddieMacProduct/LoanType"]["Home Possible"]["ARM"] = {}
                   cc = cc + 6
@@ -857,6 +920,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 61 && cc == 10
                   @other_adjustment["State"] = {}
+                  get_cell_number @other_adjustment["State"],r,cc
                   @other_adjustment["State"]["NY"] = {}
                   cc = cc + 6
                   new_val = sheet_data.cell(r,cc)
@@ -986,6 +1050,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       new_key = value
                     end
+                    if r == 58
+                      get_cell_number @adjustment_hash[primary_key],r,cc
+                    end
                     @adjustment_hash[primary_key][new_key] = {}
                   end
                   if r >= 58 && r <= 59 && cc >= 8 && cc <= 16
@@ -996,6 +1063,7 @@ class ObCmgWholesalesController < ApplicationController
                   if r == 60 && cc >= 8 && cc <= 16
                     primary_key = "PropertyType/Term/LTV"
                     @adjustment_hash[primary_key] = {}
+                    get_cell_number @adjustment_hash[primary_key],r,cc
                     new_key = "Condo"
                     @adjustment_hash[primary_key][new_key] = {}
                     term_key = "15-Inf"
@@ -1014,6 +1082,9 @@ class ObCmgWholesalesController < ApplicationController
                     elsif value.include?("(N/A for 15 Year Term or less)")
                       secondary_key = value.split("(N/A for 15 Year Term or less)").first.tr('A-Z ','')
                     end
+                    if r == 61
+                      get_cell_number @adjustment_hash["FannieMae/Term/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["FannieMae/Term/FICO/LTV"]["true"]["15-Inf"][secondary_key] = {}
                   end
                   if r >= 61 && r <= 68 && cc >= 8 && cc <= 16
@@ -1031,6 +1102,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 70 && cc == 1
                     @adjustment_hash["LoanSize/Term/LTV"] = {}
+                    get_cell_number @adjustment_hash["LoanSize/Term/LTV"],r,cc
                     @adjustment_hash["LoanSize/Term/LTV"]["High-Balance"] = {}
                     @adjustment_hash["LoanSize/Term/LTV"]["High-Balance"]["15"] = {}
                   end
@@ -1048,6 +1120,9 @@ class ObCmgWholesalesController < ApplicationController
                       secondary_key = "0-Inf"
                     else
                       secondary_key = get_value value
+                    end
+                    if r == 74
+                      get_cell_number @subordinate_hash[primary_key],r,cc
                     end
                     @subordinate_hash[primary_key]["Subordinate Financing"][secondary_key] = {}
                   end
@@ -1072,6 +1147,9 @@ class ObCmgWholesalesController < ApplicationController
                       secondary_key = "0-Inf"
                     else
                       secondary_key = value
+                    end
+                    if r == 81
+                      get_cell_number @adjustment_cap[primary_key],r,cc
                     end
                     @adjustment_cap[primary_key]["true"][secondary_key] = {}
                   end
@@ -1118,6 +1196,7 @@ class ObCmgWholesalesController < ApplicationController
                   # MISCELLANEOUS
                   if r == 73 && cc == 10 
                     @misc_adjustment["LockDay"] = {}
+                    get_cell_number @misc_adjustment["LockDay"],r,cc
                     @misc_adjustment["LockDay"]["60"] = {}
                     cc = cc + 6
                     new_val = sheet_data.cell(r,cc)
@@ -1125,6 +1204,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 74 && cc == 10 
                     @misc_adjustment["State"] = {}
+                    get_cell_number @misc_adjustment["State"],r,cc
                     @misc_adjustment["State"]["NY"] = {}
                     cc = cc + 6
                     new_val = sheet_data.cell(r,cc)
@@ -1139,6 +1219,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       m_key =  get_value value
                     end
+                    if r == 76
+                      get_cell_number @misc_adjustment[primary_key1],r,cc
+                    end
                     @misc_adjustment[primary_key1][m_key] = {}
                   end
                   if r >= 76 && r <= 80 && cc == 16
@@ -1147,6 +1230,9 @@ class ObCmgWholesalesController < ApplicationController
                   # STATE ADJUSTMENTS
                   if r >= 83 && r <= 88 && cc == 11
                     adj_key = value.split(', ')
+                    if r == 83
+                      get_cell_number @state_adjustment[primary_key1],r,cc
+                    end
                     adj_key.each do |f_key|
                       key = f_key
                       ccc = cc + 5
@@ -1282,6 +1368,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = value
                     end
+                    if r == 57
+                      get_cell_number @adjustment_hash[primary_key],r,cc
+                    end
                     @adjustment_hash[primary_key]["true"][secondary_key] = {}
                   end
                   if r >= 57 && r <= 60 && cc >= 8 && cc <= 16
@@ -1291,6 +1380,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 61 && cc == 1
                     @adjustment_hash["FreddieMac/PropertyType/Term/LTV"] = {}
+                    get_cell_number @adjustment_hash["FreddieMac/PropertyType/Term/LTV"],r,cc
                     @adjustment_hash["FreddieMac/PropertyType/Term/LTV"]["true"] = {}
                     @adjustment_hash["FreddieMac/PropertyType/Term/LTV"]["true"]["Condo"] = {}
                     @adjustment_hash["FreddieMac/PropertyType/Term/LTV"]["true"]["Condo"]["15-Inf"] = {}
@@ -1302,6 +1392,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 62 && cc == 1
                     @adjustment_hash["PropertyType/State/LTV"] = {}
+                    get_cell_number @adjustment_hash["PropertyType/State/LTV"],r,cc
                     @adjustment_hash["PropertyType/State/LTV"]["Condo"] = {}
                     @adjustment_hash["PropertyType/State/LTV"]["Condo"]["CA"] = {}
                   end
@@ -1318,6 +1409,9 @@ class ObCmgWholesalesController < ApplicationController
                     elsif value.include?("(N/A for 15 Year Term or less)")
                       secondary_key = value.split("(N/A for 15 Year Term or less)").first.tr('A-Z ','')
                     end
+                    if r == 63
+                      get_cell_number @adjustment_hash["FreddieMac/Term/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["FreddieMac/Term/FICO/LTV"]["true"]["15-Inf"][secondary_key] = {}
                   end
                   if r >= 63 && r <= 69 && cc >= 8 && cc <= 16
@@ -1327,6 +1421,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 70 && cc == 1
                     @adjustment_hash["LoanSize/LTV"] = {}
+                    get_cell_number @adjustment_hash["LoanSize/LTV"],r,cc
                     @adjustment_hash["LoanSize/LTV"]["High-Balance"] = {}
                   end
                   if r == 70 && cc >= 8 && cc <= 16
@@ -1343,6 +1438,9 @@ class ObCmgWholesalesController < ApplicationController
                       secondary_key = "0-Inf"
                     else
                       secondary_key = get_value value
+                    end
+                    if r == 74
+                      get_cell_number @subordinate_hash[primary_key],r,cc
                     end
                     @subordinate_hash[primary_key]["Subordinate Financing"][secondary_key] = {}
                   end
@@ -1365,6 +1463,9 @@ class ObCmgWholesalesController < ApplicationController
                       secondary_key = "2nd Home"
                     else
                       secondary_key = value
+                    end
+                    if r == 83
+                      get_cell_number @adjustment_cap[primary_key],r,cc
                     end
                     @adjustment_cap[primary_key]["true"][secondary_key] = {}
                   end
@@ -1413,6 +1514,7 @@ class ObCmgWholesalesController < ApplicationController
                   # MISCELLANEOUS
                   if r == 73 && cc == 10
                     @misc_adjustment["LockDay"] = {}
+                    get_cell_number @misc_adjustment["LockDay"],r,cc
                     @misc_adjustment["LockDay"]["60"] = {}
                     cc = cc + 6
                     new_val = sheet_data.cell(r,cc)
@@ -1420,6 +1522,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 74 && cc == 10
                     @misc_adjustment["State"] = {}
+                    get_cell_number @misc_adjustment["State"],r,cc
                     @misc_adjustment["State"]["NY"] = {}
                   end
                   if r == 74 && cc == 16
@@ -1434,6 +1537,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       m_key =  get_value value
                     end
+                    if r == 76
+                      get_cell_number @misc_adjustment[primary_key1],r,cc
+                    end
                     @misc_adjustment[primary_key1][m_key] = {}
                   end
                   if r >= 76 && r <= 80 && cc == 16
@@ -1441,6 +1547,9 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   # STATE ADJUSTMENTS
                   if r >= 83 && r <= 88 && cc == 11
+                    if r == 83
+                      get_cell_number @state_adjustment[primary_key1],r,cc
+                    end
                     adj_key = value.split(', ')
                     adj_key.each do |f_key|
                       key = f_key
@@ -1576,6 +1685,10 @@ class ObCmgWholesalesController < ApplicationController
                     end
                     if r >= 12 && r <= 15 && cc == 5
                       secondary_key = get_value value
+                      if r == 12
+                        get_cell_number @adjustment_hash["LPMI/LoanType/Term/LTV/FICO"],r,cc
+                        get_cell_number @adjustment_hash["LPMI/LoanType/LTV/FICO"],r,cc
+                      end
                       @adjustment_hash["LPMI/LoanType/Term/LTV/FICO"]["true"]["Fixed"]["25"][secondary_key] = {}
                       @adjustment_hash["LPMI/LoanType/Term/LTV/FICO"]["true"]["Fixed"]["30"][secondary_key] = {}
                       @adjustment_hash["LPMI/LoanType/LTV/FICO"]["true"]["ARM"][secondary_key] = {}
@@ -1614,6 +1727,10 @@ class ObCmgWholesalesController < ApplicationController
                     # HomeReady and HomePossible
                     if r >= 20 && r <= 23 && cc == 5
                       secondary_key = get_value value
+                      if r == 20
+                        get_cell_number @adjustment_cap["LPMI/FannieMaeProduct/LoanType/Term/LTV/FICO"],r,cc
+                        get_cell_number @adjustment_cap["LPMI/FreddieMacProduct/LoanType/Term/LTV/FICO"],r,cc
+                      end
                       @adjustment_cap["LPMI/FannieMaeProduct/LoanType/Term/LTV/FICO"]["true"]["HomeReady"]["Fixed"]["30"][secondary_key] = {}
                       @adjustment_cap["LPMI/FreddieMacProduct/LoanType/Term/LTV/FICO"]["true"]["Home Possible"]["Fixed"]["30"][secondary_key] = {}
                     end
@@ -1658,6 +1775,9 @@ class ObCmgWholesalesController < ApplicationController
                       else
                         secondary_key = value
                       end
+                      if r == 29
+                        get_cell_number @subordinate_hash["RefinanceOption/FICO"],r,cc
+                      end
                       @subordinate_hash["RefinanceOption/FICO"][secondary_key] = {}
                     end
                     if r >= 29 && r <= 30 && cc >= 7 && cc <= 14
@@ -1677,6 +1797,9 @@ class ObCmgWholesalesController < ApplicationController
                       else
                         secondary_key = value
                       end
+                      if r == 31
+                        get_cell_number @subordinate_hash["PropertyType/FICO"],r,cc
+                      end
                       @subordinate_hash["PropertyType/FICO"][secondary_key] = {}
                     end
                     if r >= 31 && r <= 34 && cc >= 7 && cc <= 14
@@ -1691,6 +1814,10 @@ class ObCmgWholesalesController < ApplicationController
                     # ENTERPRISE PAID MI
                     if r >= 38 && r <= 41 && cc == 5
                       secondary_key = get_value value
+                      if r == 38
+                        get_cell_number @standard_hash["EPMI/LoanType/Term/LTV/FICO"],r,cc
+                        get_cell_number @standard_hash["EPMI/LoanType/LTV/FICO"],r,cc
+                      end
                       @standard_hash["EPMI/LoanType/Term/LTV/FICO"]["true"]["Fixed"]["25"][secondary_key] = {}
                       @standard_hash["EPMI/LoanType/Term/LTV/FICO"]["true"]["Fixed"]["30"][secondary_key] = {}
                       @standard_hash["EPMI/LoanType/LTV/FICO"]["true"]["ARM"][secondary_key] = {}
@@ -1729,6 +1856,12 @@ class ObCmgWholesalesController < ApplicationController
                     # HomeReady and HomePossible
                     if r >= 46 && r <= 49 && cc == 5
                       secondary_key = get_value value
+                      if r == 46
+                        get_cell_number @home_hash["EPMI/FannieMaeProduct/LoanType/Term/LTV/FICO"],r,cc
+                        get_cell_number @home_hash["EPMI/FreddieMacProduct/LoanType/Term/LTV/FICO"],r,cc
+                        get_cell_number @home_hash["EPMI/FannieMaeProduct/LoanType/LTV/FICO"],r,cc
+                        get_cell_number @home_hash["EPMI/FreddieMacProduct/LoanType/LTV/FICO"],r,cc
+                      end
                       @home_hash["EPMI/FannieMaeProduct/LoanType/Term/LTV/FICO"]["true"]["HomeReady"]["Fixed"]["30"][secondary_key] = {}
                       @home_hash["EPMI/FreddieMacProduct/LoanType/Term/LTV/FICO"]["true"]["Home Possible"]["Fixed"]["30"][secondary_key] = {}
 
@@ -1776,6 +1909,7 @@ class ObCmgWholesalesController < ApplicationController
                     end
                     # EPMI (in addition to adjustments above)
                     if r == 55 && cc == 3
+                      get_cell_number @property_hash["EPMI/RefinanceOption/FICO"],r,cc
                       @property_hash["EPMI/RefinanceOption/FICO"]["true"]["Rate and Term"] = {}
                     end
                     if r == 55 && cc >= 7 && cc <= 14
@@ -1801,6 +1935,9 @@ class ObCmgWholesalesController < ApplicationController
                     end
                     if r >= 57 && r <= 58 && cc == 3
                       secondary_key = value
+                      if r == 57
+                        get_cell_number @property_hash["EPMI/PropertyType/FICO"],r,cc
+                      end
                       @property_hash["EPMI/PropertyType/FICO"]["true"][secondary_key] = {}
                     end
                     if r >= 57 && r <= 58 && cc >= 7 && cc <= 14
@@ -1939,6 +2076,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       ltv_key = get_value value
                     end
+                    if r == 27
+                      get_cell_number @adjustment_hash[key],r,cc
+                    end
                     @adjustment_hash[key]["Jumbo"][key1][ltv_key] = {}
                   end
                   if r >= 27 && r <= 33 && cc > 4 && cc <= 9
@@ -1963,6 +2103,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       ltv_key = value
                     end
+                    if r == 41
+                      get_cell_number @adjustment_hash["LoanSize/LoanAmount/PropertyType/LTV"],r,cc
+                    end
                     @adjustment_hash["LoanSize/LoanAmount/PropertyType/LTV"]["Jumbo"][key1][ltv_key] = {}
                   end
                   if r >= 41 && r <= 43 && cc >= 5 && cc <= 9
@@ -1972,6 +2115,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 44 && cc == 1
                     @adjustment_hash["LoanSize/LoanAmount/RefinanceOption/LTV"] = {}
+                    get_cell_number @adjustment_hash["LoanSize/LoanAmount/RefinanceOption/LTV"],r,cc
                     @adjustment_hash["LoanSize/LoanAmount/RefinanceOption/LTV"]["Jumbo"] = {}
                     @adjustment_hash["LoanSize/LoanAmount/RefinanceOption/LTV"]["Jumbo"]["1000000-Inf"] = {}
                     @adjustment_hash["LoanSize/LoanAmount/RefinanceOption/LTV"]["Jumbo"]["1000000-Inf"]["Cash Out"] = {}
@@ -1992,6 +2136,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 47 && cc == 1
                     @adjustment_hash["LoanSize/LoanAmount/MiscAdjuster/LTV"] = {}
+                    get_cell_number @adjustment_hash["LoanSize/LoanAmount/MiscAdjuster/LTV"],r,cc
                     @adjustment_hash["LoanSize/LoanAmount/MiscAdjuster/LTV"]["Jumbo"] = {}
                     @adjustment_hash["LoanSize/LoanAmount/MiscAdjuster/LTV"]["Jumbo"][key1] = {}
                     @adjustment_hash["LoanSize/LoanAmount/MiscAdjuster/LTV"]["Jumbo"][key1]["Escrow Waiver"] = {}
@@ -2020,6 +2165,9 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r >= 24 && r < 28 && cc == 12
                     adj_key = value.split(', ')
+                    if r == 24
+                      get_cell_number @state_adjustment[state_key],r,cc
+                    end
                     adj_key.each do |f_key|
                       key3 = f_key
                       ccc = cc + 4
@@ -2045,6 +2193,7 @@ class ObCmgWholesalesController < ApplicationController
                     @adjustment_hash["State"]["NY"] = {}
                   end
                   if r == 31 && cc == 12
+                    get_cell_number @adjustment_hash["State"],r,cc
                     ccc = cc + 4
                     c_val = sheet_data.cell(r,ccc)
                     @adjustment_hash["State"]["NY"] = c_val
@@ -2098,7 +2247,7 @@ class ObCmgWholesalesController < ApplicationController
                 # 
                 @block_hash = {}
                 key = ''
-                (1..50).each do |max_row|
+                (1..12).each do |max_row|
                   @data = []
                   (0..3).each_with_index do |index, c_i|
                     rrr = rr + max_row -1
@@ -2180,6 +2329,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       cltv_key = get_value value
                     end
+                    if r == 41
+                      get_cell_number @data_hash[first_key],r,cc
+                    end
                     @data_hash[first_key]["Jumbo"][second_key][cltv_key] = {}
                   end
                   if r >= 41 && r <= 46 && cc >= 6 && cc <= 13
@@ -2193,6 +2345,9 @@ class ObCmgWholesalesController < ApplicationController
                       cltv_key = value.tr('A-Z ','')
                     else
                       cltv_key = get_value value
+                    end
+                    if r == 49
+                      get_cell_number @data_hash["LoanSize/RefinanceOption/FICO/LTV"],r,cc
                     end
                     @data_hash["LoanSize/RefinanceOption/FICO/LTV"]["Jumbo"]["Rate and Term"][cltv_key] = {}
                   end
@@ -2220,6 +2375,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       cltv_key = get_value value
                     end
+                    if r == 62
+                      get_cell_number @data_hash["LoanSize/RefinanceOption/LoanAmount/LTV"],r,cc
+                    end
                     @data_hash["LoanSize/RefinanceOption/LoanAmount/LTV"]["Jumbo"][second_key][cltv_key] = {}
                   end
                   if r >= 62 && r <= 65 && cc >= 6 && cc <= 13
@@ -2235,6 +2393,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       cltv_key = value
                     end
+                    if r == 66
+                      get_cell_number @data_hash["LoanSize/RefinanceOption/PropertyType/LTV"],r,cc
+                    end
                     @data_hash["LoanSize/RefinanceOption/PropertyType/LTV"]["Jumbo"][second_key][cltv_key] = {}
                   end
                   if r >= 66 && r <= 69 && cc >= 6 && cc <= 13
@@ -2244,6 +2405,9 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r >= 70 && r <= 75 && cc == 1
                     cltv_key = value.tr('a-zA-Z-() ','')
+                    if r == 70
+                      get_cell_number @data_hash["LoanSize/RefinanceOption/Term/LTV"],r,cc
+                    end
                     @data_hash["LoanSize/RefinanceOption/Term/LTV"]["Jumbo"][second_key][cltv_key] = {}
                   end
                   if r >= 70 && r <= 75 && cc >= 6 && cc <= 13
@@ -2254,6 +2418,7 @@ class ObCmgWholesalesController < ApplicationController
                   if r == 76 && cc == 1
                     cltv_key = value
                     @data_hash["LoanSize/RefinanceOption/MiscAdjuster/LTV"] = {}
+                    get_cell_number @data_hash["LoanSize/RefinanceOption/MiscAdjuster/LTV"],r,cc
                     @data_hash["LoanSize/RefinanceOption/MiscAdjuster/LTV"]["Jumbo"] = {}
                     @data_hash["LoanSize/RefinanceOption/MiscAdjuster/LTV"]["Jumbo"][second_key] = {}
                     @data_hash["LoanSize/RefinanceOption/MiscAdjuster/LTV"]["Jumbo"][second_key][cltv_key] = {}
@@ -2265,6 +2430,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 77 && cc == 1
                     @data_hash["LoanSize/RefinanceOption/State/LTV"] = {}
+                    get_cell_number @data_hash["LoanSize/RefinanceOption/State/LTV"],r,cc
                     @data_hash["LoanSize/RefinanceOption/State/LTV"]["Jumbo"] = {}
                     @data_hash["LoanSize/RefinanceOption/State/LTV"]["Jumbo"][second_key] = {}
                     @data_hash["LoanSize/RefinanceOption/State/LTV"]["Jumbo"][second_key]["FL"] = {}
@@ -2285,6 +2451,7 @@ class ObCmgWholesalesController < ApplicationController
                     @data_hash[second_key]["Miscellaneous"] = {}
                     @data_hash[second_key]["Miscellaneous"]["NY"] = {}
                     v_val = sheet_data.cell(r+1,cc+3)
+                    get_cell_number @data_hash[second_key],r,cc
                     @data_hash[second_key]["Miscellaneous"]["NY"] = v_val
                   end
 
@@ -2299,6 +2466,10 @@ class ObCmgWholesalesController < ApplicationController
                       cltv_key = "0-1000000"
                     else
                       cltv_key = "1000000-Inf"
+                    end
+                    if r == 84
+                      get_cell_number @data_hash[second_key],r,cc
+                      get_cell_number @data_hash["LoanAmount/LoanType"],r,cc
                     end
                     @data_hash[second_key][cltv_key] = {}
                     @data_hash[second_key][cltv_key]["Fixed"] = {}
@@ -2506,6 +2677,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 14
+                      get_cell_number @purchase_adjustment[primary_key],r,cc
+                    end
                     @purchase_adjustment[primary_key]["Purchase"][secondary_key] = {}
                   end
                   if r >= 14 && r <= 19 && cc >= 10 && cc <= 16
@@ -2520,6 +2694,9 @@ class ObCmgWholesalesController < ApplicationController
                       secondary_key = value.tr('A-Z ','')
                     else
                       secondary_key = get_value value
+                    end
+                    if r == 22
+                      get_cell_number @rate_adjustment[primary_key],r,cc
                     end
                     @rate_adjustment[primary_key]["Rate and Term"][secondary_key] = {}
                   end
@@ -2549,6 +2726,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 35
+                      get_cell_number @rate_adjustment["RefinanceOption/LoanAmount/LTV"],r,cc
+                    end
                     @rate_adjustment["RefinanceOption/LoanAmount/LTV"]["Cash Out"][secondary_key] = {}
                   end
                   if r >= 35 && r <= 38 && cc >= 10 && cc <= 16
@@ -2564,6 +2744,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = value
                     end
+                    if r == 39
+                      get_cell_number @rate_adjustment["RefinanceOption/PropertyType/LTV"],r,cc
+                    end
                     @rate_adjustment["RefinanceOption/PropertyType/LTV"]["Cash Out"][secondary_key] = {}
                   end
                   if r >= 39 && r <= 42 && cc >= 10 && cc <= 16
@@ -2572,6 +2755,7 @@ class ObCmgWholesalesController < ApplicationController
                     @rate_adjustment["RefinanceOption/PropertyType/LTV"]["Cash Out"][secondary_key][cltv_key] = value
                   end
                   if r == 43 && cc == 6
+                    get_cell_number @rate_adjustment["RefinanceOption/LoanType/Term/LTV"],r,cc
                     @rate_adjustment["RefinanceOption/LoanType/Term/LTV"]["Cash Out"]["Fixed"][30] = {}
                   end
                   if r == 43 && cc >= 10 && cc <= 16
@@ -2580,6 +2764,7 @@ class ObCmgWholesalesController < ApplicationController
                     @rate_adjustment["RefinanceOption/LoanType/Term/LTV"]["Cash Out"]["Fixed"][30][cltv_key] = value
                   end
                   if r == 44 && cc == 6
+                    get_cell_number @rate_adjustment["RefinanceOption/LoanType/Term/State/LTV"],r,cc
                     @rate_adjustment["RefinanceOption/LoanType/Term/State/LTV"]["Cash Out"]["Fixed"][30]["CA"] = {}
                   end
                   if r == 44 && cc >= 10 && cc <= 16
@@ -2589,6 +2774,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 45 && cc == 6
                     @rate_adjustment["RefinanceOption/MiscAdjuster/LTV"] = {}
+                    get_cell_number @rate_adjustment["RefinanceOption/MiscAdjuster/LTV"],r,cc
                     @rate_adjustment["RefinanceOption/MiscAdjuster/LTV"]["Cash Out"] = {}
                     @rate_adjustment["RefinanceOption/MiscAdjuster/LTV"]["Cash Out"]["Escrow Waiver"] = {}
                     @rate_adjustment["RefinanceOption/MiscAdjuster/LTV"]["Cash Out"]["Escrow Waiver"] = {}
@@ -2600,6 +2786,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 46 && cc == 6
                     @rate_adjustment["RefinanceOption/State/LTV"] = {}
+                    get_cell_number @rate_adjustment["RefinanceOption/State/LTV"],r,cc
                     @rate_adjustment["RefinanceOption/State/LTV"]["Cash Out"] = {}
                     @rate_adjustment["RefinanceOption/State/LTV"]["Cash Out"]["FL"] = {}
                     @rate_adjustment["RefinanceOption/State/LTV"]["Cash Out"]["NV"] = {}
@@ -2630,11 +2817,13 @@ class ObCmgWholesalesController < ApplicationController
                     @other_adjustment[m_key]["Miscellaneous"]["NY"] = {}
                   end
                   if r == 25 && cc == 4
+                    get_cell_number @other_adjustment[m_key],r,cc
                     @other_adjustment[m_key]["Miscellaneous"]["NY"] = value
                   end
                   # MAX PRICE AFTER ADJUSTMENTS
                   if r == 29 && cc == 1
                     @other_adjustment["LoanAmount/LoanType/Term"] = {}
+                    get_cell_number @other_adjustment["LoanAmount/LoanType/Term"],r,cc
                     @other_adjustment["LoanAmount/LoanType/Term"]["0-1000000"] = {}
                     @other_adjustment["LoanAmount/LoanType/Term"]["0-1000000"]["Fixed"] = {}
                     @other_adjustment["LoanAmount/LoanType/Term"]["0-1000000"]["Fixed"][30] = {}
@@ -2689,6 +2878,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 60
+                      get_cell_number @jumbo_purchase_adjustment[primary_key],r,cc
+                    end
                     @jumbo_purchase_adjustment[primary_key]["Jumbo"]["Purchase"][secondary_key] = {}
                   end
                   if r >= 60 && r <= 63 && cc >= 15 && cc <= 16
@@ -2704,6 +2896,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 66
+                      get_cell_number @jumbo_rate_adjustment["LoanSize/RefinanceOption/FICO/LTV"],r,cc
+                    end
                     @jumbo_rate_adjustment["LoanSize/RefinanceOption/FICO/LTV"]["Jumbo"]["Rate and Term"][secondary_key] = {}
                   end
                   if r >= 66 && r <= 69 && cc >= 15 && cc <= 16
@@ -2713,6 +2908,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 70 && cc == 10
                     @jumbo_rate_adjustment["LoanSize/RefinanceOption/LoanAmount/LTV"] = {}
+                    get_cell_number @jumbo_rate_adjustment["LoanSize/RefinanceOption/LoanAmount/LTV"],r,cc
                     @jumbo_rate_adjustment["LoanSize/RefinanceOption/LoanAmount/LTV"]["Jumbo"] = {}
                     @jumbo_rate_adjustment["LoanSize/RefinanceOption/LoanAmount/LTV"]["Jumbo"]["Rate and Term"] = {}
                     @jumbo_rate_adjustment["LoanSize/RefinanceOption/LoanAmount/LTV"]["Jumbo"]["Rate and Term"]["0-1000000"] = {}
@@ -2732,6 +2928,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 72 && cc == 10
                     @jumbo_rate_adjustment["LoanSize/RefinanceOption/State/LTV"] = {}
+                    get_cell_number @jumbo_rate_adjustment["LoanSize/RefinanceOption/State/LTV"],r,cc
                     @jumbo_rate_adjustment["LoanSize/RefinanceOption/State/LTV"]["Jumbo"] = {}
                     @jumbo_rate_adjustment["LoanSize/RefinanceOption/State/LTV"]["Jumbo"]["Rate and Term"] = {}
                     @jumbo_rate_adjustment["LoanSize/RefinanceOption/State/LTV"]["Jumbo"]["Rate and Term"]["FL"] = {}
@@ -2754,6 +2951,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 74 && cc == 10
                     @jumbo_rate_adjustment["LoanSize/MiscAdjuster/LTV"] = {}
+                    get_cell_number @jumbo_rate_adjustment["LoanSize/MiscAdjuster/LTV"],r,cc
                     @jumbo_rate_adjustment["LoanSize/MiscAdjuster/LTV"]["Jumbo"] = {}
                     @jumbo_rate_adjustment["LoanSize/MiscAdjuster/LTV"]["Jumbo"]["Escrow Waiver"] = {}
                   end
@@ -2764,6 +2962,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 77 && cc == 10
                     @jumbo_rate_adjustment["MiscAdjuster/State"] = {}
+                    get_cell_number @jumbo_rate_adjustment["MiscAdjuster/State"],r,cc
                     @jumbo_rate_adjustment["MiscAdjuster/State"]["MISCELLANEOUS"] = {}
                     @jumbo_rate_adjustment["MiscAdjuster/State"]["MISCELLANEOUS"]["NY"] = {}
                   end
@@ -2781,6 +2980,7 @@ class ObCmgWholesalesController < ApplicationController
               if value.present?
                 if r == 71 && cc == 1
                   @jumbo_other_adjustment["LoanSize/LoanAmount"] = {}
+                  get_cell_number @jumbo_other_adjustment["LoanSize/LoanAmount"],r,cc
                   @jumbo_other_adjustment["LoanSize/LoanAmount"]["Jumbo"] = {}
                   @jumbo_other_adjustment["LoanSize/LoanAmount"]["Jumbo"]["0-1000000"] = {}
                 end
@@ -2838,7 +3038,7 @@ class ObCmgWholesalesController < ApplicationController
                 # 
                 @block_hash = {}
                 key = ''
-                (1..50).each do |max_row|
+                (1..12).each do |max_row|
                   @data = []
                   (0..3).each_with_index do |index, c_i|
                     rrr = rr + max_row -1
@@ -2911,6 +3111,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 41
+                      get_cell_number @purchase_adjustment["LoanPurpose/FICO/LTV"],r,cc
+                    end
                     @purchase_adjustment["LoanPurpose/FICO/LTV"]["Purchase"][secondary_key] = {}
                   end
                   if r >= 41 && r <= 47 && cc >= 6 && cc <= 14
@@ -2925,6 +3128,9 @@ class ObCmgWholesalesController < ApplicationController
                       secondary_key = value.tr('A-Z ','')
                     else
                       secondary_key = get_value value
+                    end
+                    if r == 50
+                      get_cell_number @rate_adjustment["RefinanceOption/FICO/LTV"],r,cc
                     end
                     @rate_adjustment["RefinanceOption/FICO/LTV"]["Rate and Term"][secondary_key] = {}
                   end
@@ -2941,6 +3147,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 59
+                      get_cell_number @adjustment_hash["RefinanceOption/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["RefinanceOption/FICO/LTV"]["Cash Out"][secondary_key] = {}
                   end
                   if r >= 59 && r <= 65 && cc >= 6 && cc <= 14
@@ -2953,6 +3162,9 @@ class ObCmgWholesalesController < ApplicationController
                       secondary_key = value.tr('A-Za-z$ ','')
                     else
                       secondary_key = get_value value
+                    end
+                    if r == 66
+                      get_cell_number @adjustment_hash["RefinanceOption/LoanAmount/LTV"],r,cc
                     end
                     @adjustment_hash["RefinanceOption/LoanAmount/LTV"]["Cash Out"][secondary_key] = {}
                   end
@@ -2967,6 +3179,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = value
                     end 
+                    if r == 69
+                      get_cell_number @adjustment_hash["RefinanceOption/PropertyType/LTV"],r,cc
+                    end
                     @adjustment_hash["RefinanceOption/PropertyType/LTV"]["Cash Out"][secondary_key] = {}
                   end
                   if r >= 69 && r <= 74 && cc >= 6 && cc <= 14
@@ -2976,6 +3191,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 75 && cc == 1
                     @adjustment_hash["RefinanceOption/MiscAdjuster/LTV"] = {}
+                    get_cell_number @adjustment_hash["RefinanceOption/MiscAdjuster/LTV"],r,cc
                     @adjustment_hash["RefinanceOption/MiscAdjuster/LTV"]["Cash Out"] = {}
                     @adjustment_hash["RefinanceOption/MiscAdjuster/LTV"]["Cash Out"]["Escrow Waiver"] = {}
                   end
@@ -2986,6 +3202,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 76 && cc == 1
                     @adjustment_hash["RefinanceOption/State/LTV"] = {}
+                    get_cell_number @adjustment_hash["RefinanceOption/State/LTV"],r,cc
                     @adjustment_hash["RefinanceOption/State/LTV"]["Cash Out"] = {}
                     @adjustment_hash["RefinanceOption/State/LTV"]["Cash Out"]["FL"] = {}
                     @adjustment_hash["RefinanceOption/State/LTV"]["Cash Out"]["NV"] = {}
@@ -2999,10 +3216,12 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   # Other Adjustments
                   if r == 79 && cc == 4
+                    get_cell_number @other_adjustment["MiscAdjuster/State"],r,cc
                     @other_adjustment["MiscAdjuster/State"]["Miscellaneous"]["NY"] = value
                   end
                   if r == 83 && cc == 1
                     @other_adjustment["LoanAmount/Term"] = {}
+                    get_cell_number @other_adjustment["LoanAmount/Term"],r,cc
                     @other_adjustment["LoanAmount/Term"]["0-1000000"] = {}
                     @other_adjustment["LoanAmount/Term"]["0-1000000"]["30"] = {}
                     @other_adjustment["LoanAmount/Term"]["0-1000000"]["15"] = {}
@@ -3081,7 +3300,7 @@ class ObCmgWholesalesController < ApplicationController
                 # 
                 @block_hash = {}
                 key = ''
-                (1..50).each do |max_row|
+                (1..13).each do |max_row|
                   @data = []
                   (0..3).each_with_index do |index, c_i|
                     rrr = rr + max_row -1
@@ -3152,6 +3371,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 42
+                      get_cell_number @purchase_adjustment["LoanPurpose/FICO/LTV"],r,cc
+                    end
                     @purchase_adjustment["LoanPurpose/FICO/LTV"]["Purchase"][secondary_key] = {}
                   end
                   if r >= 42 && r <= 48 && cc >= 6 && cc <= 14
@@ -3166,6 +3388,9 @@ class ObCmgWholesalesController < ApplicationController
                       secondary_key = value.tr('A-Z ','')
                     else
                       secondary_key = get_value value
+                    end
+                    if r == 51
+                      get_cell_number @rate_adjustment["RefinanceOption/FICO/LTV"],r,cc
                     end
                     @rate_adjustment["RefinanceOption/FICO/LTV"]["Rate and Term"][secondary_key] = {}
                   end
@@ -3182,6 +3407,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 60
+                      get_cell_number @adjustment_hash["RefinanceOption/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["RefinanceOption/FICO/LTV"]["Cash Out"][secondary_key] = {}
                   end
                   if r >= 60 && r <= 66 && cc >= 6 && cc <= 14
@@ -3194,6 +3422,9 @@ class ObCmgWholesalesController < ApplicationController
                       secondary_key = value.tr('A-Za-z$ ','')
                     else
                       secondary_key = get_value value
+                    end
+                    if r == 67
+                      get_cell_number @adjustment_hash["RefinanceOption/LoanAmount/LTV"],r,cc
                     end
                     @adjustment_hash["RefinanceOption/LoanAmount/LTV"]["Cash Out"][secondary_key] = {}
                   end
@@ -3210,6 +3441,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = value.split('s').first
                     end
+                    if r == 70
+                      get_cell_number @adjustment_hash["RefinanceOption/PropertyType/LTV"],r,cc
+                    end
                     @adjustment_hash["RefinanceOption/PropertyType/LTV"]["Cash Out"][secondary_key] = {}
                   end
                   if r >= 70 && r <= 75 && cc >= 6 && cc <= 14
@@ -3219,6 +3453,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 76 && cc == 1
                     @adjustment_hash["RefinanceOption/MiscAdjuster/LTV"] = {}
+                    get_cell_number @adjustment_hash["RefinanceOption/MiscAdjuster/LTV"],r,cc
                     @adjustment_hash["RefinanceOption/MiscAdjuster/LTV"]["Cash Out"] = {}
                     @adjustment_hash["RefinanceOption/MiscAdjuster/LTV"]["Cash Out"]["Escrow Waiver"] = {}
                   end
@@ -3229,6 +3464,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 77 && cc == 1
                     @adjustment_hash["RefinanceOption/State/LTV"] = {}
+                    get_cell_number @adjustment_hash["RefinanceOption/State/LTV"],r,cc
                     @adjustment_hash["RefinanceOption/State/LTV"]["Cash Out"] = {}
                     @adjustment_hash["RefinanceOption/State/LTV"]["Cash Out"]["FL"] = {}
                     @adjustment_hash["RefinanceOption/State/LTV"]["Cash Out"]["NV"] = {}
@@ -3243,10 +3479,12 @@ class ObCmgWholesalesController < ApplicationController
 
                   # Other Adjustments
                   if r == 80 && cc == 4
+                    get_cell_number @other_adjustment["MiscAdjuster/State"],r,cc
                     @other_adjustment["MiscAdjuster/State"]["Miscellaneous"]["NY"] = value
                   end
                   if r == 84 && cc == 1
                     @other_adjustment["LoanAmount/Term"] = {}
+                    get_cell_number @other_adjustment["LoanAmount/Term"],r,cc
                     @other_adjustment["LoanAmount/Term"]["0-1000000"] = {}
                     @other_adjustment["LoanAmount/Term"]["0-1000000"]["30"] = {}
                     @other_adjustment["LoanAmount/Term"]["0-1000000"]["15"] = {}
@@ -3441,6 +3679,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 14
+                      get_cell_number @flex_hash["Jumbo/FICO/LTV"],r,cc
+                    end
                     @flex_hash["Jumbo/FICO/LTV"]["true"][secondary_key] = {}
                   end
                   if r >= 14 && r <= 19 && cc >= 12 && cc <= 16
@@ -3480,6 +3721,9 @@ class ObCmgWholesalesController < ApplicationController
                     else
                       secondary_key = get_value value
                     end
+                    if r == 23
+                      get_cell_number @jumbo_flex_hash["LoanSize/LoanAmount"],r,cc
+                    end
                     @jumbo_flex_hash["LoanSize/LoanAmount"]["Jumbo"][secondary_key] = {}
                   end
                   if r >= 23 && r <= 24 && cc == 16
@@ -3487,6 +3731,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 25 && cc == 16
                     @jumbo_flex_hash["LoanSize/LoanPurpose/ProgramCategory"] = {}
+                    get_cell_number @jumbo_flex_hash["LoanSize/LoanPurpose/ProgramCategory"],r,cc
                     @jumbo_flex_hash["LoanSize/LoanPurpose/ProgramCategory"]["Jumbo"] = {}
                     @jumbo_flex_hash["LoanSize/LoanPurpose/ProgramCategory"]["Jumbo"]["Purchase"] = {}
                     @jumbo_flex_hash["LoanSize/LoanPurpose/ProgramCategory"]["Jumbo"]["Purchase"]["6400"] = {}
@@ -3494,6 +3739,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 26 && cc == 16
                     @jumbo_flex_hash["LoanSize/RefinanceOption/ProgramCategory"] = {}
+                    get_cell_number @jumbo_flex_hash["LoanSize/RefinanceOption/ProgramCategory"],r,cc
                     @jumbo_flex_hash["LoanSize/RefinanceOption/ProgramCategory"]["Jumbo"] = {}
                     @jumbo_flex_hash["LoanSize/RefinanceOption/ProgramCategory"]["Jumbo"]["Cash Out"] = {}
                     @jumbo_flex_hash["LoanSize/RefinanceOption/ProgramCategory"]["Jumbo"]["Cash Out"]["6400"] = {}
@@ -3504,6 +3750,9 @@ class ObCmgWholesalesController < ApplicationController
                       secondary_key = value.split("s (N/A for Investment Properties)").first
                     else
                       secondary_key = value
+                    end
+                    if r == 27
+                      get_cell_number @jumbo_flex_hash["LoanSize/PropertyType"],r,cc
                     end
                     @jumbo_flex_hash["LoanSize/PropertyType"]["Jumbo"][secondary_key] = {}
                   end
@@ -3536,6 +3785,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 36 && cc == 10
                     @jumbo_flex_hash["LoanSize/State"] = {}
+                    get_cell_number @jumbo_flex_hash["LoanSize/State"],r,cc
                     @jumbo_flex_hash["LoanSize/State"]["Jumbo"] = {}
                     @jumbo_flex_hash["LoanSize/State"]["Jumbo"]["CA"] = {}
                     cc = cc + 6
@@ -3560,6 +3810,7 @@ class ObCmgWholesalesController < ApplicationController
                   end
                   if r == 41 && cc == 10
                     @jumbo_flex_hash["MiscAdjuster/State"] = {}
+                    get_cell_number @jumbo_flex_hash["MiscAdjuster/State"],r,cc
                     @jumbo_flex_hash["MiscAdjuster/State"]["Miscellaneous"] = {}
                     @jumbo_flex_hash["MiscAdjuster/State"]["Miscellaneous"]["NY"] = {}
                     cc = cc + 6
@@ -3665,6 +3916,9 @@ class ObCmgWholesalesController < ApplicationController
                   else
                     cltv_key = get_value value
                   end
+                  if r == 43
+                    get_cell_number @block_adjustment["LoanSize/FICO/LTV"],r,cc
+                  end
                   @block_adjustment["LoanSize/FICO/LTV"]["Jumbo"][cltv_key] = {}
                 end
                 if r >= 43 && r <= 47 && cc >= 4 && cc <= 11
@@ -3673,6 +3927,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 48 && cc == 1
                   @block_adjustment["RefinanceOption/LTV"] = {}
+                  get_cell_number @block_adjustment["RefinanceOption/LTV"],r,cc
                   @block_adjustment["RefinanceOption/LTV"]["Cash Out"] = {}
                 end
                 if r == 48 &&  cc >= 4 && cc <= 11
@@ -3681,6 +3936,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 49 && cc == 1
                   @block_adjustment["LoanPurpose/LTV"] = {}
+                  get_cell_number @block_adjustment["LoanPurpose/LTV"],r,cc
                   @block_adjustment["LoanPurpose/LTV"]["Purchase"] = {}
                 end
                 if r == 49 &&  cc >= 4 && cc <= 11
@@ -3689,6 +3945,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 50 && cc == 1
                   @block_adjustment["PropertyType/LTV"] = {}
+                  get_cell_number @block_adjustment["PropertyType/LTV"],r,cc
                   @block_adjustment["PropertyType/LTV"]["Investment Property"] = {}
                 end
                 if r == 50 &&  cc >= 4 && cc <= 11
@@ -3709,6 +3966,9 @@ class ObCmgWholesalesController < ApplicationController
                 end
 
                 if r >= 43 && r <= 44 && cc == 13
+                  if r == 43
+                    get_cell_number @misc_adjustment["MiscAdjuster/State"],r,cc
+                  end
                   @misc_adjustment["MiscAdjuster/State"]["Miscellaneous"]["NY"] = {}
                   @misc_adjustment["MiscAdjuster/State"]["Miscellaneous"]["CA"] = {}
                   ccc = cc + 3
@@ -3873,6 +4133,9 @@ class ObCmgWholesalesController < ApplicationController
                   else
                     secondary_key = get_value value
                   end
+                  if r == 29
+                    get_cell_number @adjustment_hash["LoanSize/ProgramCategory/FICO/LTV"],r,cc
+                  end
                   @adjustment_hash["LoanSize/ProgramCategory/FICO/LTV"]["Jumbo"]["6900"][secondary_key] = {}
                 end
                 if r >= 29 && r <= 36 && cc >= 5 && cc <= 11
@@ -3886,6 +4149,9 @@ class ObCmgWholesalesController < ApplicationController
                   else
                     secondary_key = get_value value
                   end
+                  if r == 37
+                    get_cell_number @adjustment_hash["LoanSize/ProgramCategory/LoanAmount/LTV"],r,cc
+                  end
                   @adjustment_hash["LoanSize/ProgramCategory/LoanAmount/LTV"]["Jumbo"]["6900"][secondary_key] = {}
                 end
                 if r >= 37 && r <= 40 && cc >= 5 && cc <= 11
@@ -3895,6 +4161,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 41 && cc == 1
                   @adjustment_hash["LoanSize/ProgramCategory/LoanPurpose/LTV"] = {}
+                  get_cell_number @adjustment_hash["LoanSize/ProgramCategory/LoanPurpose/LTV"],r,cc
                   @adjustment_hash["LoanSize/ProgramCategory/LoanPurpose/LTV"]["Jumbo"] = {}
                   @adjustment_hash["LoanSize/ProgramCategory/LoanPurpose/LTV"]["Jumbo"]["6900"] = {}
                   @adjustment_hash["LoanSize/ProgramCategory/LoanPurpose/LTV"]["Jumbo"]["6900"]["Purchase"] = {}
@@ -3906,6 +4173,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 42 && cc == 1
                   @adjustment_hash["LoanSize/ProgramCategory/RefinanceOption/LTV"] = {}
+                  get_cell_number @adjustment_hash["LoanSize/ProgramCategory/RefinanceOption/LTV"],r,cc
                   @adjustment_hash["LoanSize/ProgramCategory/RefinanceOption/LTV"]["Jumbo"] = {}
                   @adjustment_hash["LoanSize/ProgramCategory/RefinanceOption/LTV"]["Jumbo"]["6900"] = {}
                   @adjustment_hash["LoanSize/ProgramCategory/RefinanceOption/LTV"]["Jumbo"]["6900"]["Cash Out"] = {}
@@ -3917,6 +4185,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 43 && cc == 1
                   @adjustment_hash["LoanSize/ProgramCategory/PropertyType/LTV"] = {}
+                  get_cell_number @adjustment_hash["LoanSize/ProgramCategory/PropertyType/LTV"],r,cc
                   @adjustment_hash["LoanSize/ProgramCategory/PropertyType/LTV"]["Jumbo"] = {}
                   @adjustment_hash["LoanSize/ProgramCategory/PropertyType/LTV"]["Jumbo"]["6900"] = {}
                   @adjustment_hash["LoanSize/ProgramCategory/PropertyType/LTV"]["Jumbo"]["6900"]["Condo"] = {}
@@ -3928,6 +4197,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 44 && cc == 1
                   @adjustment_hash["LoanSize/ProgramCategory/MiscAdjuster/State/LTV"] = {}
+                  get_cell_number @adjustment_hash["LoanSize/ProgramCategory/MiscAdjuster/State/LTV"],r,cc
                   @adjustment_hash["LoanSize/ProgramCategory/MiscAdjuster/State/LTV"]["Jumbo"] = {}
                   @adjustment_hash["LoanSize/ProgramCategory/MiscAdjuster/State/LTV"]["Jumbo"]["6900"] = {}
                   @adjustment_hash["LoanSize/ProgramCategory/MiscAdjuster/State/LTV"]["Jumbo"]["6900"]["Escrow Waiver"] = {}
@@ -3947,6 +4217,7 @@ class ObCmgWholesalesController < ApplicationController
               if value.present?
                 if r == 33 && cc == 13
                   @other_adjustment["ProgramCategory/LoanAmount/Term"] = {}
+                  get_cell_number @other_adjustment["ProgramCategory/LoanAmount/Term"],r,cc
                   @other_adjustment["ProgramCategory/LoanAmount/Term"]["6900"] = {}
                   @other_adjustment["ProgramCategory/LoanAmount/Term"]["6900"]["0-1000000"] = {}
                   @other_adjustment["ProgramCategory/LoanAmount/Term"]["6900"]["0-1000000"]["30"] = {}
@@ -4009,6 +4280,9 @@ class ObCmgWholesalesController < ApplicationController
                   else
                     secondary_key = get_value value
                   end
+                  if r == 70
+                    get_cell_number @jumbo_adjustment_hash["LoanSize/ProgramCategory/FICO/LTV"],r,cc
+                  end
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/FICO/LTV"]["Jumbo"]["7900"][secondary_key] = {}
                 end
                 if r >= 70 && r <= 77 && cc >= 5 && cc <= 11
@@ -4022,6 +4296,9 @@ class ObCmgWholesalesController < ApplicationController
                   else
                     secondary_key = get_value value
                   end
+                  if r == 78
+                    get_cell_number @jumbo_adjustment_hash["LoanSize/ProgramCategory/LoanAmount/LTV"],r,cc
+                  end
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/LoanAmount/LTV"]["Jumbo"]["7900"][secondary_key] = {}
                 end
                 if r >= 78 && r <= 81 && cc >= 5 && cc <= 11
@@ -4031,6 +4308,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 82 && cc == 1
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/LoanPurpose/LTV"] = {}
+                  get_cell_number @jumbo_adjustment_hash["LoanSize/ProgramCategory/LoanPurpose/LTV"],r,cc
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/LoanPurpose/LTV"]["Jumbo"] = {}
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/LoanPurpose/LTV"]["Jumbo"]["7900"] = {}
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/LoanPurpose/LTV"]["Jumbo"]["7900"]["Purchase"] = {}
@@ -4042,6 +4320,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 83 && cc == 1
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/RefinanceOption/LTV"] = {}
+                  get_cell_number @jumbo_adjustment_hash["LoanSize/ProgramCategory/RefinanceOption/LTV"],r,cc
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/RefinanceOption/LTV"]["Jumbo"] = {}
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/RefinanceOption/LTV"]["Jumbo"]["6900"] = {}
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/RefinanceOption/LTV"]["Jumbo"]["6900"]["Cash Out"] = {}
@@ -4053,6 +4332,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 84 && cc == 1
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/PropertyType/LTV"] = {}
+                  get_cell_number @jumbo_adjustment_hash["LoanSize/ProgramCategory/PropertyType/LTV"],r,cc
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/PropertyType/LTV"]["Jumbo"] = {}
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/PropertyType/LTV"]["Jumbo"]["6900"] = {}
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/PropertyType/LTV"]["Jumbo"]["6900"]["Condo"] = {}
@@ -4064,6 +4344,7 @@ class ObCmgWholesalesController < ApplicationController
                 end
                 if r == 85 && cc == 1
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/MiscAdjuster/State/LTV"] = {}
+                  get_cell_number @jumbo_adjustment_hash["LoanSize/ProgramCategory/MiscAdjuster/State/LTV"],r,cc
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/MiscAdjuster/State/LTV"]["Jumbo"] = {}
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/MiscAdjuster/State/LTV"]["Jumbo"]["7900"] = {}
                   @jumbo_adjustment_hash["LoanSize/ProgramCategory/MiscAdjuster/State/LTV"]["Jumbo"]["7900"]["Escrow Waiver"] = {}
@@ -4091,6 +4372,7 @@ class ObCmgWholesalesController < ApplicationController
                   @jumbo_other_adjustment["ProgramCategory/LoanAmount/Term"]["7900"]["0-1000000"]["ARM"] = {}
                 end
                 if r == 74 && cc == 14
+                  get_cell_number @jumbo_other_adjustment["ProgramCategory/LoanAmount/Term"],r,cc
                   @jumbo_other_adjustment["ProgramCategory/LoanAmount/Term"]["7900"]["0-1000000"]["30"] = value
                 end
                 if r == 74 && cc == 15

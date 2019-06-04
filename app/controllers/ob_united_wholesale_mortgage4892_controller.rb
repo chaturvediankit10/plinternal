@@ -64,6 +64,9 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   # Credit Score
                   if r >= 9 && r <= 14 && cc == 1
                     secondary_key = get_value value
+                    if r == 9
+                      get_cell_number @adjustment_hash["Term/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["Term/FICO/LTV"]["15-Inf"][secondary_key] = {}
                   end
                   if r >= 9 && r <= 14 && cc >= 9 && cc <= 17
@@ -74,6 +77,9 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   # Cash Out
                   if r >= 16 && r <= 21 && cc == 1
                     secondary_key = get_value value
+                    if r == 16
+                      get_cell_number @cash_out["RefinanceOption/FICO/LTV"],r,cc
+                    end
                     @cash_out["RefinanceOption/FICO/LTV"]["Cash Out"][secondary_key] = {}
                   end
                   if r >= 16 && r <= 21 && cc >= 9 && cc <= 17
@@ -84,6 +90,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   # @adj_hash
                   if r == 23 && cc == 1
                     @adjustment_hash["LoanPurpose/LoanSize/RefinanceOption"] = {}
+                    get_cell_number @adjustment_hash["LoanPurpose/LoanSize/RefinanceOption"],r,cc
                     @adjustment_hash["LoanPurpose/LoanSize/RefinanceOption"]["Purchase"] = {}
                     @adjustment_hash["LoanPurpose/LoanSize/RefinanceOption"]["Purchase"]["High Balance"] = {}
                     @adjustment_hash["LoanPurpose/LoanSize/RefinanceOption"]["Purchase"]["High Balance"]["Rate and Term"] = {}
@@ -189,6 +196,9 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                 # Loan Size Adjustors
                 if r >= 80 && r <= 82 && cc == 9
                   secondary_key = get_value value
+                  if r == 80
+                    get_cell_number @adjustment_hash["LoanAmount"],r,cc
+                  end
                   @adjustment_hash["LoanAmount"][secondary_key] = {}
                 end
                 if r >= 80 && r <= 82 && cc == 16
@@ -197,6 +207,9 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                 # Credit Score Adjustors
                 if r >= 84 && r <= 85 && cc == 9
                   secondary_key = value.gsub(/\s+/, '')
+                  if r == 84
+                    get_cell_number @fico_adj[primary_key],r,cc
+                  end
                   @fico_adj[primary_key][secondary_key] = {}
                 end
                 if r >= 84 && r <= 85 && cc == 16
@@ -490,6 +503,9 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   # Loan Size Adjustors
                   if r >= 53 && r <= 55 && cc == 4
                     secondary_key = get_value value
+                    if r == 53
+                      get_cell_number @adjustment_hash[primary_key],r,cc
+                    end
                     @adjustment_hash[primary_key][secondary_key] = {}
                   end
                   if r >= 53 && r <= 55 && cc == 13
@@ -498,6 +514,9 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   # Credit Score Adjustors
                   if r >= 57 && r <= 58 && cc == 4
                     secondary_key = get_value value
+                    if r == 57
+                      get_cell_number @loan_amount[primary_key],r,cc
+                    end
                     @loan_amount[primary_key][secondary_key] = {}
                   end
                   if r >= 57 && r <= 58 && cc == 13
@@ -512,6 +531,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   # end
                   if r == 60 && cc == 4
                     @loan_amount["LoanPurpose/LockDay"] = {}
+                    get_cell_number @loan_amount["LoanPurpose/LockDay"],r,cc
                     @loan_amount["LoanPurpose/LockDay"]["Purchase"] = {}
                     @loan_amount["LoanPurpose/LockDay"]["Purchase"]["45"] = {}
                     cc = cc + 9
@@ -782,6 +802,9 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   # Credit Score
                   if r >= 70 && r <= 75 && cc == 5
                     secondary_key = get_value value
+                    if r == 70
+                      get_cell_number @adjustment_hash[primary_key],r,cc
+                    end
                     @adjustment_hash[primary_key]["Jumbo"][secondary_key] = {}
                   end
                   if r >= 70 && r <= 75 && cc >= 8 && cc <= 14
@@ -792,6 +815,9 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   # Loan Amount:
                   if r >= 76 && r <= 82 && cc == 5
                     secondary_key = get_value value
+                    if r == 76
+                      get_cell_number @loan_amount[primary_key],r,cc
+                    end
                     @loan_amount[primary_key]["Jumbo"][secondary_key] = {}
                   end
                   if r >= 76 && r <= 82 && cc >= 8 && cc <= 14
@@ -802,6 +828,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   # Other Adjustment
                   if r == 83 && cc >= 8 && cc <= 14
                     ltv_key = get_value @ltv_data[cc-1]
+                    get_cell_number @other_adjustment["LoanSize/RefinanceOption/LTV"],r,cc
                     @other_adjustment["LoanSize/RefinanceOption/LTV"]["Jumbo"]["Cash Out"][ltv_key] = {}
                     @other_adjustment["LoanSize/RefinanceOption/LTV"]["Jumbo"]["Cash Out"][ltv_key] = value
                   end
@@ -813,6 +840,9 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                     else
                       primary_key = value
                     end
+                    if r == 84
+                      get_cell_number @other_adjustment["LoanSize/PropertyType/LTV"],r,cc
+                    end
                     @other_adjustment["LoanSize/PropertyType/LTV"]["Jumbo"][primary_key] = {}
                   end
                   if r >= 84 && r <= 88 && cc >= 8 && cc <= 14
@@ -822,16 +852,19 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   end
                   if r == 89 && cc >= 8 && cc <= 14
                     ltv_key = get_value @ltv_data[cc-1]
+                    get_cell_number @other_adjustment["LoanSize/LoanPurpose/LTV"],r,cc
                     @other_adjustment["LoanSize/LoanPurpose/LTV"]["Jumbo"]["Purchase"][ltv_key] = {}
                     @other_adjustment["LoanSize/LoanPurpose/LTV"]["Jumbo"]["Purchase"][ltv_key] = value
                   end
                   if r == 90 && cc >= 8 && cc <= 14
                     ltv_key = get_value @ltv_data[cc-1]
+                    get_cell_number @other_adjustment["LoanSize/MiscAdjuster/State/LTV/CLTV"],r,cc
                     @other_adjustment["LoanSize/MiscAdjuster/State/LTV/CLTV"]["Jumbo"][primary_key]["CA"]["80-Inf"][ltv_key] = {}
                     @other_adjustment["LoanSize/MiscAdjuster/State/LTV/CLTV"]["Jumbo"][primary_key]["CA"]["80-Inf"][ltv_key] = value
                   end
                   if r == 91 && cc == 3
                     @other_adjustment["LoanSize/ArmBasic/LTV"] = {}
+                    get_cell_number @other_adjustment["LoanSize/ArmBasic/LTV"],r,cc
                     @other_adjustment["LoanSize/ArmBasic/LTV"]["Jumbo"] = {}
                     @other_adjustment["LoanSize/ArmBasic/LTV"]["Jumbo"]["5"] = {}
                     @other_adjustment["LoanSize/ArmBasic/LTV"]["Jumbo"]["7"] = {}

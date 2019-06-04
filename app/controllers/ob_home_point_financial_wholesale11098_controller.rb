@@ -559,7 +559,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   key = ''
                   (1..20).each do |max_row|
                     @data = []
-                    (0..7).each_with_index do |index, c_i|
+                    (0..6).each_with_index do |index, c_i|
                       rrr = rr + max_row
                       ccc = cc + c_i
                       value = sheet_data.cell(rrr,ccc)

@@ -149,11 +149,13 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                   @adj_hash["PropertyType"]["2-4 Unit"] = {}
                   cc = cc + 5
                   new_val = sheet_data.cell(r,cc)
+                  get_cell_number @adj_hash["PropertyType"],r,cc
                   @adj_hash["PropertyType"]["2-4 Unit"] = new_val
                 end
 
                 if r == 377 && cc == 15
                   @adj_hash["PropertyType/Term/LTV"] = {}
+                  get_cell_number @adj_hash["PropertyType/Term/LTV"],r,cc
                   @adj_hash["PropertyType/Term/LTV"]["Condo"] = {}
                   @adj_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                   @adj_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -169,6 +171,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 379 && cc == 15
                   @adj_hash["FinancingType"] = {}
+                  get_cell_number @adj_hash["FinancingType"],r,cc
                   @adj_hash["FinancingType"]["Subordinate Financing"] = {}
                   cc = cc + 5
                   new_val = sheet_data.cell(r,cc)
@@ -176,6 +179,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 380 && cc == 15
                   @adj_hash["PropertyType/LTV"] = {}
+                  get_cell_number @adj_hash["PropertyType/LTV"],r,cc
                   @adj_hash["PropertyType/LTV"]["Investment Property"] = {}
                   @adj_hash["PropertyType/LTV"]["Investment Property"]["0-75"] = {}
                   cc = cc + 5
@@ -196,6 +200,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 383 && cc == 15
                   @adj_hash["LoanType/LTV"] = {}
+                  get_cell_number @adj_hash["LoanType/LTV"],r,cc
                   @adj_hash["LoanType/LTV"]["ARM"] = {}
                   @adj_hash["LoanType/LTV"]["ARM"]["90-Inf"] = {}
                   cc = cc + 5
@@ -204,6 +209,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 384 && cc == 15
                   @adj_hash["LPMI/RefinanceOption/FICO"] = {}
+                  get_cell_number @adj_hash["LPMI/RefinanceOption/FICO"],r,cc
                   @adj_hash["LPMI/RefinanceOption/FICO"]["true"] = {}
                   @adj_hash["LPMI/RefinanceOption/FICO"]["true"]["Cash Out"] = {}
                   @adj_hash["LPMI/RefinanceOption/FICO"]["true"]["Cash Out"]["680-719"] = {}
@@ -219,6 +225,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 386 && cc == 15
                   @adj_hash["LoanSize/LoanType/LTV"] = {}
+                  get_cell_number @adj_hash["LoanSize/LoanType/LTV"],r,cc
                   @adj_hash["LoanSize/LoanType/LTV"]["High-Balance"] = {}
                   @adj_hash["LoanSize/LoanType/LTV"]["High-Balance"]["ARM"] = {}
                   @adj_hash["LoanSize/LoanType/LTV"]["High-Balance"]["ARM"]["0-75"] = {}
@@ -234,6 +241,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 388 && cc == 15
                   @adj_hash["LoanSize/RefinanceOption"] = {}
+                  get_cell_number @adj_hash["LoanSize/RefinanceOption"],r,cc
                   @adj_hash["LoanSize/RefinanceOption"]["High-Balance"] = {}
                   @adj_hash["LoanSize/RefinanceOption"]["High-Balance"]["Cash Out"] = {}
                   cc = cc + 5
@@ -242,6 +250,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 389 && cc == 15
                   @adj_hash["LoanPurpose/LoanSize/RefinanceOption"] = {}
+                  get_cell_number @adj_hash["LoanPurpose/LoanSize/RefinanceOption"],r,cc
                   @adj_hash["LoanPurpose/LoanSize/RefinanceOption"]["Purchase"] = {}
                   @adj_hash["LoanPurpose/LoanSize/RefinanceOption"]["Purchase"]["High-Balance"] = {}
                   @adj_hash["LoanPurpose/LoanSize/RefinanceOption"]["Purchase"]["High-Balance"]["Cash Out"] = {}
@@ -251,6 +260,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 397 && cc == 15
                   @adj_hash["FNMA/FannieMaeProduct/FICO/LTV"] = {}
+                  get_cell_number @adj_hash["FNMA/FannieMaeProduct/FICO/LTV"],r,cc
                   @adj_hash["FNMA/FannieMaeProduct/FICO/LTV"]["true"] = {}
                   @adj_hash["FNMA/FannieMaeProduct/FICO/LTV"]["true"]["HomeReady"] = {}
                   @adj_hash["FNMA/FannieMaeProduct/FICO/LTV"]["true"]["HomeReady"]["680-Inf"] = {}
@@ -372,6 +382,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 783 && cc == 15
                   @property_hash["PropertyType/Term/LTV"] = {}
+                  get_cell_number @property_hash["PropertyType/Term/LTV"],r,cc
                   @property_hash["PropertyType/Term/LTV"]["Condo"] = {}
                   @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                   @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -381,6 +392,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 784 && cc == 15
                   @property_hash["PropertyType"] = {}
+                  get_cell_number @property_hash["PropertyType"],r,cc
                   @property_hash["PropertyType"]["Manufactured Home"] = {}
                   cc = cc + 5
                   new_val = sheet_data.cell(r,cc)
@@ -394,6 +406,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 786 && cc == 15
                   @property_hash["PropertyType/LTV"] = {}
+                  get_cell_number @property_hash["PropertyType/LTV"],r,cc
                   @property_hash["PropertyType/LTV"]["3-4 Unit"] = {}
                   @property_hash["PropertyType/LTV"]["3-4 Unit"]["0-80"] = {}
                   cc = cc + 5
@@ -414,6 +427,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 789 && cc == 15
                   @property_hash["FinancingType"] = {}
+                  get_cell_number @property_hash["FinancingType"],r,cc
                   @property_hash["FinancingType"]["Subordinate Financing"] = {}
                   cc = cc + 5
                   new_val = sheet_data.cell(r,cc)
@@ -421,6 +435,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 791 && cc == 15
                   @property_hash["FreddieMacProduct/LoanPurpose/LoanSize/RefinanceOption"] = {}
+                  get_cell_number @property_hash["FreddieMacProduct/LoanPurpose/LoanSize/RefinanceOption"],r,cc
                   @property_hash["FreddieMacProduct/LoanPurpose/LoanSize/RefinanceOption"]["HomePossible"] = {}
                   @property_hash["FreddieMacProduct/LoanPurpose/LoanSize/RefinanceOption"]["HomePossible"]["Purchase"] = {}
                   @property_hash["FreddieMacProduct/LoanPurpose/LoanSize/RefinanceOption"]["HomePossible"]["Purchase"]["Super Conforming"] = {}
@@ -431,6 +446,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 795 && cc == 2
                   @property_hash["FreddieMacProduct/LTV/FICO"] = {}
+                  get_cell_number @property_hash["FreddieMacProduct/LTV/FICO"],r,cc
                   @property_hash["FreddieMacProduct/LTV/FICO"]["HomePossible"] = {}
                   @property_hash["FreddieMacProduct/LTV/FICO"]["HomePossible"]["80-Inf"] = {}
                   @property_hash["FreddieMacProduct/LTV/FICO"]["HomePossible"]["80-Inf"]["680-Inf"] = {}
@@ -550,6 +566,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 1169 && cc == 14
                   @jumbo_hash["LockDay/LTV"] = {}
+                  get_cell_number @jumbo_hash["LockDay/LTV"],r,cc
                   @jumbo_hash["LockDay/LTV"]["15"] = {}
                 end
                 if r == 1169 && cc >= 16 && cc <= 20
@@ -559,6 +576,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r >= 1170 && r <= 1174 && cc == 14
                   primary_key = value.split.last
+                  if r == 1170
+                    get_cell_number @jumbo_hash["State/LTV"],r,cc
+                  end
                   @jumbo_hash["State/LTV"][primary_key] = {}
                 end
                 if r >= 1170 && r <= 1174 && cc >= 16 && cc <= 20
@@ -568,6 +588,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 1175 && cc == 14
                   @jumbo_hash["PropertyType/LTV"] = {}
+                  get_cell_number @jumbo_hash["PropertyType/LTV"],r,cc
                   @jumbo_hash["PropertyType/LTV"]["2 Unit"] = {}
                 end
                 if r == 1175 && cc >= 16 && cc <= 20
@@ -593,6 +614,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 1178 && cc == 14
                   @jumbo_hash["LoanPurpose/LTV"] = {}
+                  get_cell_number @jumbo_hash["LoanPurpose/LTV"],r,cc
                   @jumbo_hash["LoanPurpose/LTV"]["Purchase"] = {}
                 end
                 if r == 1178 && cc >= 16 && cc <= 20
@@ -602,6 +624,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 1179 && cc == 14
                   @jumbo_hash["RefinanceOption/LTV"] = {}
+                  get_cell_number @jumbo_hash["RefinanceOption/LTV"],r,cc
                   @jumbo_hash["RefinanceOption/LTV"]["Cash Out"] = {}
                 end
                 if r == 1179 && cc >= 16 && cc <= 20
@@ -611,6 +634,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r >= 1185 && r <= 1189 && cc == 2
                   primary_key = get_value value
+                  if r == 1185
+                    get_cell_number @jumbo_hash["LoanAmount/FICO/LTV"],r,cc
+                  end
                   @jumbo_hash["LoanAmount/FICO/LTV"]["0-1000000"][primary_key] = {}
                   @jumbo_hash["LoanAmount/FICO/LTV"]["1000000-1500000"][primary_key] = {}
                 end
@@ -742,6 +768,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r >= 1602 && r <= 1607 && cc == 7
                   primary_key = get_value value
+                  if r == 1602
+                    get_cell_number @price_hash["LoanSize/FICO/LTV"],r,cc
+                  end
                   @price_hash["LoanSize/FICO/LTV"]["Non-Conforming"][primary_key] = {}
                 end
                 if r >= 1602 && r <= 1607 && cc >= 8 && cc <= 11
@@ -751,6 +780,10 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r >= 1601 && r <= 1610 && cc == 13
                   cltv_key = value.split.last
+                  if r == 1601
+                    get_cell_number @price_hash["LoanSize/LoanType/State/Term"],r,cc
+                    get_cell_number @price_hash["LoanSize/LoanType/State/ArmBasic"],r,cc
+                  end
                   @price_hash["LoanSize/LoanType/State/Term"]["Non-Conforming"]["Fixed"][cltv_key] = {}
                   @price_hash["LoanSize/LoanType/State/ArmBasic"]["Non-Conforming"]["ARM"][cltv_key] = {}
                 end
@@ -766,6 +799,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 1607 && cc == 2
                   @price_hash["LoanSize/PropertyType"] = {}
+                  get_cell_number @price_hash["LoanSize/PropertyType"],r,cc
                   @price_hash["LoanSize/PropertyType"]["Non-Conforming"] = {}
                   @price_hash["LoanSize/PropertyType"]["Non-Conforming"]["Investment Property"] = {}
                   cc = cc + 3
@@ -792,6 +826,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 1611 && cc == 2
                   @price_hash["LoanSize/LoanAmount"] = {}
+                  get_cell_number @price_hash["LoanSize/LoanAmount"],r,cc
                   @price_hash["LoanSize/LoanAmount"]["Non-Conforming"] = {}
                   @price_hash["LoanSize/LoanAmount"]["Non-Conforming"]["1000000-Inf"] = {}
                   cc = cc + 3
@@ -800,6 +835,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r >= 1612 && r <= 1614 && cc == 2
                   ltv_key = get_value value
+                  if r == 1612
+                    get_cell_number @price_hash["LoanSize/RefinanceOption/LTV"],r,cc
+                  end
                   @price_hash["LoanSize/RefinanceOption/LTV"]["Non-Conforming"]["Cash Out"][ltv_key] = {}
                   cc = cc + 3
                   new_val = sheet_data.cell(r,cc)
@@ -891,6 +929,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 2256 && cc == 14
                   @gov_hash["FHA"] = {}
+                  get_cell_number @gov_hash["FHA"],r,cc
                   @gov_hash["FHA"]["true"] = {}
                   cc = cc + 6
                   new_val = sheet_data.cell(r,cc)
@@ -898,6 +937,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 2257 && cc == 14
                   @gov_hash["VA"] = {}
+                  get_cell_number @gov_hash["VA"],r,cc
                   @gov_hash["VA"]["true"] = {}
                   cc = cc + 6
                   new_val = sheet_data.cell(r,cc)
@@ -905,6 +945,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 2258 && cc == 14
                   @gov_hash["USDA"] = {}
+                  get_cell_number @gov_hash["USDA"],r,cc
                   @gov_hash["USDA"]["true"] = {}
                   cc = cc + 6
                   new_val = sheet_data.cell(r,cc)
@@ -912,6 +953,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 2260 && cc == 14
                   @gov_hash["LoanType/Term"] = {}
+                  get_cell_number @gov_hash["LoanType/Term"],r,cc
                   @gov_hash["LoanType/Term"]["Fixed"] = {}
                   @gov_hash["LoanType/Term"]["Fixed"]["16-29"] = {}
                   @gov_hash["LoanType/Term"]["Fixed"]["30"] = {}
@@ -922,6 +964,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r >= 2261 && r <= 2266 && cc == 14
                   primary_key = get_value value
+                  if r == 2261
+                    get_cell_number @gov_hash["FICO"],r,cc
+                  end
                   @gov_hash["FICO"][primary_key] = {}
                   cc = cc + 6
                   new_val = sheet_data.cell(r,cc)
@@ -929,6 +974,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 end
                 if r == 2269 && cc == 14
                   @gov_hash["PropertyType"] = {}
+                  get_cell_number @gov_hash["PropertyType"],r,cc
                   @gov_hash["PropertyType"]["Manufactured Home"] = {}
                   cc = cc + 6
                   new_val = sheet_data.cell(r,cc)
@@ -1120,6 +1166,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
 
               if r >= 2732 && r <= 2738 && cc == 2
                 ltv_key = value
+                if r == 2732
+                  get_cell_number @spec_adjustment5[primary_key],r,cc
+                end
                 @spec_adjustment5[primary_key][ltv_key] = {}
               end
 
@@ -1226,6 +1275,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                   @adj_hash["PropertyType/LTV"]["2-4 Unit"] = {}
                 end
                 if r == 2858 && cc == 16
+                  get_cell_number @adj_hash["Dti/LTV"],r,cc
                   @adj_hash["Dti/LTV"]["36.01-43.00"] = {}
                   @adj_hash["Dti/LTV"]["36.01-43.00"]["85.01-90.00"] = {}
                   cc = cc + 4
@@ -1250,6 +1300,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 if r >= 2865 && r <= 2868 && cc == 16
                   ltv_key = value.downcase.split('ltv').last.tr('A-Za-z()% ','')
                   ltv_key = get_value ltv_key
+                  if r == 2865
+                    get_cell_number @adj_hash["LoanPurpose/RefinanceOption/LTV"],r,cc
+                  end
                   @adj_hash["LoanPurpose/RefinanceOption/LTV"]["Refinance"]["Cash Out"][ltv_key] = {}
                   cc = cc + 4
                   new_val = sheet_data.cell(r,cc)
@@ -1258,6 +1311,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 if r >= 2869 && r <= 2871 && cc == 16
                   ltv_key = value.downcase.split('ltv').last.tr('A-Za-z()% ','')
                   ltv_key = get_value ltv_key
+                  if r == 2869
+                    get_cell_number @adj_hash["LTV"],r,cc
+                  end
                   @adj_hash["LTV"][ltv_key] = {}
                   cc = cc + 4
                   new_val = sheet_data.cell(r,cc)
@@ -1266,6 +1322,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 if r >= 2872 && r <= 2873 && cc == 16
                   ltv_key = value.downcase.split('ltv').last.tr('A-Za-z()% ','')
                   ltv_key = get_value ltv_key
+                  if r == 2872
+                    get_cell_number @adj_hash["PropertyType/LTV"],r,cc
+                  end
                   @adj_hash["PropertyType/LTV"]["2nd Home"][ltv_key] = {}
                   cc = cc + 4
                   new_val = sheet_data.cell(r,cc)
@@ -1321,6 +1380,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                   primary_key = "LockDay"
                   c_val = sheet_data.cell(2855,20)
                   @day_adjustment[primary_key] = {}
+                  get_cell_number @day_adjustment[primary_key],2855,20
                   @day_adjustment[primary_key]["45"] = c_val
                 end
               end
@@ -1402,6 +1462,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 primary_key = "LoanType / RateLock"
                 @spec_adjustment12[primary_key] = {}
                 c_val = sheet_data.cell(r,cc+4)
+                get_cell_number @spec_adjustment12[primary_key],r,cc
                 @spec_adjustment12[primary_key][value] = c_val
               end
 
@@ -1414,6 +1475,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 primary_key = "RateType/LoanType/RateLock"
                 c_val = sheet_data.cell(3445,20)
                 @day_adjustment6[primary_key] = {}
+                get_cell_number @day_adjustment6[primary_key],r,cc
                 @day_adjustment6[primary_key][value] = c_val
               end
 
@@ -1518,6 +1580,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
 
               if r >= 3158 && r <= 3181 && cc == 16
                 c_val = sheet_data.cell(r,cc+4)
+                if r == 3158
+                  get_cell_number @spec_adjustment8[first_key],r,cc
+                end
                 @spec_adjustment8[first_key][value] = c_val
               end
 
@@ -1525,6 +1590,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
                 primary_key = "RateType/LoanType/RateLock"
                 c_val = sheet_data.cell(3155,20)
                 @day_adjustment2[primary_key] = {}
+                get_cell_number @day_adjustment2[primary_key],r,cc
                 @day_adjustment2[primary_key][value] = c_val
               end
 
@@ -2026,6 +2092,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
               if value.present?
                 if r >= first_row && r <= end_row && cc == first_column
                   ltv_key = get_value value
+                  if r == first_row
+                    get_cell_number @adjustment_hash[primary_key],r,cc
+                  end
                   @adjustment_hash[primary_key]["Conforming"]["15-Inf"][ltv_key] = {}
                 end
                 if r >= first_row && r <= end_row && cc > first_column && cc <= last_column
@@ -2062,6 +2131,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
               if value.present?
                 if r >= first_row && r <= end_row && cc == first_column
                   ltv_key = get_value value
+                  if r == first_row
+                    get_cell_number @adjustment_hash[primary_key],r,cc
+                  end
                   @adjustment_hash[primary_key]["Conforming"]["Cash Out"][ltv_key] = {}
                 end
                 if r >= first_row && r <= end_row && cc > first_column && cc <= last_column
@@ -2098,6 +2170,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
               if value.present?
                 if r >= first_row && r <= end_row && cc == first_column
                   ltv_key = get_value value
+                  if r == first_row
+                    get_cell_number @adjustment_hash[primary_key],r,cc
+                  end
                   @adjustment_hash[primary_key]["true"]["Conforming"][ltv_key] = {}
                 end
                 if r >= first_row && r <= end_row && cc > first_column && cc <= last_column
@@ -2134,6 +2209,9 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
               value = sheet_data.cell(r,cc)
               if value.present?
                 if r >= first_row && r <= end_row && cc == first_column
+                  if r == first_row
+                    get_cell_number @adjustment_hash[primary_key],r,cc
+                  end
                   ltv_key = get_value value
                   @adjustment_hash[primary_key]["Subordinate Financing"]["Conforming"][ltv_key] = {}
                 end

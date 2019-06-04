@@ -114,6 +114,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Cash-Out Refinance
                   if r >= 81 && r <= 87 && cc == 3
                     secondary_key = get_value value
+                    if r == 81
+                      get_cell_number @adjustment_hash[primary_key],r,cc
+                    end
                     @adjustment_hash[primary_key][new_key][secondary_key] = {}
                   end
                   if r >= 81 && r <= 87 && cc >= 4 && cc <= 7
@@ -127,6 +130,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Applicable for all mortgages with all terms
                   if r == 91 && cc == 3
                     @adjustment_hash["PropertyType/Term/LTV"] = {}
+                    get_cell_number @adjustment_hash["PropertyType/Term/LTV"],r,cc
                     @adjustment_hash["PropertyType/Term/LTV"]["Investment Property"] = {}
                     @adjustment_hash["PropertyType/Term/LTV"]["Investment Property"]["0-Inf"] = {}
                   end
@@ -143,6 +147,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Applicable for all mortgages with terms greater than 15 years
                   if r >= 95 && r <= 101 && cc == 3
                     secondary_key = get_value value
+                    if r == 95
+                      get_cell_number @mortgage_hash[primary_key],r,cc
+                    end
                     @mortgage_hash[primary_key][new_key][secondary_key] = {}
                   end
                   if r >= 95 && r <= 101 && cc >= 4 && cc <= 11
@@ -155,6 +162,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     secondary_key = get_value value
                     if secondary_key.include?("%")
                       secondary_key = secondary_key.split("%").first+secondary_key.split("%").last
+                    end
+                    if r == 105
+                      get_cell_number @sub_hash[primary_key],r,cc
                     end
                     @sub_hash[primary_key][new_key][secondary_key] = {}
                   end
@@ -173,12 +183,14 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Subordinate Finance
                   if r == 112 && cc == 3
                     @sub_hash["FinancingType"] = {}
+                    get_cell_number @sub_hash["FinancingType"],r,cc
                     @sub_hash["FinancingType"]["Subordinate Financing"] = {}
                     @sub_hash["FinancingType"]["Subordinate Financing"] = value
                   end
                   # Property Type
                   if r == 105 && cc == 10
                     @multiunit_hash["PropertyType/LTV"] = {}
+                    get_cell_number @multiunit_hash["PropertyType/LTV"],r,cc
                     @multiunit_hash["PropertyType/LTV"]["2nd Home"] = {}
                     @multiunit_hash["PropertyType/LTV"]["2nd Home"]["85-Inf"] = {}
                     @multiunit_hash["PropertyType/LTV"]["2nd Home"]["85-Inf"] = (value*100)
@@ -189,6 +201,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     ltv_key = "15-Inf"
                     new_key = "75-Inf"
                     @property_hash[primary_key] = {}
+                    get_cell_number @property_hash[primary_key],r,cc
                     @property_hash[primary_key][secondary_key] = {}
                     @property_hash[primary_key][secondary_key][ltv_key] = {}
                     cc = cc + 3
@@ -213,6 +226,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     primary_key = "PropertyType"
                     new_key = "Manufactured Home"
                     @property_hash[primary_key] = {}
+                    get_cell_number @property_hash[primary_key],r,cc
                     if @property_hash[primary_key][new_key] = {}
                       cc = cc + 3
                       new_value = sheet_data.cell(r,cc)
@@ -221,6 +235,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 118 && cc == 3
                     @multiunit_hash["MiscAdjuster"] = {}
+                    get_cell_number @multiunit_hash["MiscAdjuster"],r,cc
                     @multiunit_hash["MiscAdjuster"]["Escrows Waived"] = {}
                     @multiunit_hash["MiscAdjuster"]["Escrows Waived"] = value*100
                   end
@@ -434,6 +449,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     primary_key = "USDA" if value == "USDA"
                     primary_key = "FHA" if value == "FHA Streamline"
                     @adjustment_hash[primary_key] = {}
+                    if value == "VA" || value == "USDA" || value == "FHA Streamline"
+                      get_cell_number @adjustment_hash[primary_key],r,cc
+                    end
                     @adjustment_hash[primary_key][new_key] = {}
                     if @adjustment_hash[primary_key][new_key] = {}
                       cc = cc + 1
@@ -443,6 +461,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 34 && cc == 11
                     @adjustment_hash["VA/RefinanceOption"] = {}
+                    get_cell_number @adjustment_hash["VA/RefinanceOption"],r,cc
                     @adjustment_hash["VA/RefinanceOption"]["true"] = {}
                     cc = cc + 1
                     new_value = sheet_data.cell(r,cc)
@@ -455,10 +474,14 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       second_key = get_value value
                     end
                     new_value = sheet_data.cell(r,cc+1)
+                    if r == 35
+                      get_cell_number @fico_hash["FICO"],r,cc
+                    end
                     @fico_hash["FICO"][second_key]=new_value*100
                   end
                   if r == 39 && cc == 13
                     @fico_hash["VA/FICO"] = {}
+                    get_cell_number @fico_hash["VA/FICO"],r,cc
                     @fico_hash["VA/FICO"]["true"] = {}
                     @fico_hash["VA/FICO"]["true"]["600-619"] = {}
                     cc = cc + 1
@@ -467,6 +490,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r >= 41 && r <= 42 && cc == 11
                     new_value = sheet_data.cell(r,cc+1)
+                    if r == 41
+                      get_cell_number @property_hash["PropertyType"],r,cc
+                    end
                     @property_hash["PropertyType"][value] = new_value*100
                   end
                 end
@@ -571,6 +597,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Cash-Out Refinance
                   if r >= 60 && r <= 65 && cc == 2
                     secondary_key = get_value value
+                    if r == 60
+                      get_cell_number @adjustment_hash["RefinanceOption/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["RefinanceOption/FICO/LTV"]["Cash Out"][secondary_key] = {}
                   end
                   if r >= 60 && r <= 65 && cc >= 3 && cc <= 6
@@ -586,6 +615,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Applicable for all mortgages with all terms
                   if r == 69 && cc == 2
                     @adjustment_hash["PropertyType/Term/LTV"] = {}
+                    get_cell_number @adjustment_hash["PropertyType/Term/LTV"],r,cc
                     @adjustment_hash["PropertyType/Term/LTV"]["Investment Property"] = {}
                     @adjustment_hash["PropertyType/Term/LTV"]["Investment Property"]["0-Inf"] = {}
                   end
@@ -597,6 +627,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Applicable for all mortgages with terms greater than 15 years
                   if r >= 73 && r <= 79 && cc == 2
                     secondary_key = get_value value
+                    if r == 73
+                      get_cell_number @mortgage_hash["Term/FICO/LTV"],r,cc  
+                    end
                     @mortgage_hash["Term/FICO/LTV"]["15-Inf"][secondary_key] = {}
                   end
                   if r >= 73 && r <= 79 && cc >= 3 && cc <= 10
@@ -617,6 +650,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     else
                       secondary_key
                     end
+                    if r == 83
+                      get_cell_number @sub_hash["FinancingType/LTV/CLTV/FICO"],r,cc  
+                    end
                     @sub_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"][secondary_key] = {}
                   end
                   if r >= 83 && r <= 87 && cc == 6
@@ -636,12 +672,14 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Subordinate Finance
                   if r == 90 && cc == 2
                     @sub_hash["FinancingType"] = {}
+                    get_cell_number @sub_hash["FinancingType"],r,cc
                     @sub_hash["FinancingType"]["Subordinate Financing"] = {}
                     @sub_hash["FinancingType"]["Subordinate Financing"] = value
                   end
                   # Property Type
                   if r == 90 && cc == 5
                     @property_hash["PropertyType/Term/LTV"] = {}
+                    get_cell_number @property_hash["PropertyType/Term/LTV"],r,cc
                     @property_hash["PropertyType/Term/LTV"]["Condo"] = {}
                     @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                     @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -651,6 +689,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 90 && cc == 9
                     @property_hash["PropertyType/LTV"] = {}
+                    get_cell_number @property_hash["PropertyType/LTV"],r,cc
                     @property_hash["PropertyType/LTV"]["2 Unit"] = {}
                     @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 1
@@ -659,6 +698,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 91 && cc == 5
                     @property_hash["PropertyType"] = {}
+                    get_cell_number @property_hash["PropertyType"],r,cc
                     @property_hash["PropertyType"]["Manufactured Home"] = {}
                     cc = cc + 2
                     new_value = sheet_data.cell(r,cc)
@@ -673,6 +713,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 97 && cc == 3
                     @property_hash["MiscAdjuster"] = {}
+                    get_cell_number @property_hash["MiscAdjuster"],r,cc
                     @property_hash["MiscAdjuster"]["Escrows Waived"] = {}
                     @property_hash["MiscAdjuster"]["Escrows Waived"] = value*100
                   end
@@ -778,6 +819,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Cash-Out Refinance
                   if r >= 36 && r <= 42 && cc == 2
                     secondary_key = get_value value
+                    if r == 36
+                      get_cell_number @adjustment_hash["RefinanceOption/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["RefinanceOption/FICO/LTV"]["Cash Out"][secondary_key] = {}
                   end
                   if r >= 36 && r <= 42 && cc >= 3 && cc <= 6
@@ -793,6 +837,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Applicable for all mortgages with all terms
                   if r == 46 && cc == 2
                     @adjustment_hash["PropertyType/Term/LTV"] = {}
+                    get_cell_number @adjustment_hash["PropertyType/Term/LTV"],r,cc
                     @adjustment_hash["PropertyType/Term/LTV"]["Investment Property"] = {}
                     @adjustment_hash["PropertyType/Term/LTV"]["Investment Property"]["0-Inf"] = {}
                   end
@@ -808,6 +853,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Applicable for all mortgages with terms greater than 15 years
                   if r >= 50 && r <= 56 && cc == 2
                     secondary_key = get_value value
+                    if r == 50
+                      get_cell_number @mortgage_hash["Term/FICO/LTV"],r,cc
+                    end
                     @mortgage_hash["Term/FICO/LTV"]["15-Inf"][secondary_key] = {}
                   end
                   if r >= 50 && r <= 56 && cc >= 3 && cc <= 10
@@ -827,6 +875,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       secondary_key = secondary_key.tr('% ','')
                     else
                       secondary_key
+                    end
+                    if r == 60
+                      get_cell_number @sub_hash["FinancingType/LTV/CLTV/FICO"],r,cc
                     end
                     @sub_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"][secondary_key] = {}
                   end
@@ -852,12 +903,14 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Subordinate Finance
                   if r == 67 && cc == 2
                     @sub_hash["FinancingType"] = {}
+                    get_cell_number @sub_hash["FinancingType"],r,cc
                     @sub_hash["FinancingType"]["Subordinate Financing"] = {}
                     @sub_hash["FinancingType"]["Subordinate Financing"] = value*100
                   end
                   # Property Type
                   if r == 67 && cc == 5
                     @property_hash["PropertyType/Term/LTV"] = {}
+                    get_cell_number @property_hash["PropertyType/Term/LTV"],r,cc
                     @property_hash["PropertyType/Term/LTV"]["Condo"] = {}
                     @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                     @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -867,6 +920,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 67 && cc == 10
                     @property_hash["PropertyType/LTV"] = {}
+                    get_cell_number @property_hash["PropertyType/LTV"],r,cc
                     @property_hash["PropertyType/LTV"]["2 Unit"] = {}
                     @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 2
@@ -875,6 +929,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 68 && cc == 5
                     @property_hash["PropertyType"] = {}
+                    get_cell_number @property_hash["PropertyType"],r,cc
                     @property_hash["PropertyType"]["Manufactured Home"] = {}
                     cc = cc + 3
                     new_value = sheet_data.cell(r,cc)
@@ -889,6 +944,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 72 && cc == 3
                     @property_hash["MiscAdjuster"] = {}
+                    get_cell_number @property_hash["MiscAdjuster"],r,cc
                     @property_hash["MiscAdjuster"]["Escrows Waived"] = {}
                     @property_hash["MiscAdjuster"]["Escrows Waived"] = value*100
                   end
@@ -997,6 +1053,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Cash-Out Refinance
                   if r >= 29 && r <= 35 && cc == 2
                     secondary_key = get_value value
+                    if r == 29
+                      get_cell_number @adjustment_hash["RefinanceOption/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["RefinanceOption/FICO/LTV"]["Cash Out"][secondary_key] = {}
                   end
                   if r >= 29 && r <= 35 && cc >= 3 && cc <= 6
@@ -1011,6 +1070,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r >= 35 && r <= 36 && cc == 9
                     ltv_key = value.tr('% ','')
+                    if r == 35
+                      get_cell_number @adjustment_hash["LTV"],r,cc  
+                    end
                     @adjustment_hash["LTV"][ltv_key] = {}
                     cc = cc + 2
                     new_value = sheet_data.cell(r,cc)
@@ -1019,6 +1081,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Applicable for all mortgages with terms greater than 15 years
                   if r >= 40 && r <= 47 && cc == 2
                     secondary_key = get_value value
+                    if r == 40
+                      get_cell_number @mortgage_hash["Term/FICO/LTV"],r,cc
+                    end
                     @mortgage_hash["Term/FICO/LTV"]["15-Inf"][secondary_key] = {}
                   end
                   if r >= 40 && r <= 47 && cc >= 3 && cc <= 10
@@ -1038,6 +1103,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     else
                       ltv_key
                     end
+                    if r == 48
+                      get_cell_number @mortgage_hash["PropertyType/LTV"],r,cc
+                    end
                     @mortgage_hash["PropertyType/LTV"]["Investment Property"][ltv_key] = {}
                     @mortgage_hash["PropertyType/LTV"]["Investment Property"][ltv_key] = (value.class == Float ? value*100 : value)
                   end
@@ -1048,6 +1116,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       secondary_key = secondary_key.tr("% ", "")
                     else
                       secondary_key
+                    end
+                    if r == 52
+                      get_cell_number @sub_hash["FinancingType/LTV/CLTV/FICO"],r,cc
                     end
                     @sub_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"][secondary_key] = {}
                   end
@@ -1068,6 +1139,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Property Type
                   if r == 61 && cc == 5
                     @property_hash["PropertyType/Term/LTV"] = {}
+                    get_cell_number @property_hash["PropertyType/Term/LTV"],r,cc
                     @property_hash["PropertyType/Term/LTV"]["Condo"] = {}
                     @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                     @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -1077,6 +1149,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 61 && cc == 10
                     @property_hash["PropertyType/LTV"] = {}
+                    get_cell_number @property_hash["PropertyType/LTV"],r,cc
                     @property_hash["PropertyType/LTV"]["2 Unit"] = {}
                     @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 2
@@ -1092,6 +1165,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 65 && cc == 3
                     @property_hash["MiscAdjuster"] = {}
+                    get_cell_number @property_hash["MiscAdjuster"],r,cc
                     @property_hash["MiscAdjuster"]["Escrows Waived"] = {}
                     @property_hash["MiscAdjuster"]["Escrows Waived"] = value*100
                   end
@@ -1200,11 +1274,15 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     else
                       ltv_key
                     end
+                    get_cell_number @adjustment_hash["PropertyType/LTV"],r,cc
                     @adjustment_hash["PropertyType/LTV"]["Investment Property"][ltv_key] = (value.class == Float ? value*100 : value)
                   end
                   # Applicable for all mortgages with terms greater than 15 years
                   if r >= 41 && r <= 47 && cc == 2
                     secondary_key = get_value value
+                    if r == 41
+                      get_cell_number @adjustment_hash["Term/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["Term/FICO/LTV"]["15-Inf"][secondary_key] = {}
                   end
                   if r >= 41 && r <= 47 && cc >= 3 && cc <= 10
@@ -1225,6 +1303,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     else
                       secondary_key
                     end
+                    if r == 51
+                      get_cell_number @sub_hash["FinancingType/LTV/CLTV/FICO"],r,cc
+                    end
                     @sub_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"][secondary_key] = {}
                   end
                   if r >= 51 && r <= 55 && cc == 6
@@ -1244,11 +1325,13 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                    # Property Type
                    if r == 59 && cc == 2
                      @sub_hash["FinancingType"] = {}
+                     get_cell_number @sub_hash["FinancingType"],r,cc
                      @sub_hash["FinancingType"]["Subordinate Financing"] = {}
                      @sub_hash["FinancingType"]["Subordinate Financing"] = value*100
                    end
                    if r == 59 && cc == 5
                     @property_hash["PropertyType/Term/LTV"] = {}
+                    get_cell_number @property_hash["PropertyType/Term/LTV"],r,cc
                     @property_hash["PropertyType/Term/LTV"]["Condo"] = {}
                     @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                     @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -1258,6 +1341,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 59 && cc == 10
                     @property_hash["PropertyType/LTV"] = {}
+                    get_cell_number @property_hash["PropertyType/LTV"],r,cc
                     @property_hash["PropertyType/LTV"]["2 Unit"] = {}
                     @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 2
@@ -1266,6 +1350,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 60 && cc == 5
                     @property_hash["PropertyType"] = {}
+                    get_cell_number @property_hash["PropertyType"],r,cc
                     @property_hash["PropertyType"]["Manufactured Home"] = {}
                     cc = cc + 3
                     new_value = sheet_data.cell(r,cc)
@@ -1280,6 +1365,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 64 && cc == 3
                     @property_hash["MiscAdjuster"] = {}
+                    get_cell_number @property_hash["MiscAdjuster"],r,cc
                     @property_hash["MiscAdjuster"]["Escrows Waived"] = {}
                     @property_hash["MiscAdjuster"]["Escrows Waived"] = value*100
                   end
@@ -1384,6 +1470,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     else
                       secondary_key
                     end
+                    if r == 37
+                      get_cell_number @adjustment_hash["Term/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["Term/FICO/LTV"]["15-Inf"][secondary_key] = {}
                   end
                   if r >= 37 && r <= 43 && cc >= 3 && cc <= 10
@@ -1404,6 +1493,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     else
                       secondary_key
                     end
+                    if r == 47
+                      get_cell_number @sub_hash["FinancingType/LTV/CLTV/FICO"],r,cc
+                    end
                     @sub_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"][secondary_key] = {}
                   end
                   if r >= 47 && r <= 51 && cc == 6
@@ -1423,6 +1515,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                    # Property Type
                    if r == 55 && cc == 5
                     @property_hash["PropertyType/Term/LTV"] = {}
+                    get_cell_number @property_hash["PropertyType/Term/LTV"],r,cc
                     @property_hash["PropertyType/Term/LTV"]["Condo"] = {}
                     @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"] = {}
                     @property_hash["PropertyType/Term/LTV"]["Condo"]["15-Inf"]["75-Inf"] = {}
@@ -1432,6 +1525,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 55 && cc == 10
                     @property_hash["PropertyType/LTV"] = {}
+                    get_cell_number @property_hash["PropertyType/LTV"],r,cc
                     @property_hash["PropertyType/LTV"]["2 Unit"] = {}
                     @property_hash["PropertyType/LTV"]["2 Unit"]["0-85"] = {}
                     cc = cc + 2
@@ -1440,6 +1534,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 56 && cc == 5
                     @property_hash["PropertyType"] = {}
+                    get_cell_number @property_hash["PropertyType"],r,cc
                     @property_hash["PropertyType"]["Manufactured Home"] = {}
                     cc =cc + 3
                     new_value = sheet_data.cell(r,cc)
@@ -1454,6 +1549,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 60 && cc == 3
                     @property_hash["MiscAdjuster"] = {}
+                    get_cell_number @property_hash["MiscAdjuster"],r,cc
                     @property_hash["MiscAdjuster"]["Escrows Waived"] = {}
                     @property_hash["MiscAdjuster"]["Escrows Waived"] = value*100
                   end
@@ -1555,6 +1651,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     else
                       ltv_key = get_value value
                     end
+                    if r == 97
+                      get_cell_number @adjustment_hash[secondary_key],r,cc
+                    end
                     @adjustment_hash[secondary_key][ltv_key] = {}
                   end
                   if r >= 97 && r <= 105 && cc >= 4 && cc <= 8
@@ -1563,6 +1662,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 94 && cc == 10
                     @other_hash["RefinanceOption/LTV"] = {}
+                    get_cell_number @other_hash["RefinanceOption/LTV"],r,cc
                     @other_hash["RefinanceOption/LTV"]["Cash Out"] = {}
                   end
                   if r == 94 && cc >= 11 && cc <= 15
@@ -1576,6 +1676,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                     else
                       ltv_key = value
                     end
+                    get_cell_number @other_hash["PropertyType/LTV"],r,cc
                     @other_hash["PropertyType/LTV"][ltv_key] = {}
                   end
                   if r == 95 && cc >= 11 && cc <= 15
@@ -1689,6 +1790,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   # Other Adjustments
                   if r >= 39 && r <= 42 && cc == 10
                     secondary_key = value
+                    if r == 39
+                      get_cell_number @other_hash["State/LTV"],r,cc
+                    end
                     @other_hash["State/LTV"][secondary_key] = {}
                   end
                   if r >= 39 && r <= 42 && cc >= 11 && cc <= 15
@@ -1698,6 +1802,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 45 && cc == 10
                     @other_hash["PropertyType/LTV"] = {}
+                    get_cell_number @other_hash["PropertyType/LTV"],r,cc
                     @other_hash["PropertyType/LTV"]["2 Unit"] = {}
                   end
                   if r == 45 && cc >= 11 && cc <= 15
@@ -1723,6 +1828,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 52 && cc == 10
                     @other_hash["LoanPurpose/LTV"] = {}
+                    get_cell_number @other_hash["LoanPurpose/LTV"],r,cc
                     @other_hash["LoanPurpose/LTV"]["Purchase"] = {}
                   end
                   if r == 52 && cc >= 11 && cc <= 15
@@ -1732,6 +1838,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r == 53 && cc == 10
                     @other_hash["RefinanceOption/LTV"] = {}
+                    get_cell_number @other_hash["RefinanceOption/LTV"],r,cc
                     @other_hash["RefinanceOption/LTV"]["Cash Out"] = {}
                   end
                   if r == 53 && cc >= 11 && cc <= 15
@@ -1741,6 +1848,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   end
                   if r >=56 && r <= 57 && cc == 10
                     secondary_key = value
+                    if r == 56
+                      get_cell_number @other_hash["MiscAdjuster/LTV"],r,cc
+                    end
                     @other_hash["MiscAdjuster/LTV"][secondary_key] = {}
                   end
                   if r >= 56 && r <= 57 && cc >= 11 && cc <= 15

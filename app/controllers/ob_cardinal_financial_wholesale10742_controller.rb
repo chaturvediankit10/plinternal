@@ -159,6 +159,9 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # All Eligible Mortgages - LLPAs for Terms > 15 Years
                   if r >= 357 && r <= 365 && cc == 9
                     ltv_key = get_value value
+                    if r == 357
+                      get_cell_number @adjustment_hash["FannieMae/Term/FICO/LTV"],r,cc
+                    end
                     @adjustment_hash["FannieMae/Term/FICO/LTV"]["true"]["15-Inf"][ltv_key] = {}
                   end
                   if r >= 357 && r <= 365 && cc >= 18 && cc <= 44
@@ -170,6 +173,9 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # All Eligible Mortgages  Cash-Out Refinance  LLPAs
                   if r >= 367 && r <= 373 && cc == 9
                     ltv_key = get_value value
+                    if r == 367
+                      get_cell_number @cashout_adjustment["FannieMae/RefinanceOption/FICO/LTV"],r,cc
+                    end
                     @cashout_adjustment["FannieMae/RefinanceOption/FICO/LTV"]["true"]["Cash Out"][ltv_key] = {}
                   end
                   if r >= 367 && r <= 373 && cc >= 18 && cc <= 44
@@ -181,6 +187,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # All Eligible Mortgages Product Feature  LLPAs
                   if r == 375 && cc == 9
                     @product_hash["FannieMae/LoanType/LTV"] = {}
+                    get_cell_number @product_hash["FannieMae/LoanType/LTV"],r,cc
                     @product_hash["FannieMae/LoanType/LTV"]["true"] = {}
                     @product_hash["FannieMae/LoanType/LTV"]["true"]["ARM"] = {}
                   end
@@ -191,6 +198,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 376 && cc == 9
                     @product_hash["FannieMae/PropertyType/LTV"] = {}
+                    get_cell_number @product_hash["FannieMae/PropertyType/LTV"],r,cc
                     @product_hash["FannieMae/PropertyType/LTV"]["true"] = {}
                     @product_hash["FannieMae/PropertyType/LTV"]["true"]["Manufactured Home"] = {}
                   end
@@ -209,6 +217,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 378 && cc >= 18 && cc <= 44
                     ltv_data =  get_value @ltv_data[cc-2]
+                    get_cell_number @product_hash["FannieMae/LoanSize/RefinanceOption/LTV"],r,cc
                     @product_hash["FannieMae/LoanSize/RefinanceOption/LTV"]["true"]["High-Balance"]["Rate and Term"][ltv_data] = {}
                     @product_hash["FannieMae/LoanSize/RefinanceOption/LTV"]["true"]["High-Balance"]["Rate and Term"][ltv_data] = value
                   end
@@ -219,6 +228,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 380 && cc == 9
                     @product_hash["FannieMae/LoanSize/LoanType/LTV"] = {}
+                    get_cell_number @product_hash["FannieMae/LoanSize/LoanType/LTV"],r,cc
                     @product_hash["FannieMae/LoanSize/LoanType/LTV"]["true"] = {}
                     @product_hash["FannieMae/LoanSize/LoanType/LTV"]["true"]["High-Balance"] = {}
                     @product_hash["FannieMae/LoanSize/LoanType/LTV"]["true"]["High-Balance"]["ARM"] = {}
@@ -247,6 +257,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
 
                   # subordinate adjustment
                   if r == 387 && cc == 6
+                    get_cell_number @subordinate_hash["FinancingType/LTV/CLTV/FICO"],r,cc
                     @subordinate_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"]["0-Inf"] = {}
                     @subordinate_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"]["0-Inf"]["0-Inf"] = {}
                     @subordinate_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"]["0-Inf"]["0-Inf"]["0-720"] = {}
@@ -272,6 +283,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # Additional Adjustments5
                   if r == 394 && cc == 6
                     @additional_hash["RefinanceOption"] = {}
+                    get_cell_number @additional_hash["RefinanceOption"],r,cc
                     @additional_hash["RefinanceOption"]["Cash Out"] = {}
                     cc = cc + 8
                     new_val = sheet_data.cell(r,cc)
@@ -279,6 +291,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 395 && cc == 6
                     @additional_hash["MiscAdjuster/FICO"] = {}
+                    get_cell_number @additional_hash["MiscAdjuster/FICO"],r,cc
                     @additional_hash["MiscAdjuster/FICO"]["Escrow Waiver"] = {}
                     @additional_hash["MiscAdjuster/FICO"]["Escrow Waiver"]["0-700"] = {}
                     cc = cc + 8
@@ -287,6 +300,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 396 && cc == 6
                     @additional_hash["MiscAdjuster/State/FICO"] = {}
+                    get_cell_number @additional_hash["MiscAdjuster/State/FICO"],r,cc
                     @additional_hash["MiscAdjuster/State/FICO"]["Escrow Waiver"] = {}
                     @additional_hash["MiscAdjuster/State/FICO"]["Escrow Waiver"]["CA"] = {}
                     @additional_hash["MiscAdjuster/State/FICO"]["Escrow Waiver"]["CA"]["0-700"] = {}
@@ -296,6 +310,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 397 && cc == 6
                     @additional_hash["LoanType/LTV"] = {}
+                    get_cell_number @additional_hash["LoanType/LTV"],r,cc
                     @additional_hash["LoanType/LTV"]["ARM"] = {}
                     @additional_hash["LoanType/LTV"]["ARM"]["90-Inf"] = {}
                     cc = cc + 8
@@ -304,6 +319,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 397 && cc == 6
                     @additional_hash["LockDay"] = {}
+                    get_cell_number @additional_hash["LockDay"],r,cc
                     @additional_hash["LockDay"]["90"] = {}
                     cc = cc + 8
                     new_val = sheet_data.cell(r,cc)
@@ -311,6 +327,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 404 && cc == 2
                     @additional_hash["State"] = {}
+                    get_cell_number @additional_hash["State"],r,cc
                     @additional_hash["State"]["AL"] = {}
                     cc = cc + 8
                     new_val = sheet_data.cell(r,cc)
@@ -318,6 +335,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 396 && cc == 37
                     @additional_hash["FICO/LTV"] = {}
+                    get_cell_number @additional_hash["FICO/LTV"],r,cc
                     @additional_hash["FICO/LTV"]["680-inf"] = {}
                     @additional_hash["FICO/LTV"]["680-inf"]["80-Inf"] = {}
                     @additional_hash["FICO/LTV"]["680-inf"]["80-Inf"] = value
@@ -330,6 +348,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # Lender Paid Mortgage Insurance
                   if r == 424 && cc == 7
                     @lpmi_hash["LPMI/Term/FICO"] = {}
+                    get_cell_number @lpmi_hash["LPMI/Term/FICO"],r,cc
                     @lpmi_hash["LPMI/Term/FICO"]["true"] = {}
                     @lpmi_hash["LPMI/Term/FICO"]["true"]["0-25"] = {}
                   end
@@ -340,6 +359,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 425 && cc == 7
                     @lpmi_hash["LPMI/RefinanceOption/FICO"] = {}
+                    get_cell_number @lpmi_hash["LPMI/RefinanceOption/FICO"],r,cc
                     @lpmi_hash["LPMI/RefinanceOption/FICO"]["true"] = {}
                     @lpmi_hash["LPMI/RefinanceOption/FICO"]["true"]["Cash Out"] = {}
                   end
@@ -350,6 +370,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 426 && cc == 7
                     @lpmi_hash["LPMI/PropertyType/FICO"] = {}
+                    get_cell_number @lpmi_hash["LPMI/PropertyType/FICO"],r,cc
                     @lpmi_hash["LPMI/PropertyType/FICO"]["true"] = {}
                     @lpmi_hash["LPMI/PropertyType/FICO"]["true"]["Investment Property"] = {}
                   end
@@ -360,6 +381,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 427 && cc == 7
                     @lpmi_hash["LPMI/LoanAmount/FICO"] = {}
+                    get_cell_number @lpmi_hash["LPMI/LoanAmount/FICO"],r,cc
                     @lpmi_hash["LPMI/LoanAmount/FICO"]["true"] = {}
                     @lpmi_hash["LPMI/LoanAmount/FICO"]["true"]["484350-Inf"] = {}
                   end
@@ -506,6 +528,9 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # All Eligible Mortgages - Other Than Relief Refinance Mortgages - LLPAs for Terms > 15 Years
                   if r >= 744 && r <= 750 && cc == 10
                     ltv_key = get_value value
+                    if r == 744
+                      get_cell_number @freddie_adjustment_hash["FreddieMac/Term/FICO/LTV"],r,cc
+                    end
                     @freddie_adjustment_hash["FreddieMac/Term/FICO/LTV"]["true"]["15-Inf"][ltv_key] = {}
                   end
                   if r >= 744 && r <= 750 && cc >= 21 && cc <= 42
@@ -517,6 +542,9 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # All Eligible Mortgages - Relief Refinance Mortgages - LLPAs for Terms > 15 Years
                   if r >= 752 && r <= 760 && cc == 10
                     ltv_key = get_value value
+                    if r == 752
+                      get_cell_number @freddie_adjustment_hash["FreddieMac/LoanPurpose/Term/FICO/LTV"],r,cc
+                    end
                     @freddie_adjustment_hash["FreddieMac/LoanPurpose/Term/FICO/LTV"]["true"]["Refinance"]["15-Inf"][ltv_key] = {}
                   end
                   if r >= 752 && r <= 760 && cc >= 21 && cc <= 42
@@ -528,6 +556,9 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # All Eligible Mortgages  Cash-Out Refinance  LLPAs
                   if r >= 762 && r <= 768 && cc == 10
                     ltv_key = get_value value
+                    if r == 762
+                      get_cell_number @cashout_hash["FreddieMac/RefinanceOption/FICO/LTV"],r,cc
+                    end
                     @cashout_hash["FreddieMac/RefinanceOption/FICO/LTV"]["true"]["Cash Out"][ltv_key] = {}
                   end
                   if r >= 762 && r <= 768 && cc >= 21 && cc <= 42
@@ -539,6 +570,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # # All Eligible Mortgages Product Feature  LLPAs
                   if r == 770 && cc == 10
                     @property_hash["FreddieMac/LoanType/LTV"] = {}
+                    get_cell_number @property_hash["FreddieMac/LoanType/LTV"],r,cc
                     @property_hash["FreddieMac/LoanType/LTV"]["true"] = {}
                     @property_hash["FreddieMac/LoanType/LTV"]["true"]["ARM"] = {}
                   end
@@ -549,6 +581,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 771 && cc == 10
                     @property_hash["FreddieMac/PropertyType/LTV"] = {}
+                    get_cell_number @property_hash["FreddieMac/PropertyType/LTV"],r,cc
                     @property_hash["FreddieMac/PropertyType/LTV"]["true"] = {}
                     @property_hash["FreddieMac/PropertyType/LTV"]["true"]["Manufactured Home"] = {}
                   end
@@ -599,6 +632,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 777 && cc == 10
                     @property_hash["FreddieMac/LoanPurpose/LoanType/LoanSize/RefinanceOption/LTV"] = {}
+                    get_cell_number @property_hash["FreddieMac/LoanPurpose/LoanType/LoanSize/RefinanceOption/LTV"],r,cc
                     @property_hash["FreddieMac/LoanPurpose/LoanType/LoanSize/RefinanceOption/LTV"]["true"] = {}
                     @property_hash["FreddieMac/LoanPurpose/LoanType/LoanSize/RefinanceOption/LTV"]["true"]["Purchase"] = {}
                     @property_hash["FreddieMac/LoanPurpose/LoanType/LoanSize/RefinanceOption/LTV"]["true"]["Purchase"]["Fixed"] = {}
@@ -612,6 +646,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 778 && cc == 10
                     @property_hash["FreddieMac/LoanType/LoanSize/RefinanceOption/LTV"] = {}
+                    get_cell_number @property_hash["FreddieMac/LoanType/LoanSize/RefinanceOption/LTV"],r,cc
                     @property_hash["FreddieMac/LoanType/LoanSize/RefinanceOption/LTV"]["true"] = {}
                     @property_hash["FreddieMac/LoanType/LoanSize/RefinanceOption/LTV"]["true"]["Fixed"] = {}
                     @property_hash["FreddieMac/LoanType/LoanSize/RefinanceOption/LTV"]["true"]["Fixed"]["Conforming"] = {}
@@ -644,6 +679,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   # # subordinate adjustment
                   if r == 786 && cc == 7
+                    get_cell_number @sub_hash["FinancingType/FreddieMacProduct/LTV/CLTV/FICO"],r,cc
                     @sub_hash["FinancingType/FreddieMacProduct/LTV/CLTV/FICO"]["Subordinate Financing"]["Home Possible"]["0-Inf"] = {}
                     @sub_hash["FinancingType/FreddieMacProduct/LTV/CLTV/FICO"]["Subordinate Financing"]["Home Possible"]["0-Inf"]["0-Inf"] = {}
                   end
@@ -685,6 +721,9 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                     else
                       primary_key = get_value value
                     end
+                    if r == 796
+                      get_cell_number @sub_hash["FinancingType/LTV/CLTV/FICO"],r,cc
+                    end
                     @sub_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"][primary_key] = {}
                   end
                   if r >= 796 && r <= 802 && cc == 11
@@ -699,6 +738,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # Add Adj9
                   if r == 808 && cc == 37
                     @sub_hash["RefinanceOption"] = {}
+                    get_cell_number @sub_hash["RefinanceOption"],r,cc
                     @sub_hash["RefinanceOption"]["Rate and Term"] = {}
                     cc = cc + 6
                     new_val = sheet_data.cell(r,cc)
@@ -706,6 +746,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 809 && cc == 37
                     @sub_hash["MiscAdjuster/FICO"] = {}
+                    get_cell_number @sub_hash["MiscAdjuster/FICO"],r,cc
                     @sub_hash["MiscAdjuster/FICO"]["Escrow Waiver"] = {}
                     @sub_hash["MiscAdjuster/FICO"]["Escrow Waiver"]["0-700"] = {}
                     cc = cc + 6
@@ -714,6 +755,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 810 && cc == 37
                     @sub_hash["MiscAdjuster/State/FICO"] = {}
+                    get_cell_number @sub_hash["MiscAdjuster/State/FICO"],r,cc
                     @sub_hash["MiscAdjuster/State/FICO"]["Escrow Waiver"] = {}
                     @sub_hash["MiscAdjuster/State/FICO"]["Escrow Waiver"]["CA"] = {}
                     @sub_hash["MiscAdjuster/State/FICO"]["Escrow Waiver"]["CA"]["0-700"] = {}
@@ -723,6 +765,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 811 && cc == 37
                     @sub_hash["LockDay"] = {}
+                    get_cell_number @sub_hash["LockDay"],r,cc
                     @sub_hash["LockDay"]["90"] = {}
                     cc = cc + 6
                     new_val = sheet_data.cell(r,cc)
@@ -730,6 +773,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 812 && cc == 37
                     @sub_hash["LoanType/LTV"] = {}
+                    get_cell_number @sub_hash["LoanType/LTV"],r,cc
                     @sub_hash["LoanType/LTV"]["ARM"] = {}
                     @sub_hash["LoanType/LTV"]["ARM"]["90-Inf"] = {}
                     cc = cc + 6
@@ -836,6 +880,11 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                     else
                       primary_key = get_value value
                     end
+                    if r == 1036
+                      get_cell_number @relief_cashout_adjustment["FHA/FICO"],r,cc
+                      get_cell_number @relief_cashout_adjustment["USDA/FICO"],r,cc
+                      get_cell_number @relief_cashout_adjustment["VA/FICO"],r,cc
+                    end
                     @relief_cashout_adjustment["FHA/FICO"]["true"][primary_key] = {}
                     @relief_cashout_adjustment["USDA/FICO"]["true"][primary_key] = {}
                     @relief_cashout_adjustment["VA/FICO"]["true"][primary_key] = {}
@@ -851,6 +900,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 1048 && cc == 8
                     @relief_cashout_adjustment["VA/PropertyType"] = {}
+                    get_cell_number @relief_cashout_adjustment["VA/PropertyType"],r,cc
                     @relief_cashout_adjustment["VA/PropertyType"]["true"] = {}
                     @relief_cashout_adjustment["VA/PropertyType"]["true"]["Non-Owner Occupied"] = {}
                     cc = cc + 7
@@ -859,6 +909,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 1049 && cc == 8
                     @relief_cashout_adjustment["PropertyType"] = {}
+                    get_cell_number @relief_cashout_adjustment["PropertyType"],r,cc
                     @relief_cashout_adjustment["PropertyType"]["Manufactured Home"] = {}
                     cc = cc + 7
                     new_val = sheet_data.cell(r,cc)
@@ -878,6 +929,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 1052 && cc == 8
                     @relief_cashout_adjustment["VA/RefinanceOption/LTV"] = {}
+                    get_cell_number @relief_cashout_adjustment["VA/RefinanceOption/LTV"],r,cc
                     @relief_cashout_adjustment["VA/RefinanceOption/LTV"]["true"] = {}
                     @relief_cashout_adjustment["VA/RefinanceOption/LTV"]["true"]["Cash Out"] = {}
                     @relief_cashout_adjustment["VA/RefinanceOption/LTV"]["true"]["Cash Out"]["95-Inf"] = {}
@@ -887,6 +939,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 1053 && cc == 8
                     @relief_cashout_adjustment["FHA"] = {}
+                    get_cell_number @relief_cashout_adjustment["FHA"],r,cc
                     @relief_cashout_adjustment["FHA"]["true"] = {}
                     cc = cc + 7
                     new_val = sheet_data.cell(r,cc)
@@ -894,6 +947,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 1054 && cc == 8
                     @relief_cashout_adjustment["LockDay"] = {}
+                    get_cell_number @relief_cashout_adjustment["LockDay"],r,cc
                     @relief_cashout_adjustment["LockDay"][90] = {}
                     cc = cc + 7
                     new_val = sheet_data.cell(r,cc)
@@ -999,6 +1053,9 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # Non-Conforming Jumbo CORE Loan Level Price Adjustments
                   if r >= 1158 && r <= 1164 && cc == 8
                     primary_key = get_value value
+                    if r == 1158
+                      get_cell_number @jumbo_hash["LoanSize/LoanAmount/FICO/LTV"],r,cc
+                    end
                     @jumbo_hash["LoanSize/LoanAmount/FICO/LTV"]["Jumbo"]["0-1000000"][primary_key] = {}
                     @jumbo_hash["LoanSize/LoanAmount/FICO/LTV"]["Non-Conforming"]["0-1000000"][primary_key] = {}
                   end
@@ -1023,6 +1080,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   # Other Specific Adjustments
                   if r == 1176 && cc == 8
+                    get_cell_number @jumbo_hash["PropertyType/LTV"],r,cc
                     @jumbo_hash["PropertyType/LTV"]["Condo"] = {}
                   end
                   if r == 1176 && cc >= 15 && cc <= 39
@@ -1047,6 +1105,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                     @jumbo_hash["PropertyType/LTV"]["Investment Property"][ltv_key] = value
                   end
                   if r == 1179 && cc == 8
+                    get_cell_number @jumbo_hash["RefinanceOption/LTV"],r,cc
                     @jumbo_hash["RefinanceOption/LTV"]["Cash Out"] = {}
                   end
                   if r == 1179 && cc >= 15 && cc <= 39
@@ -1072,6 +1131,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 1182 && cc == 8
                     @jumbo_hash["MiscAdjuster/State/LTV"] = {}
+                    get_cell_number @jumbo_hash["MiscAdjuster/State/LTV"],r,cc
                     @jumbo_hash["MiscAdjuster/State/LTV"]["Escrow Waiver"] = {}
                     @jumbo_hash["MiscAdjuster/State/LTV"]["Escrow Waiver"]["CA"] = {}
                   end
@@ -1166,6 +1226,9 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   # Non-Conforming Jumbo X Loan Level Price Adjustments
                   if r >= 1275 && r <= 1281 && cc == 8
                     primary_key = get_value value
+                    if r == 1275
+                      get_cell_number @non_jumbo_hash["LoanSize/FICO/LTV"],r,cc
+                    end
                     @non_jumbo_hash["LoanSize/FICO/LTV"]["Non-Conforming"][primary_key] = {}
                     @non_jumbo_hash["LoanSize/FICO/LTV"]["Jumbo"][primary_key] = {}
                   end
@@ -1178,6 +1241,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 1284 && cc == 6
                     @non_jumbo_hash["RefinanceOption/LTV"] = {}
+                    get_cell_number @non_jumbo_hash["RefinanceOption/LTV"],r,cc
                     @non_jumbo_hash["RefinanceOption/LTV"]["Cash Out"] = {}
                   end
                   if r == 1284 && cc >= 13 && cc <= 41
@@ -1187,6 +1251,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 1285 && cc == 6
                     @non_jumbo_hash["LoanPurpose/LTV"] = {}
+                    get_cell_number @non_jumbo_hash["LoanPurpose/LTV"],r,cc
                     @non_jumbo_hash["LoanPurpose/LTV"]["Purchase"] = {}
                   end
                   if r == 1285 && cc >= 13 && cc <= 41
@@ -1196,6 +1261,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
                   end
                   if r == 1287 && cc == 6
                     @non_jumbo_hash["PropertyType/LTV"] = {}
+                    get_cell_number @non_jumbo_hash["PropertyType/LTV"],r,cc
                     @non_jumbo_hash["PropertyType/LTV"]["Non-Owner Occupied"] = {}
                   end
                   if r == 1287 && cc >= 13 && cc <= 41
