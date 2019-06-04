@@ -8,7 +8,7 @@
       <button id="reset_all_btn" class="btn btn-danger" >Reset All</button>
       </div>
     </div>
-    <%= form_tag('/dashboard/index', method: :get, id: :search_form) do %>
+    <%= form_tag('/', method: :get, id: :search_form) do %>
       <div class="main-form panel">
         <div class="panel-heading">Program Inputs</div>
           <div class="panel-body">
@@ -498,7 +498,7 @@
 
       $.ajax({
         type:'GET',
-        url:'/dashboard/fetch_programs_by_bank',
+        url:'/fetch_programs',
         data: {bank_name : bank_name, loan_category: loan_category, pro_category: pro_category },
         success:function(response){
           var selectBox = document.getElementById('program_name');
@@ -529,7 +529,7 @@
       var pro_category ="All"
       $.ajax({
         type:'GET',
-        url:'/dashboard/fetch_programs_by_bank',
+        url:'/fetch_programs',
         data: {loan_category : loan_category, bank_name : bank_name, pro_category: pro_category },
         success:function(response){
           var selectBox = document.getElementById('program_name');
@@ -554,7 +554,7 @@
       var loan_category = $('#loan_category').val()
       $.ajax({
         type:'GET',
-        url:'/dashboard/fetch_programs_by_bank',
+        url:'/fetch_programs',
         data: {loan_category : loan_category, bank_name : bank_name, pro_category: pro_category },
         success:function(response){
           var selectBox = document.getElementById('program_name');

@@ -1,6 +1,7 @@
 require 'sidekiq/web'
 Rails.application.routes.draw do
-  root 'dashboard#index'
+  root 'dashboard#home'
+  get '/fetch_programs', to: 'dashboard#fetch_programs', as: :fetch_programs
   # get 'error_logs/index'
   # get 'ob_american_financial_resources_wholesale5513/index'
   # root :to => "dashboard#index"
