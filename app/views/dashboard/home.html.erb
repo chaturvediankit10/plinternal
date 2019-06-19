@@ -9,6 +9,7 @@
       </div>
     </div>
     <%= form_tag('/', method: :get, id: :search_form) do %>
+      <%= hidden_field_tag 'source', 1 %>
       <div class="main-form panel">
         <div class="panel-heading">Program Inputs</div>
           <div class="panel-body">
