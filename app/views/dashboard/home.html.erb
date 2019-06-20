@@ -427,7 +427,7 @@
                   <td><%= program[:loan_category] %></td>
                   <td><%= program[:program_category] %></td>
                   <td><p class="table-break-progrom-name"><%= program[:program_name] %></p></td>
-                  <td><%= number_with_precision(program[:air].to_s, :precision => 3)%></td>
+                  <td><%= number_with_precision(program[:air].to_s, :precision => 3)  unless (program[:air] == 0.0) %></td>
                   <td><%= number_with_precision(program[:final_rate].sum, :precision => 3) %>
                   </td>
                   <td><%= @interest %></td>
