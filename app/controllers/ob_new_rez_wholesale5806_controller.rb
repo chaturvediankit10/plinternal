@@ -3372,8 +3372,8 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     break # terminate the loop
                   end
                 end
-                if @block_hash.values.first.keys.first.nil?
-                  @block_hash.values.first.shift
+                if @block_hash.keys.first.nil?
+                  @block_hash.shift
                 end
                 @program.update(base_rate: @block_hash,loan_category: @sheet_name)
                 # @program.update(base_rate: @block_hash,loan_category: @sheet_name)

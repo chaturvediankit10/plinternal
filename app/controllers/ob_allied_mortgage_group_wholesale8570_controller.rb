@@ -215,18 +215,6 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                     new_val = sheet_data.cell(r,cc)
                     @loan_adj["LoanAmount"][first_key] = new_val
                   end
-                  if r == 94 && cc >= 2 && cc <= 6
-                    first_key = @term_data[cc-2].tr('A-Za-z ','')
-                    get_cell_number @loan_adj["LoanType/Term"],r,cc
-                    @loan_adj["LoanType/Term"]["Fixed"][first_key] = {}
-                    @loan_adj["LoanType/Term"]["Fixed"][first_key] = value
-                  end
-                  if r == 94 && cc >= 7 && cc <= 9
-                    first_key = @term_data[cc-2].tr('A-Za-z ','')
-                    get_cell_number @loan_adj["LoanType/ArmBasic"],r,cc
-                    @loan_adj["LoanType/ArmBasic"]["ARM"][first_key] = {}
-                    @loan_adj["LoanType/ArmBasic"]["ARM"][first_key] = value
-                  end
                 end
               rescue Exception => e
                 error_log = ErrorLog.new(details: e.backtrace_locations[0], row: rr, column: cc, loan_category: @sheet, error_detail: e.message)
@@ -416,22 +404,6 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                     cc = cc + 3
                     new_val = sheet_data.cell(r,cc)
                     @loan_amount["LoanAmount"][primary_key] = new_val
-                  end
-                  if r == 90 && cc >= 2 && cc <= 6
-                    primary_key = @term_data[cc-2].tr('A-Za-z ','')
-                    if r == 90
-                      get_cell_number @loan_amount["LoanType/Term"],r,cc
-                    end
-                    @loan_amount["LoanType/Term"]["Fixed"][primary_key] = {}
-                    @loan_amount["LoanType/Term"]["Fixed"][primary_key] = value
-                  end
-                  if r == 90 && cc >= 7 && cc <= 9
-                    primary_key = @term_data[cc-2].tr('A-Za-z ','')
-                    if r == 90
-                      get_cell_number @loan_amount["LoanType"],r,cc
-                    end
-                    @loan_amount["LoanType"]["ARM"][primary_key] = {}
-                    @loan_amount["LoanType"]["ARM"][primary_key] = value
                   end
                 end
               rescue Exception => e
@@ -720,18 +692,6 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                     cc = cc + 3
                     new_val = sheet_data.cell(r,cc)
                     @loan_amount["LoanAmount"][ltv_key] = new_val
-                  end
-                  if r == 111 && cc >= 7 && cc <= 11
-                    first_key = @term_data[cc-2].tr('A-Za-z ','')
-                    get_cell_number @loan_amount["LoanType/Term"],r,cc
-                    @loan_amount["LoanType/Term"]["Fixed"][first_key] = {}
-                    @loan_amount["LoanType/Term"]["Fixed"][first_key] = value
-                  end
-                  if r == 111 && cc >= 12 && cc <= 14
-                    first_key = @term_data[cc-2].tr('A-Za-z ','')
-                    get_cell_number @loan_amount["LoanType"],r,cc
-                    @loan_amount["LoanType"]["ARM"][first_key] = {}
-                    @loan_amount["LoanType"]["ARM"][first_key] = value
                   end
                 end
               rescue Exception => e

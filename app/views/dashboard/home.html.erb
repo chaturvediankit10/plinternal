@@ -9,7 +9,6 @@
       </div>
     </div>
     <%= form_tag('/', method: :get, id: :search_form) do %>
-      <%= hidden_field_tag 'source', 1 %>
       <div class="main-form panel">
         <div class="panel-heading">Program Inputs</div>
           <div class="panel-body">
@@ -136,7 +135,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Loan Purpose</label>
-                            <%= select_tag 'loan_purpose', options_for_select(Program::LOAN_PURPOSE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_purpose] rescue nil)), { :class=> "form-control" }%>
+                            <%= select_tag 'loan_purpose', options_for_select(Program::LOAN_PURPOSE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_purpose] rescue nil)), { prompt: 'Select Loan Purpose', :class=> "form-control" }%>
                           <span class="error-loan-purpose">Please Select Refinance</span>
                         </div>
                       </div>
@@ -427,7 +426,7 @@
                   <td><%= program[:loan_category] %></td>
                   <td><%= program[:program_category] %></td>
                   <td><p class="table-break-progrom-name"><%= program[:program_name] %></p></td>
-                  <td><%= number_with_precision(program[:air].to_s, :precision => 3)  unless (program[:air] == 0.0) %></td>
+                  <td><%= number_with_precision(program[:air].to_s, :precision => 3)%></td>
                   <td><%= number_with_precision(program[:final_rate].sum, :precision => 3) %>
                   </td>
                   <td><%= @interest %></td>
@@ -450,7 +449,7 @@
                       if program[:cell_number].present?
                         program[:cell_number].each_with_index do |key, index|
                           %>
-                            <p> <%= key.try(' ', '') if key.present? %></p>
+                            <p> <%= key if key.present? %></p>
                           <%
                         end
                       end
@@ -633,8 +632,7 @@
      }
    });
   });
-
-  $("#arm_advanced").on('click', function(e){
+    $("#arm_advanced").on('click', function(e){
     if ($(this).val()==""){
      $('#arm_basic').val('5/1')
     }else{
