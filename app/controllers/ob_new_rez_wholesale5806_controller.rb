@@ -3696,7 +3696,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"] = {}
                     @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"]["Conforming"] = {}
                     @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"]["Conforming"]["Fixed"] = {}
-                    @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"]["Conforming"]["Fixed"]["0-15"] = {}
+                    @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"]["Conforming"]["Fixed"]["15-Inf"] = {}
                     @adjustment_hash["RefinanceOption/LTV/FICO"] = {}
                     @adjustment_hash["RefinanceOption/LTV/FICO"]["Cash Out"] = {}
                   end
@@ -3720,12 +3720,12 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     if r == 81
                       get_cell_number @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"],r,cc
                     end
-                    @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"]["Conforming"]["Fixed"]["0-15"][primary_key] = {}
+                    @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"]["Conforming"]["Fixed"]["15-Inf"][primary_key] = {}
                   end
                   if r >= 81 && r <= 88 && cc >= 10 && cc <= 19
                     ltv_key = get_value @ltv_data[cc-2]
-                    @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"]["Conforming"]["Fixed"]["0-15"][primary_key][ltv_key] = {}
-                    @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"]["Conforming"]["Fixed"]["0-15"][primary_key][ltv_key] = value
+                    @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"]["Conforming"]["Fixed"]["15-Inf"][primary_key][ltv_key] = {}
+                    @adjustment_hash["LoanSize/LoanType/Term/LTV/FICO"]["Conforming"]["Fixed"]["15-Inf"][primary_key][ltv_key] = value
                   end
                   if r >= 91 && r <= 93 && cc == 7
                     primary_key = get_value value
