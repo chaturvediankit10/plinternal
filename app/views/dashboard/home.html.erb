@@ -586,6 +586,7 @@
     }
 
     function setArmDefaultValuesOnLoan(){
+      $('#financing_type').val('Subordinate Financing')
       if ($('#arm_benchmark').val()=='' && $("#loan_type").val() != "All" && $("#loan_type").val() != "ARM" ) {
           $('#arm_benchmark').val('LIBOR')
         }
