@@ -2,6 +2,7 @@ require 'sidekiq/web'
 Rails.application.routes.draw do
   root 'dashboard#home'
   get '/fetch_programs', to: 'dashboard#fetch_programs', as: :fetch_programs
+  get '/set_loan_amount_range', to: 'dashboard#set_loan_amount_range', as: :set_loan_amount_range
   # get 'error_logs/index'
   # get 'ob_american_financial_resources_wholesale5513/index'
   # root :to => "dashboard#index"

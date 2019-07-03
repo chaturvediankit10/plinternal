@@ -11,7 +11,47 @@
     <%= form_tag('/', method: :get, id: :search_form) do %>
       <%= hidden_field_tag 'source', 1 %>
       <div class="main-form panel">
-        <div class="panel-heading">Program Inputs</div>
+          <div class="panel-heading">Basic Search</div>
+          <div class="panel-body">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>State</label>
+                  <div class="input-group">
+                    <%= select_tag 'state', options_for_select(Program::STATE, (params[:state] rescue nil)), :class=> "form-control" %>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Loan Purpose</label>
+                    <%= select_tag 'loan_purpose', options_for_select(Program::LOAN_PURPOSE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_purpose] rescue nil)), { :class=> "form-control" }%>
+                  <span class="error-loan-purpose">Please Select Refinance</span>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Home Price</label>
+                  <%= text_field_tag :home_price, number_to_currency(@home_price, :unit=> "", precision: 0), class: 'form-control' %>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Down Payment</label>
+                  <%= text_field_tag :down_payment,number_to_currency(@down_payment,  :unit=> "", precision: 0), class: 'form-control' %>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Credit Score</label>
+                  <div class="input-group">
+                    <%= select_tag 'credit_score', options_for_select(Program::CREDIT_SCORE_LIST, (params[:credit_score].present? ? params[:credit_score] : "700-719")), :class=> "form-control" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel-heading">Program Inputs</div>
           <div class="panel-body">
             <div class="row">
               <div class="col-md-5">
@@ -135,25 +175,17 @@
                     <div class="row col-md-12">
                       <div class="col-md-6">
                         <div class="form-group">
-                          <label>Loan Purpose</label>
-                            <%= select_tag 'loan_purpose', options_for_select(Program::LOAN_PURPOSE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_purpose] rescue nil)), { prompt: 'Select Loan Purpose', :class=> "form-control" }%>
-                          <span class="error-loan-purpose">Please Select Refinance</span>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
                           <label>Loan Size</label>
                             <%= select_tag 'loan_size', options_for_select(Program::LOAN_SIZE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_size] rescue nil)), { prompt: 'Select Loan Size', :class=> "form-control" }%>
                         </div>
                       </div>
-                    </div>
-                    <div class="row col-md-12">
                       <div class="col-md-6">
                         <div class="form-group">
                           <label>Loan Type</label>
                             <%= select_tag 'loan_type', options_for_select(Program::LOAN_TYPE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_type] rescue nil)), { prompt: 'Select Loan Type', :class=> "form-control" } %>
                         </div>
                       </div>
+                    </div>
                       <div class="col-md-6 term">
                         <div class="form-group">
                           <label>Term</label>
@@ -194,20 +226,17 @@
                           <%= select_tag 'arm_advanced', options_for_select( @arm_advanced_list.flatten.sort_by!{ |m| m.downcase }.prepend(["All"]), (params[:arm_advanced] rescue nil)), { prompt: 'Select ARM Advanced', :class=> "form-control"} %>
                         </div>
                       </div>
-                    </div>
-                    <div class="row col-md-12">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Interest Rate</label>
-                          <%= select_tag 'interest', options_for_select(Program::INTEREST_LIST, @interest), :class=> "form-control" %>
-                        </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Interest Rate</label>
+                        <%= select_tag 'interest', options_for_select(Program::INTEREST_LIST, @interest), :class=> "form-control" %>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Lock Period</label>
-                          <div class="input-group">
-                            <%= select_tag 'lock_period', options_for_select(Program::LOCK_PERIOD_LIST, @lock_period), :class=> "form-control" %>
-                          </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Lock Period</label>
+                        <div class="input-group">
+                          <%= select_tag 'lock_period', options_for_select(Program::LOCK_PERIOD_LIST, @lock_period), :class=> "form-control" %>
                         </div>
                       </div>
                     </div>
@@ -265,218 +294,213 @@
               </div>
             </div>
           </div>
-      </div>
-      <div class="main-form panel">
-        <div class="panel-heading">Adjustment Inputs</div>
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Credit Score</label>
-                <div class="input-group">
-                  <%= select_tag 'credit_score', options_for_select(Program::CREDIT_SCORE_LIST, (params[:credit_score].present? ? params[:credit_score] : "700-719")), :class=> "form-control" %>
+          <div class="panel-heading">Adjustment Inputs</div>
+          <div class="panel-body">
+            <div class="row">
+              <!-- <div class="col-md-2">
+                <div class="form-group">
+                  <label>Credit Score</label>
+                  <div class="input-group">
+                    <%#= select_tag 'credit_score', options_for_select(Program::CREDIT_SCORE_LIST, (params[:credit_score].present? ? params[:credit_score] : "700-719")), :class=> "form-control" %>
+                  </div>
+                </div>
+              </div> -->
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>LTV</label>
+                  <div class="input-group">
+                    <%= select_tag 'ltv', options_for_select(Program::LTV_VALUES, (params[:ltv].present? ? params[:ltv] : "65.01 - 70.00")), :class=> "form-control" %>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>LTV</label>
-                <div class="input-group">
-                  <%= select_tag 'ltv', options_for_select(Program::LTV_VALUES, (params[:ltv].present? ? params[:ltv] : "65.01 - 70.00")), :class=> "form-control" %>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>CLTV</label>
+                  <div class="input-group">
+                    <%= select_tag 'cltv', options_for_select(Program::CLTV_VALUES, (params[:cltv].present? ? params[:cltv] : "75.01 - 80.00")), :class=> "form-control" %>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>CLTV</label>
-                <div class="input-group">
-                  <%= select_tag 'cltv', options_for_select(Program::CLTV_VALUES, (params[:cltv].present? ? params[:cltv] : "75.01 - 80.00")), :class=> "form-control" %>
+              <!-- <div class="col-md-2">
+                <div class="form-group">
+                  <label>State</label>
+                  <div class="input-group">
+                    <%#= select_tag 'state', options_for_select(Program::STATE, (params[:state] rescue nil)), :class=> "form-control" %>
+                  </div>
+                </div>
+              </div> -->
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Loan Amount</label>
+                  <%= select_tag 'loan_amount', options_for_select(Program::LOAN_AMOUNT, (params[:loan_amount] rescue nil)), { :class=> "form-control", :required => true} %>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>State</label>
-                <div class="input-group">
-                  <%= select_tag 'state', options_for_select(Program::STATE, (params[:state] rescue nil)), :class=> "form-control" %>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Program Category</label>
+                  <%= select_tag 'program_category', options_for_select(Program::PROGRAM_CATEGORY_LIST.sort, (params[:program_category] rescue nil)), { :class=> "form-control", :required => true} %>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Loan Amount</label>
-                <% @loan_amount_list =%>
-                <%= select_tag 'loan_amount', options_for_select(Program::LOAN_AMOUNT, (params[:loan_amount] rescue nil)), { :class=> "form-control", :required => true} %>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Program Category</label>
-                <%= select_tag 'program_category', options_for_select(Program::PROGRAM_CATEGORY_LIST.sort, (params[:program_category] rescue nil)), { :class=> "form-control", :required => true} %>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Property Type</label>
-                <div class="input-group">
-                  <%= select_tag 'property_type', options_for_select(Program::PROPERTY_TYPE_VALUES.sort, (params[:property_type] rescue nil)), :class=> "form-control" %>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Property Type</label>
+                  <div class="input-group">
+                    <%= select_tag 'property_type', options_for_select(Program::PROPERTY_TYPE_VALUES.sort, (params[:property_type] rescue nil)), :class=> "form-control" %>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Financing Type</label>
-                <div class="input-group">
-                  <%= select_tag 'financing_type', options_for_select(Program::FINANCING_TYPE_VALUES.sort, (params[:financing_type] rescue nil)), :class=> "form-control" %>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Financing Type</label>
+                  <div class="input-group">
+                    <%= select_tag 'financing_type', options_for_select(Program::FINANCING_TYPE_VALUES.sort, (params[:financing_type] rescue nil)), :class=> "form-control" %>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Refinance Option</label>
-                <div class="input-group">
-                  <%= select_tag 'refinance_option', options_for_select(Program::REFINANCE_OPTION_VALUES.sort, (params[:refinance_option] rescue nil)), :class=> "form-control" %>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Refinance Option</label>
+                  <div class="input-group">
+                    <%= select_tag 'refinance_option', options_for_select(Program::REFINANCE_OPTION_VALUES.sort, (params[:refinance_option] rescue nil)), :class=> "form-control" %>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Misc Adjuster</label>
-                <div class="input-group">
-                  <%= select_tag 'misc_adjuster', options_for_select(Program::MISC_ADJUSTER_VALUES.sort, (params[:misc_adjuster] rescue nil)), :class=> "form-control" %>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Misc Adjuster</label>
+                  <div class="input-group">
+                    <%= select_tag 'misc_adjuster', options_for_select(Program::MISC_ADJUSTER_VALUES.sort, (params[:misc_adjuster] rescue nil)), :class=> "form-control" %>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Payment Type</label>
-                <div class="input-group">
-                  <%= select_tag 'payment_type', options_for_select(Program::PATMENT_TYPE_VALUES.sort, (params[:payment_type] rescue nil)), :class=> "form-control" %>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Payment Type</label>
+                  <div class="input-group">
+                    <%= select_tag 'payment_type', options_for_select(Program::PATMENT_TYPE_VALUES.sort, (params[:payment_type] rescue nil)), :class=> "form-control" %>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>DTI</label>
-                <div class="input-group">
-                  <%= select_tag 'dti', options_for_select(Program::DTI_VALUES.sort, (params[:dti] rescue nil)), :class=> "form-control" %>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>DTI</label>
+                  <div class="input-group">
+                    <%= select_tag 'dti', options_for_select(Program::DTI_VALUES.sort, (params[:dti] rescue nil)), :class=> "form-control" %>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Coverage</label>
-                <div class="input-group">
-                  <%= select_tag 'coverage', options_for_select(Program::COVERAGE_VALUES.sort, (params[:coverage] rescue nil)), :class=> "form-control" %>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Coverage</label>
+                  <div class="input-group">
+                    <%= select_tag 'coverage', options_for_select(Program::COVERAGE_VALUES.sort, (params[:coverage] rescue nil)), :class=> "form-control" %>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="col-md-2">
-              <div class="form-group">
-                <label>Margin</label>
-                <div class="input-group">
-                  <%= select_tag 'margin', options_for_select(Program::MARGIN_VALUES.sort, (params[:margin] rescue nil)), :class=> "form-control" %>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label>Margin</label>
+                  <div class="input-group">
+                    <%= select_tag 'margin', options_for_select(Program::MARGIN_VALUES.sort, (params[:margin] rescue nil)), :class=> "form-control" %>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
       </div>
       <div class="row">
-        <div class="col-md-8"></div>
-        <div class="col-md-4">
-          <div class="form-group">
-            <div>
-              <label></label>
-            </div>
-            <%= submit_tag "Search", :class => "btn btn-info btn-block" %>
-          </div>
-        </div>
+       <div class="col-md-8"></div>
+       <div class="col-md-4">
+         <div class="form-group">
+           <div>
+             <label></label>
+           </div>
+           <%= submit_tag "Search", :class => "btn btn-info btn-block" %>
+         </div>
+       </div>
       </div>
     <% end %>
   </div>
   <!-- end searching form -->
   <div class="custyle">
-    <div class="row">
-      <div class="col-md-12">
-        <h2>Search Results</h2>
-        <div class="result-table table-responsive">
-          <table class="table table-striped custab table-bordered">
-            <thead>
+    <div class="main-form panel">
+      <div class="panel-heading">Search Results</div>
+      <div class="result-table table-responsive">
+        <table class="table table-striped custab table-bordered">
+          <thead>
+            <tr>
+              <th style="width: 5%;">No.</th>
+              <th style="width: 5%;">Bank Name</th>
+              <th style="width: 5%;">Loan Category</th>
+              <th style="width: 5%;">Program Category</th>
+              <th style="width: 15%;">Program Name</th>
+              <th style="width: 5%;">AIR</th>
+              <th style="width: 5%;">Final Point</th>
+              <th style="width: 5%;">Interest Rate</th>
+              <th style="width: 5%;">Base Point</th>
+              <th style="width: 5%;">Adjustments</th>
+              <th style="width: 10%;">Adj Table Loc</th>
+              <th style="width: 30%;">Adjustment Table Name</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% if @result.present? %>
+            <% @result.each_with_index do |program, index|%>
               <tr>
-                <th style="width: 5%;">No.</th>
-                <th style="width: 5%;">Bank Name</th>
-                <th style="width: 5%;">Loan Category</th>
-                <th style="width: 5%;">Program Category</th>
-                <th style="width: 15%;">Program Name</th>
-                <th style="width: 5%;">AIR</th>
-                <th style="width: 5%;">Final Point</th>
-                <th style="width: 5%;">Interest Rate</th>
-                <th style="width: 5%;">Base Point</th>
-                <th style="width: 5%;">Adjustments</th>
-                <th style="width: 10%;">Adj Table Loc</th>
-                <th style="width: 30%;">Adjustment Table Name</th>
-              </tr>
-            </thead>
-            <tbody>
-            <% if @result.present? %>
-              <% @result.each_with_index do |program, index|%>
-                <tr>
-                  <td><%= index +1 %></td>
-                  <td><%= program[:bank_name] %></td>
-                  <td><%= program[:loan_category] %></td>
-                  <td><%= program[:program_category] %></td>
-                  <td><p class="table-break-progrom-name"><%= program[:program_name] %></p></td>
-                  <td><%= number_with_precision(program[:air].to_s, :precision => 3)%></td>
-                  <td><%= number_with_precision(program[:final_rate].sum, :precision => 3) %>
-                  </td>
-                  <td><%= @interest %></td>
-                  <td><%= number_with_precision(program[:base_rate], :precision => 3) %>
-                  </td>
-                  <td>
-                    <%if program[:adj_points].present? && program[:adj_points] != "Adjustment Not Present"%>
-                    <%
-                      program[:adj_points].each_with_index do |adj_value, index|
+                <td><%= index +1 %></td>
+                <td><%= program[:bank_name] %></td>
+                <td><%= program[:loan_category] %></td>
+                <td><%= program[:program_category] %></td>
+                <td><p class="table-break-progrom-name"><%= program[:program_name] %></p></td>
+                <td><%= number_with_precision(program[:air].to_s, :precision => 3)%></td>
+                <td><%= number_with_precision(program[:final_rate].sum, :precision => 3) %>
+                </td>
+                <td><%= @interest %></td>
+                <td><%= number_with_precision(program[:base_rate], :precision => 3) %>
+                </td>
+                <td>
+                  <%if program[:adj_points].present? && program[:adj_points] != "Adjustment Not Present"%>
+                  <%
+                    program[:adj_points].each_with_index do |adj_value, index|
+                      %>
+                        <p> <%= number_with_precision(adj_value.round(3), :precision => 3)%></p>
+                      <%
+                    end
+                  %>
+                  <%#= program[:adj_points].map{|a| number_with_precision(a.round(3), :precision => 3)} %>
+                  <%end%>
+                </td>
+                <td>
+                  <%
+                    if program[:cell_number].present?
+                      program[:cell_number].each_with_index do |key, index|
                         %>
-                          <p> <%= number_with_precision(adj_value.round(3), :precision => 3)%></p>
+                          <p> <%= key if key.present? %></p>
                         <%
                       end
-                    %>
-                    <%#= program[:adj_points].map{|a| number_with_precision(a.round(3), :precision => 3)} %>
-                    <%end%>
-                  </td>
-                  <td>
-                    <%
-                      if program[:cell_number].present?
-                        program[:cell_number].each_with_index do |key, index|
-                          %>
-                            <p> <%= key if key.present? %></p>
-                          <%
-                        end
+                    end
+                  %>
+                </td>
+                <td>
+                  <%
+                    if program[:adj_primary_key].present? && program[:adj_primary_key] != "Adjustment Not Present"
+                      program[:adj_primary_key].each_with_index do |key, index|
+                        %>
+                          <p class="table-break-text"><%= index+1 %>.<%= key %> </p>
+                        <%
                       end
-                    %>
-                  </td>
-                  <td>
-                    <%
-                      if program[:adj_primary_key].present? && program[:adj_primary_key] != "Adjustment Not Present"
-                        program[:adj_primary_key].each_with_index do |key, index|
-                          %>
-                            <p class="table-break-text"><%= index+1 %>.<%= key %> </p>
-                          <%
-                        end
-                      end
-                    %>
-                  </td>
-                </tr>
-              <%end%>
-            <%else%>
-              <tr>
-                <td colspan="11">No programs..</td>
+                    end
+                  %>
+                </td>
               </tr>
             <%end%>
-            </tbody>
-          </table>
-        </div>
+          <%else%>
+            <tr>
+              <td colspan="11">No programs..</td>
+            </tr>
+          <%end%>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -566,6 +590,23 @@
           });
         }
       });
+    });
+
+    function set_loan_amount_range(){
+      $.ajax({
+        type:'GET',
+        url:'/set_loan_amount_range',
+        data: {home_price: $('#home_price').val(), down_payment: $('#down_payment').val()},
+        success:function(response){
+          $('#loan_amount').val(response.response)
+        }
+      });
+    }
+
+    set_loan_amount_range();
+
+    $('#home_price, #down_payment').change(function () {
+      set_loan_amount_range();
     });
 
     function setArmDefaultValues(){
