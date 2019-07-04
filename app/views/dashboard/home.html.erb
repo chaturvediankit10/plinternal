@@ -515,6 +515,7 @@
 </div>
 
 <script type="text/javascript">
+  let params_present = <%= raw params["commit"].present? ? false : true%>
   $(document).ready(function(){
     $('#bank_name').change(function(){
       var bank_name =  $(this).val();
@@ -598,12 +599,15 @@
         url:'/set_loan_amount_range',
         data: {home_price: $('#home_price').val(), down_payment: $('#down_payment').val()},
         success:function(response){
-          $('#loan_amount').val(response.response)
+          $('#loan_amount').val(response.loan_amount);
+          $('#ltv').val(response.ltv);
         }
       });
     }
 
-    set_loan_amount_range();
+    if (params_present) {
+      set_loan_amount_range();
+    }
 
     $('#home_price, #down_payment').change(function () {
       set_loan_amount_range();
