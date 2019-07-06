@@ -63,5 +63,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem "select2-rails"
 gem 'csv'
 gem 'jquery-validation-rails'
-gem 'finance_math'
 gem "search_api", git: "https://github.com/PureLoan/APIRead.git"
