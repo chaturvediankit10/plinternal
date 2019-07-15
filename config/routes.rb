@@ -90,7 +90,7 @@ Rails.application.routes.draw do
       get :single_program
       get :fannie_mae_products
       get :freddie_mac_products
-      get :fha_va_usda_products
+      get :government_and_loan_level_products
       get :non_conforming_jumbo_core
       get :non_conforming_jumbo_x
     end

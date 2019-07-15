@@ -1,8 +1,8 @@
 class ObCardinalFinancialWholesale10742Controller < ApplicationController
   include ProgramAdj
-  before_action :read_sheet, only: [:index,:ak, :fannie_mae_products, :freddie_mac_products, :fha_va_usda_products, :non_conforming_jumbo_core, :non_conforming_jumbo_x]
+  before_action :read_sheet, only: [:index,:ak, :fannie_mae_products, :freddie_mac_products, :government_and_loan_level_products, :non_conforming_jumbo_core, :non_conforming_jumbo_x]
   # before_action :check_sheet_empty , only:[:ak, :sheet1]
-  before_action :get_sheet, only: [:programs, :ak, :fannie_mae_products, :freddie_mac_products, :fha_va_usda_products, :non_conforming_jumbo_core, :non_conforming_jumbo_x]
+  before_action :get_sheet, only: [:programs, :ak, :fannie_mae_products, :freddie_mac_products, :government_and_loan_level_products, :non_conforming_jumbo_core, :non_conforming_jumbo_x]
   before_action :get_program, only: [:single_program, :program_property]
 
 
@@ -796,7 +796,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
     redirect_to programs_ob_cardinal_financial_wholesale10742_path(@sheet_obj)
   end
 
-  def fha_va_usda_products
+  def government_and_loan_level_products
     @xlsx.sheets.each do |sheet|
       if (sheet == "AK")
         sheet_data = @xlsx.sheet(sheet)
@@ -1346,7 +1346,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
     end
 
     def get_sheets_names
-      return ["Fannie Mae Products","Freddie Mac Products","FHA VA USDA Products","Non Conforming Jumbo Core","Non Conforming Jumbo X"]
+      return ["Fannie Mae Products","Freddie Mac Products","Government and Loan Level Products","Non Conforming Jumbo Core","Non Conforming Jumbo X"]
     end
 
     def program_property title
