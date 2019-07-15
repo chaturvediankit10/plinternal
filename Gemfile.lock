@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/PureLoan/APIRead.git
-  revision: e046b86240b46e3d52c3b69690f3a3500bbab238
+  revision: 8bc2a1a76770ecb2a524bd22ba869b3c95b18d49
   specs:
     search_api (0.1.0)
       activesupport
@@ -309,7 +309,7 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2019.1)
+    tzinfo-data (1.2019.2)
       tzinfo (>= 1.0.0)
     uber (0.1.0)
     uglifier (4.1.20)
@@ -362,9 +362,6 @@ DEPENDENCIES
   tzinfo-data
   uglifier (>= 1.3.0)
   web-console (>= 3.3.0)
-
-RUBY VERSION
-   ruby 2.5.0p0
 
 BUNDLED WITH
    2.0.1
