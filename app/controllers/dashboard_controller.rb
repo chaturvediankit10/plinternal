@@ -2,13 +2,13 @@ class DashboardController < SearchApi::DashboardController
   # before_action :profiling
 
   def home
-     @banks = Bank.all
+    api_search
+    @banks = Bank.all
     @all_banks_name = @banks.pluck(:name)
     @arm_advanced_list = @programs_all.pluck(:arm_advanced).push("5-5").compact.uniq.reject(&:empty?).map{|c| [c]}
     @arm_caps_list = @programs_all.pluck(:arm_caps).push("3-2-5").compact.uniq.reject(&:empty?).map{|c| [c]}
     @term_list = @programs_all.where('term <= ?', 999).pluck(:term).compact.uniq.push(5,10,15,20,25,30).uniq.sort.map{|y| [y.to_s + " yrs" , y]}.prepend(["All"])
     fetch_programs(true)
-    api_search
   end
 
   def fetch_programs(html_type=false)
