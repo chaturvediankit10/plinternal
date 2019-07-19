@@ -33,14 +33,15 @@ class DashboardController < SearchApi::DashboardController
   end
 
   def set_ltv_value(ltv_amount)
-    ltv = "65.01 - 70.00"
+    ltv = "65.00 - 69.99"
     Program::LTV_VALUES.each do |ltv_value|
       ltv_value = ltv_value[0]
       unless ltv_value.include?("+")
-        lower = ltv_value.split("-").first.squish.to_i
-        higher = ltv_value.split("-").last.squish.to_i
+        lower = ltv_value.split("-").first.squish.to_f
+        higher = ltv_value.split("-").last.squish.to_f
         if ltv_amount.between?(lower, higher)
           ltv = ltv_value
+          break;
         end
       end
     end
@@ -49,31 +50,44 @@ class DashboardController < SearchApi::DashboardController
 
   def set_loan_amount(loan_amt)
     loan_amount = "250000 - 300000"
-    if loan_amt <= 850000
-      Program::LOAN_AMOUNT.each do |a|
-        loan_value = a[1]
+    if loan_amt <= 1550000
+      Program::LOAN_AMOUNT.each do |loan_value|
         if loan_value.present? && loan_value.include?("-")
           lower = loan_value.split("-").first.squish.to_i
           higher = loan_value.split("-").last.squish.to_i
           if loan_amt.between?(lower, higher)
             loan_amount = loan_value
+            break;
           end
         end
       end
     else
-      loan_amount = "850000 +"
+      loan_amount = "1550000 +"
     end
     return loan_amount
   end
 
-  def set_loan_amount_range
-    home_price = params[:home_price].present? ? params[:home_price].tr("^0-9", '').to_f : 300000.00
-    down_payment = params[:down_payment].present? ? params[:down_payment].tr("^0-9", '').to_f : 50000.00
+  def set_la_and_ltv_value
+    home_price = params[:home_price].present? ? params[:home_price].tr("^0-9.", '').to_f : 300000.00
+    down_payment = params[:down_payment].present? ? params[:down_payment].tr("^0-9.", '').to_f : 50000.00
     loan_amt = home_price - down_payment
     loan_amount_range = set_loan_amount(loan_amt)
-    ltv_range  = set_ltv_value(loan_amt/home_price*100)
+    ltv = loan_amt/home_price*100
+    ltv_range  = set_ltv_value(ltv)
     respond_to do |format|
-      format.json {render :json => {loan_amount: loan_amount_range , ltv: ltv_range}}
+      format.json {render :json => {loan_amount_range: loan_amount_range , ltv_range: ltv_range, loan_amount: loan_amt, ltv: ltv }}
+    end
+  end
+
+  def set_hv_and_dp_value
+    loan_amt = params[:loan_amount_text].tr("^0-9.", '').to_f if params[:loan_amount_text].present?
+    ltv = params[:ltv_text].tr("^0-9.", '').to_f if params[:ltv_text].present?
+    loan_amount_range = set_loan_amount(loan_amt)
+    ltv_range  = set_ltv_value(ltv)
+    home_price =  (loan_amt/(ltv/100)).to_i
+    down_payment = (home_price - loan_amt).to_i
+    respond_to do |format|
+      format.json {render :json => {loan_amount_range: loan_amount_range , ltv_range: ltv_range, home_price: home_price, down_payment: down_payment }}
     end
   end
 

@@ -309,7 +309,8 @@
             <div class="form-group">
               <label>LTV</label>
               <div class="input-group">
-                <%= select_tag 'ltv', options_for_select(Program::LTV_VALUES, (params[:ltv].present? ? params[:ltv] : "65.01 - 70.00")), :class=> "form-control" %>
+                <%= text_field_tag :ltv_text,(params[:ltv_text] rescue nil), class: 'form-control' %>
+                <%= hidden_field_tag 'ltv', (params[:ltv] rescue nil), :class=> "form-control" %>
               </div>
             </div>
           </div>
@@ -317,14 +318,15 @@
             <div class="form-group">
               <label>CLTV</label>
               <div class="input-group">
-                <%= select_tag 'cltv', options_for_select(Program::CLTV_VALUES, (params[:cltv].present? ? params[:cltv] : "75.01 - 80.00")), :class=> "form-control" %>
+                <%= select_tag 'cltv', options_for_select(Program::CLTV_VALUES, (params[:cltv] rescue nil)), :class=> "form-control" %>
               </div>
             </div>
           </div>
           <div class="col-md-2">
             <div class="form-group">
               <label>Loan Amount</label>
-              <%= select_tag 'loan_amount', options_for_select(Program::LOAN_AMOUNT, (params[:loan_amount] rescue nil)), { :class=> "form-control", :required => true} %>
+              <%= text_field_tag 'loan_amount_text', (params[:loan_amount_text] rescue nil), class: 'form-control' %>
+              <%= hidden_field_tag 'loan_amount', (params[:loan_amount] rescue nil) %>
             </div>
           </div>
           <div class="col-md-2">
@@ -585,24 +587,44 @@
       });
     });
   
-    function set_loan_amount_range(){
+    function set_la_and_ltv_value(){
       $.ajax({
         type:'GET',
-        url:'/set_loan_amount_range',
+        url:'/set_la_and_ltv_value',
         data: {home_price: $('#home_price').val(), down_payment: $('#down_payment').val()},
         success:function(response){
-          $('#loan_amount').val(response.loan_amount);
-          $('#ltv').val(response.ltv);
+          $('#loan_amount').val(response.loan_amount_range);
+          $('#loan_amount_text').val(response.loan_amount);
+          $('#ltv').val(response.ltv_range);
+          $('#ltv_text').val(parseFloat(response.ltv.toFixed(4)));
+        }
+      });
+    }
+
+    function set_hv_and_dp_value(){
+      $.ajax({
+        type:'GET',
+        url:'/set_hv_and_dp_value',
+        data: {loan_amount_text: $('#loan_amount_text').val(), ltv_text: $('#ltv_text').val()},
+        success:function(response){
+          $('#loan_amount').val(response.loan_amount_range);
+          $('#home_price').val(response.home_price);
+          $('#ltv').val(response.ltv_range);
+          $('#down_payment').val(response.down_payment);
         }
       });
     }
   
     if (params_present) {
-      set_loan_amount_range();
+      set_la_and_ltv_value();
     }
   
     $('#home_price, #down_payment').change(function () {
-      set_loan_amount_range();
+      set_la_and_ltv_value();
+    });
+
+    $('#loan_amount_text, #ltv_text').change(function () {
+      set_hv_and_dp_value();
     });
   
     function setArmDefaultValues(){
@@ -889,10 +911,10 @@
         $('#fannie_mae_product').val('')
         $('#freddie_mac_product').val('')
         $('#credit_score').val("700-719")
-        $('#ltv').val("65.01 - 70.00")
+        // $('#ltv').val("65.01 - 70.00")
         $('#cltv').val("75.01 - 80.00")
         $('#state').val('All')
-        $('#loan_amount').val('0 - 50000')
+        // $('#loan_amount').val('0 - 50000')
         $('#program_category').val('7900')
         $('#property_type').val('2-4 Unit')
         $('#financing_type').val('Subordinate Financing')
