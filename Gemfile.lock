@@ -1,22 +1,11 @@
 GIT
   remote: https://github.com/PureLoan/APIRead.git
-  revision: 8c410c27d3c1a897330a3896dfb23faaefbb00d7
+  revision: 1e3a71a220063d5fecca09c2946a32ca6e0698e3
   specs:
     search_api (0.1.0)
       activesupport
-      bootsnap (>= 1.1.0)
-      bootstrap
-      csv
-      google_drive
+      finance_math
       jquery-datatables
-      jquery-rails
-      jquery-validation-rails
-      redis-rails
-      roo (~> 2.7.0)
-      roo-xls
-      select2-rails
-      sidekiq
-      tzinfo-data
 
 GEM
   remote: https://rubygems.org/
@@ -110,6 +99,7 @@ GEM
     faraday (0.15.4)
       multipart-post (>= 1.2, < 3)
     ffi (1.11.1)
+    finance_math (1.0.5)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
     google-api-client (0.28.7)
@@ -308,8 +298,6 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2019.2)
-      tzinfo (>= 1.0.0)
     uber (0.1.0)
     uglifier (4.1.20)
       execjs (>= 0.3.0, < 3)
