@@ -318,7 +318,7 @@
             <div class="form-group">
               <label>CLTV</label>
               <div class="input-group">
-                <%= select_tag 'cltv', options_for_select(Program::CLTV_VALUES, (params[:cltv] rescue nil)), :class=> "form-control" %>
+                <%= select_tag 'cltv', options_for_select(Program::CLTV_VALUES, (params[:cltv].present? ? params[:cltv] : "75.00 - 79.99")), :class=> "form-control" %>
               </div>
             </div>
           </div>
