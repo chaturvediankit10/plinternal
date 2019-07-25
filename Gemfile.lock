@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/PureLoan/APIRead.git
-  revision: 1e3a71a220063d5fecca09c2946a32ca6e0698e3
+  revision: 626dd9fb2af9d90f3e8123de421eccad3afe6e66
   specs:
     search_api (0.1.0)
       activesupport
@@ -348,4 +348,4 @@ DEPENDENCIES
   webdrivers (~> 4.0)
 
 BUNDLED WITH
-   2.0.1
+   2.0.2

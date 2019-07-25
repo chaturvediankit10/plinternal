@@ -142,7 +142,7 @@
                 <h5>Points / Fees </h5>
               </div>
               <div class="row panel-body">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <div class="radio-boxes">
                     <div class="radio">
                       <label class="radio-bx">
@@ -161,6 +161,14 @@
                       <%= radio_button_tag 'point', '2', params[:point]=='2' ? true : false%> 2 points
                       <span class="checkmark"></span>
                       </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Point Mode</label>
+                    <div class="input-group">
+                      <%= select_tag 'point_mode', options_for_select(Program::POINT_MODE_LIST, (params[:point_mode].present? ? params[:point_mode] : "Regular")), :class=> "form-control" %>
                     </div>
                   </div>
                 </div>
