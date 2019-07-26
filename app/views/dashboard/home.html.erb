@@ -191,20 +191,20 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Loan Size</label>
-                    <%= select_tag 'loan_size', options_for_select(Program::LOAN_SIZE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_size] rescue nil)), { prompt: 'Select Loan Size', :class=> "form-control" }%>
+                    <%= select_tag 'loan_size', options_for_select(Program::LOAN_SIZE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_size].present? ? params[:loan_size] : @loan_size)), { prompt: 'Select Loan Size', :class=> "form-control" }%>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Loan Type</label>
-                    <%= select_tag 'loan_type', options_for_select(Program::LOAN_TYPE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_type] rescue nil)), { prompt: 'Select Loan Type', :class=> "form-control" } %>
+                    <%= select_tag 'loan_type', options_for_select(Program::LOAN_TYPE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_type].present? ? params[:loan_type] : @loan_type)), { prompt: 'Select Loan Type', :class=> "form-control" } %>
                   </div>
                 </div>
                 <div class="col-md-6 term">
                   <div class="form-group">
                     <label>Term</label>
                     <div class="input-group">
-                      <%= select_tag 'term', options_for_select(@term_list, (params[:term] rescue nil)), { prompt: 'Select Term', :class=> "form-control" } %>
+                      <%= select_tag 'term', options_for_select(@term_list, (params[:term].present? ? params[:term] : @term)), { prompt: 'Select Term', :class=> "form-control" } %>
                     </div>
                   </div>
                 </div>
@@ -243,14 +243,14 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Interest Rate</label>
-                    <%= select_tag 'interest', options_for_select(Program::INTEREST_LIST, @interest), :class=> "form-control" %>
+                    <%= select_tag 'interest', options_for_select(Program::INTEREST_LIST, (params[:interest].present? ? params[:interest] : @interest)), :class=> "form-control" %>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Lock Period</label>
                     <div class="input-group">
-                      <%= select_tag 'lock_period', options_for_select(Program::LOCK_PERIOD_LIST, @lock_period), :class=> "form-control" %>
+                      <%= select_tag 'lock_period', options_for_select(Program::LOCK_PERIOD_LIST, (params[:lock_period].present? ? params[:lock_period] : @lock_period)), :class=> "form-control" %>
                     </div>
                   </div>
                 </div>
