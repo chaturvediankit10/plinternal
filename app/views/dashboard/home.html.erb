@@ -18,7 +18,7 @@
             <div class="form-group">
               <label>State</label>
               <div class="input-group">
-                <%= select_tag 'state', options_for_select(Program::STATE, (params[:state] rescue nil)), :class=> "form-control" %>
+                <%= select_tag 'state_code', options_for_select(Program::STATE, (params[:state_code] rescue nil)), :class=> "form-control" %>
               </div>
             </div>
           </div>
@@ -500,7 +500,7 @@
           <%end%>
           <%else%>
           <tr>
-            <td colspan="11">No programs..</td>
+            <td colspan="12">No programs..</td>
           </tr>
           <%end%>
         </tbody>
@@ -921,7 +921,7 @@
         $('#credit_score').val("700-719")
         // $('#ltv').val("65.01 - 70.00")
         $('#cltv').val("75.01 - 80.00")
-        $('#state').val('All')
+        $('#state_code').val('All')
         // $('#loan_amount').val('0 - 50000')
         $('#program_category').val('7900')
         $('#property_type').val('2-4 Unit')

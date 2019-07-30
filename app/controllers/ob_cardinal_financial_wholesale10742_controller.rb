@@ -1,5 +1,6 @@
 class ObCardinalFinancialWholesale10742Controller < ApplicationController
   include ProgramAdj
+  include BankState
   before_action :read_sheet, only: [:index,:ak, :fannie_mae_products, :freddie_mac_products, :government_and_loan_level_products, :non_conforming_jumbo_core, :non_conforming_jumbo_x]
   # before_action :check_sheet_empty , only:[:ak, :sheet1]
   before_action :get_sheet, only: [:programs, :ak, :fannie_mae_products, :freddie_mac_products, :government_and_loan_level_products, :non_conforming_jumbo_core, :non_conforming_jumbo_x]
@@ -13,7 +14,7 @@ class ObCardinalFinancialWholesale10742Controller < ApplicationController
         if (sheet == "AK")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "Cardinal Financial"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
         sub_sheet_names.each do |sub_sheet|

@@ -1,5 +1,6 @@
 class ObSunWestWholesaleDemo5907Controller < ApplicationController
   include ProgramAdj
+  include BankState
   before_action :read_sheet, only: [:index,:ak, :agency_conforming_programs, :fhlmc_home_possible, :non_conforming_sigma_qm_prime_jumbo, :non_conforming_jw, :government_programs, :hecm_reverse_mortgage, :non_qm_sigma_seasoned_credit_event, :non_qm_sigma_no_credit_event_plus, :non_qm_real_prime_advantage, :non_qm_real_credit_advantage_a, :non_qm_real_credit_advantage_bbc, :non_qm_real_investor_income_a, :non_qm_real_investor_income_bb, :non_qm_real_dsc_ratio]
   before_action :get_sheet, only: [:programs, :ratesheet, :agency_conforming_programs, :fhlmc_home_possible, :non_conforming_sigma_qm_prime_jumbo, :non_conforming_jw, :government_programs, :hecm_reverse_mortgage, :non_qm_sigma_seasoned_credit_event, :non_qm_sigma_no_credit_event_plus, :non_qm_real_prime_advantage, :non_qm_real_credit_advantage_a, :non_qm_real_credit_advantage_bbc, :non_qm_real_investor_income_a, :non_qm_real_investor_income_bb, :non_qm_real_dsc_ratio]
   before_action :get_program, only: [:single_program]
@@ -10,7 +11,7 @@ class ObSunWestWholesaleDemo5907Controller < ApplicationController
         if (sheet == "RATESHEET")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "SunWest Wholesale"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
         sub_sheet_names.each do |sub_sheet|

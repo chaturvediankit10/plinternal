@@ -1,5 +1,6 @@
 class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
   include ProgramAdj
+  include BankState
   before_action :read_sheet, only: [:index, :conventional, :conven_highbalance_30, :gov_highbalance_30, :government_30_15_yr, :arm_programs, :fnma_du_refi_plus, :fhlmc_open_access, :fnma_home_ready, :fhlmc_home_possible, :simple_access, :jumbo_fixed]
   before_action :get_sheet, only: [:programs, :conventional, :conven_highbalance_30, :gov_highbalance_30, :government_30_15_yr, :arm_programs, :fnma_du_refi_plus, :fhlmc_open_access, :fnma_home_ready, :fhlmc_home_possible, :simple_access, :jumbo_fixed]
   before_action :get_program, only: [:single_program, :program_property]
@@ -10,7 +11,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
         if (sheet == "Intro")
           # headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "Union Home Mortgage Wholesale"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end

@@ -1,5 +1,6 @@
 class ObQuickenLoans3571Controller < ApplicationController
   include ProgramAdj
+  include BankState
   before_action :read_sheet, only: [:index,:ws_du_lp_pricing, :durp_lp_relief_pricing, :fha_usda_full_doc_pricing, :fha_streamline_pricing, :va_full_doc_pricing, :va_irrrl_pricing_govy_llpas, :na_jumbo_pricing_llpas, :du_lp_llpas, :durp_lp_relief_llpas, :lpmi]
 	before_action :get_sheet, only: [:programs, :ws_du_lp_pricing, :durp_lp_relief_pricing, :fha_usda_full_doc_pricing, :fha_streamline_pricing, :va_full_doc_pricing, :va_irrrl_pricing_govy_llpas, :na_jumbo_pricing_llpas, :du_lp_llpas, :durp_lp_relief_llpas, :lpmi]
   before_action :get_program, only: [:single_program]
@@ -10,7 +11,7 @@ class ObQuickenLoans3571Controller < ApplicationController
         if (sheet == "WS Rate Sheet Summary")
           # headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "Quicken Loans Mortgage Services"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end

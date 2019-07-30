@@ -1,5 +1,6 @@
 class ObCmgWholesalesController < ApplicationController
   include ProgramAdj
+  include BankState
   before_action :read_sheet, only: [:index,:gov, :agency, :durp, :oa, :jumbo_700,:jumbo_7200_6700, :jumbo_6600, :jumbo_6200, :jumbo_7600, :jumbo_6800, :jumbo_6900_7900, :programs, :jumbo_6400,:mi_llpas]
   before_action :get_sheet, only: [:gov, :agency, :durp, :oa, :jumbo_700,:jumbo_7200_6700, :jumbo_6600, :jumbo_6200, :jumbo_7600, :jumbo_6800, :jumbo_6900_7900, :programs, :jumbo_6400, :mi_llpas, :program_property]
   before_action :get_program, only: [:single_program, :program_property]
@@ -10,7 +11,7 @@ class ObCmgWholesalesController < ApplicationController
         if (sheet == "AGENCY")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "CMG Financial"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end

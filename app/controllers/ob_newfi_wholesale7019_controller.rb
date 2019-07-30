@@ -1,5 +1,6 @@
 class ObNewfiWholesale7019Controller < ApplicationController
   include ProgramAdj
+  include BankState
   before_action :read_sheet, only: [:index, :program, :biscayne_delegated_jumbo, :sequoia_portfolio_plus_products, :sequoia_expanded_products, :sequoia_investor_pro, :fha_buydown_fixed_rate_products, :fha_fixed_arm_products, :fannie_mae_homeready_products, :fnma_buydown_products, :fnma_conventional_fixed_rate, :fnma_conventional_high_balance, :fnma_conventional_arm, :olympic_piggyback_fixed, :olympic_piggyback_high_balance, :olympic_piggyback_arm]
   before_action :get_sheet, only: [:programs, :biscayne_delegated_jumbo, :sequoia_portfolio_plus_products, :sequoia_expanded_products, :sequoia_investor_pro, :fha_buydown_fixed_rate_products, :fha_fixed_arm_products, :fannie_mae_homeready_products, :fnma_buydown_products, :fnma_conventional_fixed_rate, :fnma_conventional_high_balance, :fnma_conventional_arm, :olympic_piggyback_fixed, :olympic_piggyback_high_balance, :olympic_piggyback_arm]
   before_action :get_program, only: [:single_program]
@@ -9,7 +10,7 @@ class ObNewfiWholesale7019Controller < ApplicationController
         if (sheet == "BISCAYNE DELEGATED JUMBO")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "Newfi Wholesale"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end

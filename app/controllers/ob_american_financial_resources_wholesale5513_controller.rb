@@ -1,4 +1,5 @@
 class ObAmericanFinancialResourcesWholesale5513Controller < ApplicationController
+  include BankState
   before_action :get_sheet, only: [:programs, :gnma, :gnma_hb, :fnma, :fhlmc, :hp, :jumbo]
   before_action :read_sheet, only: [:index, :gnma, :gnma_hb, :fnma, :fhlmc, :hp, :jumbo]
   before_action :get_program, only: [:single_program]
@@ -11,7 +12,7 @@ class ObAmericanFinancialResourcesWholesale5513Controller < ApplicationControlle
         if (sheet == "GNMA")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "American Financial Resource"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end

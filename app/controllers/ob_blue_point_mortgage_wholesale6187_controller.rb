@@ -1,4 +1,5 @@
 class ObBluePointMortgageWholesale6187Controller < ApplicationController
+  include BankState
   include SheetOperation
 
   def index
@@ -9,7 +10,7 @@ class ObBluePointMortgageWholesale6187Controller < ApplicationController
       xlsx.sheets.each do |sheet|
         if (sheet == "Blue Point")
           @name = "BluePoint Mortgage"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
         sub_sheet_names.each do |sub_sheet|

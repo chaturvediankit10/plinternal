@@ -1,5 +1,6 @@
 class WholesaleRateSheetHomeBridgeWholesaleController < ApplicationController
 	include Wholesale
+  include BankState
 	before_action :get_sheet, only: [:conventional_fixed_rate_products, :programs, :program_property,:conventional_arm_products, :government_products, :high_ltv_refinance,:jumbo_products,:jumbo_flex_product,:elite_plus_programs,:expanded_plus_programs,:simple_access_programs]
   before_action :get_program, only: [:single_program, :program_property]
   before_action :read_sheet, only: [:index,:conventional_fixed_rate_products,:programs,:conventional_arm_products,:government_products, :high_ltv_refinance,:jumbo_products,:jumbo_flex_product,:elite_plus_programs,:expanded_plus_programs,:simple_access_programs]
@@ -11,7 +12,7 @@ class WholesaleRateSheetHomeBridgeWholesaleController < ApplicationController
         if (sheet == "Rate Sheet")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "HomeBridge Wholesale"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
         sub_sheet_names.each do |sub_sheet|

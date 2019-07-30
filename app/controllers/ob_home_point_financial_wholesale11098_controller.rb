@@ -1,4 +1,5 @@
 class ObHomePointFinancialWholesale11098Controller < ApplicationController
+  include BankState
   before_action :read_sheet, only: [:index, :conforming_standard, :conforming_high_balance, :fha_va_usda, :homestyle, :fha_203k, :durp, :lpoa, :err, :hlr, :homeready, :homepossible, :jumbo_select, :jumbo_choice]
   before_action :get_sheet, only: [:programs, :conforming_standard, :conforming_high_balance, :fha_va_usda, :homestyle, :fha_203k, :durp, :lpoa, :err, :hlr, :homeready, :homepossible, :jumbo_select, :jumbo_choice]
   before_action :get_program, only: [:single_program, :program_property]
@@ -9,7 +10,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
         if (sheet == "Conforming Standard")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "Home Point Financial Corporation"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end

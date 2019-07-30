@@ -1,4 +1,5 @@
 class ObDirectMortgageCorpWholesale8443Controller < ApplicationController
+  include BankState
   before_action :get_sheet, only: [:programs, :rate_sheet_single_page_excel]
   before_action :read_sheet, only: [:index, :rate_sheet_single_page_excel]
   before_action :get_program, only: [:single_program]
@@ -11,7 +12,7 @@ class ObDirectMortgageCorpWholesale8443Controller < ApplicationController
         if (sheet == "RateSheet-SinglePageExcel")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "Direct Mortgage Corp Wholesale"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end

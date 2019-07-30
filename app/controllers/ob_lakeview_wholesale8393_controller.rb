@@ -1,5 +1,6 @@
 class ObLakeviewWholesale8393Controller < ApplicationController
 	include Wholesale
+  include BankState
 	before_action :get_sheet, only: [:programs, :program_property,:early_access,:asset_inclusion,:expanded_ratio,:alternative_income_calculation,:investor_product_no_prepayment_penalty,:bayview_portfolio_products,:piggy_back_second_lien_prepayment]
   before_action :get_program, only: [:single_program, :program_property]
   before_action :read_sheet, only: [:index,:programs,:early_access,:asset_inclusion,:expanded_ratio,:alternative_income_calculation,:investor_product_no_prepayment_penalty,:bayview_portfolio_products,:piggy_back_second_lien_prepayment]
@@ -11,7 +12,7 @@ class ObLakeviewWholesale8393Controller < ApplicationController
         if (sheet == "Whsl Portfolio Ratesheet")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "Bayview Loan Servicing"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
         sub_sheet_names.each do |sub_sheet|

@@ -1,5 +1,6 @@
 class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
   include ProgramAdj
+  include BankState
   before_action :read_sheet, only: [:index,:fha, :va, :conf_fixed]
   before_action :get_sheet, only: [:programs, :va, :fha, :conf_fixed]
   before_action :get_program, only: [:single_program]
@@ -10,7 +11,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
         if (sheet == "Cover")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "Allied Mortgage"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end

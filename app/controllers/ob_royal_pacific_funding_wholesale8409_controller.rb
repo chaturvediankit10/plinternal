@@ -1,4 +1,5 @@
 class ObRoyalPacificFundingWholesale8409Controller < ApplicationController
+  include BankState
   before_action :get_program, only: [:single_program, :program_property]
   before_action :get_sheet, only: [:programs, :royal_pfc, :fha_standard_programs, :fha_streamline_programs, :va_standard_programs, :va_streamline_programs, :conventional_fixed_programs, :conventional_arm_programs, :freddie_mac_programs, :core_jumbo_minimum_loan_amount, :core_jumbo_minimum_loan_amount_above_agency_limit, :choice_advantage_plus, :choice_advantage, :choice_alternative, :choice_ascent, :choice_investor, :pivot_prime_jumbo]
   before_action :read_sheet, only: [:index,:royal_pfc, :fha_standard_programs, :fha_streamline_programs, :va_standard_programs, :va_streamline_programs, :conventional_fixed_programs, :conventional_arm_programs, :freddie_mac_programs, :core_jumbo_minimum_loan_amount, :core_jumbo_minimum_loan_amount_above_agency_limit, :choice_advantage_plus, :choice_advantage, :choice_alternative, :choice_ascent, :choice_investor, :pivot_prime_jumbo]
@@ -8,7 +9,7 @@ class ObRoyalPacificFundingWholesale8409Controller < ApplicationController
       @xlsx.sheets.each do |sheet|
         if (sheet == "Royal PFC")
           @name = "Royal Pacific Funding"
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
         sub_sheet_names.each do |sub_sheet|

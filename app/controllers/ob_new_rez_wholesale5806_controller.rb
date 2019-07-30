@@ -1,5 +1,6 @@
 class ObNewRezWholesale5806Controller < ApplicationController
   include ProgramAdj
+  include BankState
   method_names = [:government, :programs, :freddie_fixed_rate, :conforming_fixed_rate, :home_possible, :conforming_arms, :lp_open_acces_arms, :lp_open_access_105, :lp_open_access, :du_refi_plus_arms, :du_refi_plus_fixed_rate_105, :du_refi_plus_fixed_rate, :dream_big, :high_balance_extra, :freddie_arms, :jumbo_series_d,:jumbo_series_f, :jumbo_series_h, :jumbo_series_i, :jumbo_series_jqm, :homeready, :homeready_hb]
   before_action :read_sheet, only: method_names + [:index]
   before_action :get_sheet, only: method_names
@@ -40,7 +41,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
             end
           end
 
-          @bank = Bank.find_or_create_by(name: @name)
+          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
           @bank.update(phone: @phone, address1: @address_a.join, state_code: @state_code, zip: @zip)
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
