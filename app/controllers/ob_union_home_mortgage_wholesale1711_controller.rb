@@ -10,7 +10,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
       @xlsx.sheets.each do |sheet|
         if (sheet == "Intro")
           # headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
-          @name = "Union Home Mortgage Wholesale"
+          @name = "Union Home"
           @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
@@ -629,7 +629,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   if r >= 73 && r <= 79 && cc == 2
                     secondary_key = get_value value
                     if r == 73
-                      get_cell_number @mortgage_hash["Term/FICO/LTV"],r,cc  
+                      get_cell_number @mortgage_hash["Term/FICO/LTV"],r,cc
                     end
                     @mortgage_hash["Term/FICO/LTV"]["15-Inf"][secondary_key] = {}
                   end
@@ -652,7 +652,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       secondary_key
                     end
                     if r == 83
-                      get_cell_number @sub_hash["FinancingType/LTV/CLTV/FICO"],r,cc  
+                      get_cell_number @sub_hash["FinancingType/LTV/CLTV/FICO"],r,cc
                     end
                     @sub_hash["FinancingType/LTV/CLTV/FICO"]["Subordinate Financing"][secondary_key] = {}
                   end
@@ -1072,7 +1072,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                   if r >= 35 && r <= 36 && cc == 9
                     ltv_key = value.tr('% ','')
                     if r == 35
-                      get_cell_number @adjustment_hash["LTV"],r,cc  
+                      get_cell_number @adjustment_hash["LTV"],r,cc
                     end
                     @adjustment_hash["LTV"][ltv_key] = {}
                     cc = cc + 2
@@ -1909,7 +1909,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
   def program_property title
     if title.include?("YEAR") || title.downcase.include?("yr") || title.downcase.include?("y")
       if title.scan(/\d+/).count > 1
-        term = title.scan(/\d+/)[0] + term = title.scan(/\d+/)[1]  
+        term = title.scan(/\d+/)[0] + term = title.scan(/\d+/)[1]
       else
         term = title.scan(/\d+/)[0]
       end

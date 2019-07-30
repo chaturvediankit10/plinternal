@@ -10,7 +10,7 @@ class ObQuickenLoans3571Controller < ApplicationController
       @xlsx.sheets.each do |sheet|
         if (sheet == "WS Rate Sheet Summary")
           # headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
-          @name = "Quicken Loans Mortgage Services"
+          @name = "Quicken Loans"
           @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
