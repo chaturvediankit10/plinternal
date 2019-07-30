@@ -8,7 +8,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
       @xlsx.sheets.each do |sheet|
         if (sheet == "Conforming Standard")
           headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
-          @name = "Home Point Financial Corporation"
+          @name = "Home Point"
           @bank = Bank.find_or_create_by(name: @name)
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
@@ -46,7 +46,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -107,7 +107,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -169,7 +169,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -231,7 +231,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -292,7 +292,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -357,7 +357,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -422,7 +422,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -490,7 +490,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -554,7 +554,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                     @program.update(arm_margin: 2.00, arm_caps: "1-1-5")
                   end
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -615,7 +615,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -676,7 +676,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -737,7 +737,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -773,7 +773,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
     end
     redirect_to programs_ob_home_point_financial_wholesale11098_path(@sheet_obj)
   end
-  
+
   def jumbo_choice
     @programs_ids = []
     @xlsx.sheets.each do |sheet|
@@ -803,7 +803,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
                   @program.update(loan_category: sheet)
                   program_property @title
                   @programs_ids << @program.id
-                  
+
                   @block_hash = {}
                   key = ''
                   (1..20).each do |max_row|
@@ -889,7 +889,7 @@ class ObHomePointFinancialWholesale11098Controller < ApplicationController
         end
       end
         # Arm Basic
-      if title.downcase.include?("arm")  
+      if title.downcase.include?("arm")
         if title.include?("3/1") || title.include?("3 / 1")
           arm_basic = 3
         elsif title.include?("5/1") || title.include?("5 / 1")

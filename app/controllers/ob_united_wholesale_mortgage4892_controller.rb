@@ -11,7 +11,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
       xlsx.sheets.each do |sheet|
         if (sheet == "Conv")
           # headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
-          @name = "UWM United Wholesale Mortgage"
+          @name = "United Whole Sale"
           @bank = Bank.find_or_create_by(name: @name)
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
@@ -359,7 +359,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   program_property @title
                   @programs_ids << @program.id
                 end
-                # 
+                #
                 @block_hash = {}
                 key = ''
                 (1..11).each do |max_row|
@@ -452,7 +452,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   program_property @title
                   @programs_ids << @program.id
                 end
-                # 
+                #
                 @block_hash = {}
                 key = ''
                 (1..11).each do |max_row|
@@ -680,7 +680,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   @programs_ids << @program.id
                 end
 
-                # 
+                #
                 @block_hash = {}
                 key = ''
                 (1..11).each do |max_row|
@@ -728,7 +728,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
                   @programs_ids << @program.id
                 end
 
-                # 
+                #
                 @block_hash = {}
                 key = ''
                 (1..11).each do |max_row|
@@ -1015,7 +1015,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
   def program_property title
     if (title.downcase.include?("year") || title.downcase.include?("yr") || title.downcase.include?("y")) && title.downcase.exclude?('arm')
       if title.scan(/\d+/).count > 1
-        term = title.scan(/\d+/)[0] + term = title.scan(/\d+/)[1]  
+        term = title.scan(/\d+/)[0] + term = title.scan(/\d+/)[1]
       else
         term = title.scan(/\d+/)[0]
       end
@@ -1138,7 +1138,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
               program_property @title
               @programs_ids << @program.id
               # Base rate
-              
+
               @block_hash = {}
               key = ''
               (1..row_count).each do |max_row|
