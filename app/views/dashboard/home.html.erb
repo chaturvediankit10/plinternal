@@ -435,8 +435,9 @@
             <th style="width: 5%;">Bank Name</th>
             <th style="width: 5%;">Loan Category</th>
             <th style="width: 5%;">Program Category</th>
-            <th style="width: 15%;">Program Name</th>
+            <th style="width: 10%;">Program Name</th>
             <th style="width: 5%;">AIR</th>
+            <th style="width: 5%;">AIR Point</th>
             <th style="width: 5%;">Final Point</th>
             <th style="width: 5%;">Interest Rate</th>
             <th style="width: 5%;">Base Point</th>
@@ -457,6 +458,7 @@
               <p class="table-break-progrom-name"><%= program[:program_name] %></p>
             </td>
             <td><%= number_with_precision(program[:air].to_s, :precision => 3)%></td>
+            <td><%= number_with_precision(program[:air_point].to_s, :precision => 3)%></td>
             <td><%= number_with_precision(program[:final_rate].sum, :precision => 3) %>
             </td>
             <td><%= @interest %></td>
