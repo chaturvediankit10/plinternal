@@ -12,7 +12,7 @@ class ObUnitedWholesaleMortgage4892Controller < ApplicationController
       xlsx.sheets.each do |sheet|
         if (sheet == "Conv")
           # headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
-          @name = "United WholeSale"
+          @name = "United Wholesale"
           @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
