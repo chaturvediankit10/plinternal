@@ -1,0 +1,88 @@
+<style type="text/css">
+
+</style>
+<div class="main-form panel">
+  <div class="loader" style="display: none;"><i class="fa fa-spinner fa-spin loader-spinner"></i></div>
+  <div class="panel-heading">Search Results</div>
+  <div class="result-table table-responsive">
+    <table class="table table-striped custab table-bordered">
+      <thead>
+        <tr>
+          <th style="width: 5%;">No.</th>
+          <th style="width: 5%;">Bank Name</th>
+          <th style="width: 5%;">Loan Category</th>
+          <th style="width: 5%;">Program Category</th>
+          <th style="width: 10%;">Program Name</th>
+          <th style="width: 5%;">AIR</th>
+          <th style="width: 5%;">AIR Point</th>
+          <th style="width: 5%;">Final Point</th>
+          <th style="width: 5%;">Interest Rate</th>
+          <th style="width: 5%;">Base Point</th>
+          <th style="width: 5%;">Adjustments</th>
+          <th style="width: 10%;">Adj Table Loc</th>
+          <th style="width: 30%;">Adjustment Table Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if result.present? %>
+        <% result.each_with_index do |program, index|%>
+        <tr>
+          <td><%= index +1 %></td>
+          <td><%= program[:bank_name] %></td>
+          <td><%= program[:loan_category] %></td>
+          <td><%= program[:program_category] %></td>
+          <td>
+            <p class="table-break-progrom-name"><%= program[:program_name] %></p>
+          </td>
+          <td><%= number_with_precision(program[:air].to_s, :precision => 3)%></td>
+          <td><%= number_with_precision(program[:air_point].to_s, :precision => 3)%></td>
+          <td><%= number_with_precision(program[:final_rate].sum, :precision => 3) %>
+          </td>
+          <td><%= @interest %></td>
+          <td><%= number_with_precision(program[:base_rate], :precision => 3) %>
+          </td>
+          <td>
+            <%if program[:adj_points].present? && program[:adj_points] != "Adjustment Not Present"%>
+            <%
+              program[:adj_points].each_with_index do |adj_value, index|
+                %>
+            <p> <%= number_with_precision(adj_value.round(3), :precision => 3)%></p>
+            <%
+              end
+              %>
+            <%#= program[:adj_points].map{|a| number_with_precision(a.round(3), :precision => 3)} %>
+            <%end%>
+          </td>
+          <td>
+            <%
+              if program[:cell_number].present?
+                program[:cell_number].each_with_index do |key, index|
+                  %>
+            <p> <%= key if key.present? %></p>
+            <%
+              end
+              end
+              %>
+          </td>
+          <td>
+            <%
+              if program[:adj_primary_key].present? && program[:adj_primary_key] != "Adjustment Not Present"
+                program[:adj_primary_key].each_with_index do |key, index|
+                  %>
+            <p class="table-break-text"><%= index+1 %>.<%= key %> </p>
+            <%
+              end
+              end
+              %>
+          </td>
+        </tr>
+        <%end%>
+        <%else%>
+        <tr>
+          <td colspan="13">No programs..</td>
+        </tr>
+        <%end%>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -32,13 +32,13 @@
           <div class="col">
             <div class="form-group">
               <label>Home Price</label>
-              <%= text_field_tag :home_price, number_to_currency(@home_price, :unit=> "", precision: 0), class: 'form-control' %>
+              <%= text_field_tag :home_price, number_to_currency((@home_price.present? ? @home_price : "300000"), :unit=> "", precision: 0), class: 'form-control' %>
             </div>
           </div>
           <div class="col">
             <div class="form-group">
               <label>Down Payment</label>
-              <%= text_field_tag :down_payment,number_to_currency(@down_payment,  :unit=> "", precision: 0), class: 'form-control' %>
+              <%= text_field_tag :down_payment,number_to_currency((@down_payment.present? ? @down_payment : "50000"),  :unit=> "", precision: 0), class: 'form-control' %>
             </div>
           </div>
           <div class="col">
@@ -96,7 +96,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <div class="checkbox radio">
-                          <label class="radio-bx"> <%= check_box_tag 'fha', 'fha', params[:fha].present? %> FHA
+                          <label class="radio-bx"> <%= check_box_tag 'fha', 'fha',  (params[:commit].present? ? (params[:fha].present? ? true : false) : true) %> FHA
                           <span class="checkmark"></span>
                           </label>
                         </div>
@@ -116,7 +116,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <div class="checkbox radio">
-                          <label class="radio-bx"><%= check_box_tag 'va', 'va', params[:va].present? %> VA
+                          <label class="radio-bx"><%= check_box_tag 'va', 'va',  (params[:commit].present? ? (params[:fha].present? ? true : false) : true) %> VA
                           <span class="checkmark"></span>
                           </label>
                         </div>
@@ -127,7 +127,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <div class="checkbox radio">
-                          <label class="radio-bx"><%= check_box_tag 'usda', 'usda', params[:usda].present? %> USDA
+                          <label class="radio-bx"><%= check_box_tag 'usda', 'usda',  (params[:commit].present? ? (params[:usda].present? ? true : false) : true) %> USDA
                           <span class="checkmark"></span>
                           </label>
                         </div>
@@ -174,11 +174,24 @@
                 </div>
               </div>
             </div>
-            <div class="form-group">
-              <div class="checkbox radio">
-                <label class="radio-bx"><%= check_box_tag 'full_doc', 'full_doc', params[:full_doc].present? %> Full Doc
-                <span class="checkmark"></span>
-                </label>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="checkbox radio">
+                    <label class="radio-bx"><%= check_box_tag 'full_doc', 'full_doc', params[:full_doc].present? %> Full Doc
+                    <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="form-group">
+                  <div class="checkbox radio">
+                    <label class="radio-bx"><%= check_box_tag 'others', 'others', (params[:commit].present? ? (params[:others].present? ? true : false) : true) %> Others
+                    <span class="checkmark"></span>
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -191,20 +204,20 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Loan Size</label>
-                    <%= select_tag 'loan_size', options_for_select(Program::LOAN_SIZE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_size].present? ? params[:loan_size] : @loan_size)), { prompt: 'Select Loan Size', :class=> "form-control" }%>
+                    <%= select_tag 'loan_size', options_for_select(Program::LOAN_SIZE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_size].present? ? params[:loan_size] : "Conforming")), { prompt: 'Select Loan Size', :class=> "form-control" }%>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Loan Type</label>
-                    <%= select_tag 'loan_type', options_for_select(Program::LOAN_TYPE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_type].present? ? params[:loan_type] : @loan_type)), { prompt: 'Select Loan Type', :class=> "form-control" } %>
+                    <%= select_tag 'loan_type', options_for_select(Program::LOAN_TYPE.flatten.sort_by!{ |m| m.downcase }, (params[:loan_type].present? ? params[:loan_type] : "Fixed")), { prompt: 'Select Loan Type', :class=> "form-control" } %>
                   </div>
                 </div>
                 <div class="col-md-6 term">
                   <div class="form-group">
                     <label>Term</label>
                     <div class="input-group">
-                      <%= select_tag 'term', options_for_select(@term_list, (params[:term].present? ? params[:term] : @term)), { prompt: 'Select Term', :class=> "form-control" } %>
+                      <%= select_tag 'term', options_for_select(@term_list, (params[:term].present? ? params[:term] : "30")), { prompt: 'Select Term', :class=> "form-control" } %>
                     </div>
                   </div>
                 </div>
@@ -243,14 +256,14 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Interest Rate</label>
-                    <%= select_tag 'interest', options_for_select(Program::INTEREST_LIST, (params[:interest].present? ? params[:interest] : @interest)), :class=> "form-control" %>
+                    <%= select_tag 'interest', options_for_select(Program::INTEREST_LIST, (params[:interest].present? ? params[:interest] : "4.000")), :class=> "form-control" %>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Lock Period</label>
                     <div class="input-group">
-                      <%= select_tag 'lock_period', options_for_select(Program::LOCK_PERIOD_LIST, (params[:lock_period].present? ? params[:lock_period] : @lock_period)), :class=> "form-control" %>
+                      <%= select_tag 'lock_period', options_for_select(Program::LOCK_PERIOD_LIST, (params[:lock_period].present? ? params[:lock_period] : "30")), :class=> "form-control" %>
                     </div>
                   </div>
                 </div>
@@ -264,35 +277,35 @@
                 <div class="row col-md-12">
                   <div class="col-md-4">
                     <div class="checkbox radio">
-                      <label class="radio-bx"> <%= check_box_tag 'fannie_mae', 'fannie_mae', params[:fannie_mae].present? %> Fannie Mae
+                      <label class="radio-bx"> <%= check_box_tag 'fannie_mae', 'fannie_mae', (params[:commit].present? ? (params[:fannie_mae].present? ? true : false) : true) %> Fannie Mae
                       <span class="checkmark"></span>
                       </label>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="checkbox radio">
-                      <label class="radio-bx"> <%= check_box_tag 'fannie_mae_du', 'fannie_mae_du', params[:fannie_mae_du].present? %> Fannie Mae DU
+                      <label class="radio-bx"> <%= check_box_tag 'fannie_mae_du', 'fannie_mae_du', (params[:commit].present? ? (params[:fannie_mae].present? ? true : false) : true) %> Fannie Mae DU
                       <span class="checkmark"></span>
                       </label>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <%= select_tag 'fannie_mae_product', options_for_select(Program::FANNIE_MAE_PRODUCT_LIST.flatten.sort_by!{ |m| m.downcase }, (params[:fannie_mae_product] rescue nil)), { prompt: 'Select Product', :class=> "form-control" } %>
+                      <%= select_tag 'fannie_mae_product', options_for_select(Program::FANNIE_MAE_PRODUCT_LIST.flatten.sort_by!{ |m| m.downcase }, "HomeReady"), { prompt: 'Select Product', :class=> "form-control" } %>
                     </div>
                   </div>
                 </div>
                 <div class="row col-md-12">
                   <div class="col-md-4">
                     <div class="checkbox radio">
-                      <label class="radio-bx"> <%= check_box_tag 'freddie_mac', 'freddie_mac', params[:freddie_mac].present? %> Freddie Mac
+                      <label class="radio-bx"> <%= check_box_tag 'freddie_mac', 'freddie_mac', (params[:commit].present? ? (params[:freddie_mac].present? ? true : false) : true) %> Freddie Mac
                       <span class="checkmark"></span>
                       </label>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="checkbox radio">
-                      <label class="radio-bx"> <%= check_box_tag 'freddie_mac_lp', 'freddie_mac_lp', params[:freddie_mac_lp].present? %> Freddie Mac LP
+                      <label class="radio-bx"> <%= check_box_tag 'freddie_mac_lp', 'freddie_mac_lp', (params[:commit].present? ? (params[:freddie_mac_lp].present? ? true : false) : true) %> Freddie Mac LP
                       <span class="checkmark"></span>
                       </label>
                     </div>
@@ -300,7 +313,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <div class="form-group">
-                        <%= select_tag 'freddie_mac_product', options_for_select(Program::FREDDIE_MAC_PRODUCT_LIST.flatten.sort_by!{ |m| m.downcase }, (params[:freddie_mac_product] rescue nil)), { prompt: 'Select Product', :class=> "form-control" } %>
+                        <%= select_tag 'freddie_mac_product', options_for_select(Program::FREDDIE_MAC_PRODUCT_LIST.flatten.sort_by!{ |m| m.downcase }, "Home Possible"), { prompt: 'Select Product', :class=> "form-control" } %>
                       </div>
                     </div>
                   </div>
@@ -424,91 +437,8 @@
   <% end %>
 </div>
 <!-- end searching form -->
-<div class="custyle">
-  <div class="main-form panel">
-    <div class="panel-heading">Search Results</div>
-    <div class="result-table table-responsive">
-      <table class="table table-striped custab table-bordered">
-        <thead>
-          <tr>
-            <th style="width: 5%;">No.</th>
-            <th style="width: 5%;">Bank Name</th>
-            <th style="width: 5%;">Loan Category</th>
-            <th style="width: 5%;">Program Category</th>
-            <th style="width: 10%;">Program Name</th>
-            <th style="width: 5%;">AIR</th>
-            <th style="width: 5%;">AIR Point</th>
-            <th style="width: 5%;">Final Point</th>
-            <th style="width: 5%;">Interest Rate</th>
-            <th style="width: 5%;">Base Point</th>
-            <th style="width: 5%;">Adjustments</th>
-            <th style="width: 10%;">Adj Table Loc</th>
-            <th style="width: 30%;">Adjustment Table Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% if @result.present? %>
-          <% @result.each_with_index do |program, index|%>
-          <tr>
-            <td><%= index +1 %></td>
-            <td><%= program[:bank_name] %></td>
-            <td><%= program[:loan_category] %></td>
-            <td><%= program[:program_category] %></td>
-            <td>
-              <p class="table-break-progrom-name"><%= program[:program_name] %></p>
-            </td>
-            <td><%= number_with_precision(program[:air].to_s, :precision => 3)%></td>
-            <td><%= number_with_precision(program[:air_point].to_s, :precision => 3)%></td>
-            <td><%= number_with_precision(program[:final_rate].sum, :precision => 3) %>
-            </td>
-            <td><%= @interest %></td>
-            <td><%= number_with_precision(program[:base_rate], :precision => 3) %>
-            </td>
-            <td>
-              <%if program[:adj_points].present? && program[:adj_points] != "Adjustment Not Present"%>
-              <%
-                program[:adj_points].each_with_index do |adj_value, index|
-                  %>
-              <p> <%= number_with_precision(adj_value.round(3), :precision => 3)%></p>
-              <%
-                end
-                %>
-              <%#= program[:adj_points].map{|a| number_with_precision(a.round(3), :precision => 3)} %>
-              <%end%>
-            </td>
-            <td>
-              <%
-                if program[:cell_number].present?
-                  program[:cell_number].each_with_index do |key, index|
-                    %>
-              <p> <%= key if key.present? %></p>
-              <%
-                end
-                end
-                %>
-            </td>
-            <td>
-              <%
-                if program[:adj_primary_key].present? && program[:adj_primary_key] != "Adjustment Not Present"
-                  program[:adj_primary_key].each_with_index do |key, index|
-                    %>
-              <p class="table-break-text"><%= index+1 %>.<%= key %> </p>
-              <%
-                end
-                end
-                %>
-            </td>
-          </tr>
-          <%end%>
-          <%else%>
-          <tr>
-            <td colspan="12">No programs..</td>
-          </tr>
-          <%end%>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="custyle result-section">
+  <%= render partial: "results", locals: { result: @result }%>
 </div>
 <div class="valid">
 <div class='refi'>Please Select Refinance</div>
@@ -520,7 +450,24 @@
 </div>
 <script type="text/javascript">
   let params_present = <%= raw params["commit"].present? ? false : true%>
+
   $(document).ready(function(){
+
+    function get_program_results(){
+      $('.loader').show();
+      var data = $("#search_form").serialize();
+      data = data+'&commit=commit'
+      $.ajax({
+        url: '/',
+        type: "GET",
+        dataType: "script",
+        data: data,
+        success:function(response){
+          $('.loader').hide();
+        }
+      });
+    }
+
     $('#bank_name').change(function(){
       var bank_name =  $(this).val();
       var loan_category = "All"
@@ -607,6 +554,7 @@
           $('#loan_amount_text').val(response.loan_amount);
           $('#ltv').val(response.ltv_range);
           $('#ltv_text').val(parseFloat(response.ltv.toFixed(4)));
+          get_program_results();
         }
       });
     }
