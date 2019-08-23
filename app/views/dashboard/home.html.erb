@@ -291,7 +291,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <%= select_tag 'fannie_mae_product', options_for_select(Program::FANNIE_MAE_PRODUCT_LIST.flatten.sort_by!{ |m| m.downcase }, "HomeReady"), { prompt: 'Select Product', :class=> "form-control" } %>
+                      <%= select_tag 'fannie_mae_product', options_for_select(Program::FANNIE_MAE_PRODUCT_LIST.flatten.sort_by!{ |m| m.downcase }, (params[:commit].present? ? (params[:fannie_mae_product].present? ? "HomeReady" : nil) : "HomeReady")), { prompt: 'Select Product', :class=> "form-control" } %>
                     </div>
                   </div>
                 </div>
@@ -313,7 +313,7 @@
                   <div class="col-md-4">
                     <div class="form-group">
                       <div class="form-group">
-                        <%= select_tag 'freddie_mac_product', options_for_select(Program::FREDDIE_MAC_PRODUCT_LIST.flatten.sort_by!{ |m| m.downcase }, "Home Possible"), { prompt: 'Select Product', :class=> "form-control" } %>
+                        <%= select_tag 'freddie_mac_product', options_for_select(Program::FREDDIE_MAC_PRODUCT_LIST.flatten.sort_by!{ |m| m.downcase }, (params[:commit].present? ? (params[:fannie_mae_product].present? ? "Home Possible" : nil) : "Home Possible")), { prompt: 'Select Product', :class=> "form-control" } %>
                       </div>
                     </div>
                   </div>
