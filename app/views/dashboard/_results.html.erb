@@ -5,22 +5,22 @@
   <div class="loader" style="display: none;"><i class="fa fa-spinner fa-spin loader-spinner"></i></div>
   <div class="panel-heading">Search Results</div>
   <div class="result-table table-responsive">
-    <table class="table table-striped custab table-bordered">
+    <table class="table table-striped custab table-bordered fixed_header">
       <thead>
         <tr>
-          <th style="width: 5%;">No.</th>
-          <th style="width: 5%;">Bank Name</th>
-          <th style="width: 5%;">Loan Category</th>
-          <th style="width: 5%;">Program Category</th>
-          <th style="width: 10%;">Program Name</th>
-          <th style="width: 5%;">AIR</th>
-          <th style="width: 5%;">AIR Point</th>
-          <th style="width: 5%;">Final Point</th>
-          <th style="width: 5%;">Interest Rate</th>
-          <th style="width: 5%;">Base Point</th>
-          <th style="width: 5%;">Adjustments</th>
-          <th style="width: 10%;">Adj Table Loc</th>
-          <th style="width: 30%;">Adjustment Table Name</th>
+          <th>No.</th>
+          <th>Bank Name</th>
+          <th>Loan Category</th>
+          <th>Program Category</th>
+          <th>Program Name</th>
+          <th>AIR</th>
+          <th>AIR Point</th>
+          <th>Final Point</th>
+          <th>Interest Rate</th>
+          <th>Base Point</th>
+          <th>Adjustments</th>
+          <th>Adj Table Loc</th>
+          <th>Adjustment Table Name</th>
         </tr>
       </thead>
       <tbody>
@@ -86,3 +86,33 @@
     </table>
   </div>
 </div>
+
+<style type="text/css">
+  .fixed_header{
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+.fixed_header tbody{
+  display:block;
+  width: 100%;
+  overflow-y: auto;
+  height: 500px;
+}
+
+.fixed_header thead tr {
+   display: block;
+}
+
+.fixed_header thead th {
+    vertical-align: top;
+}
+
+.fixed_header th, .fixed_header td {
+  padding: 5px;
+  text-align: left;
+  width: 7.69%;
+  word-break: break-all;
+}
+</style>
