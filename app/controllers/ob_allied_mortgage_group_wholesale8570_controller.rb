@@ -58,6 +58,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
+                          @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value
@@ -270,6 +271,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
+                          @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*(c_i)] = value unless @block_hash[key].nil?
@@ -468,6 +470,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                     if value.present?
                       if (c_i == 0)
                         key = value
+                        @program.check_base_rate_range(key)
                         @block_hash[key] = {}
                       else
                         @block_hash[key][15*c_i] = value
@@ -756,16 +759,20 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
         else
           @term
         end
-      end 
+      end
     end
 
     def make_adjust(block_hash, sheet)
       block_hash.each do |hash|
         hash.each do |key|
-          data = {}
-          data[key[0]] = key[1]
-          adj_ment = Adjustment.create(data: data,loan_category: sheet)
-          link_adj_with_program(adj_ment, sheet)
+          if check_adjustment_range(key)
+            data = {}
+            data[key[0]] = key[1]
+            adj_ment = Adjustment.create(data: data,loan_category: sheet)
+            link_adj_with_program(adj_ment, sheet)
+          else
+            raise "Adjustment Key not Found"
+          end
         end
       end
     end
