@@ -110,6 +110,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
+                          @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value
@@ -4391,10 +4392,15 @@ class ObNewRezWholesale5806Controller < ApplicationController
     block_hash.each do |hash|
       if hash.present?
         hash.each do |key|
-          data = {}
-          data[key[0]] = key[1]
-          adj_ment = Adjustment.create(data: data,loan_category: sheet)
-          link_adj_with_program(adj_ment, sheet)
+          # debugger
+          if check_adjustment_range(key)
+            data = {}
+            data[key[0]] = key[1]
+            adj_ment = Adjustment.create(data: data,loan_category: sheet)
+            link_adj_with_program(adj_ment, sheet)
+          else
+            raise "Adjustment Key not Found"
+          end
         end
       end
     end
