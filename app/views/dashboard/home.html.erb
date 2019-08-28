@@ -96,7 +96,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <div class="checkbox radio">
-                          <label class="radio-bx"> <%= check_box_tag 'fha', 'fha',  (params[:commit].present? ? (params[:fha].present? ? true : false) : true) %> FHA
+                          <label class="radio-bx"> <%= check_box_tag 'fha', 'fha',  (params[:fha].present? ? true : false) %> FHA
                           <span class="checkmark"></span>
                           </label>
                         </div>
@@ -105,7 +105,7 @@
                     <div class="col-md-4">
                       <div class="form-group">
                         <div class="checkbox radio">
-                          <label class="radio-bx"><%= check_box_tag 'streamline', 'streamline', params[:streamline].present? %> Streamline
+                          <label class="radio-bx"><%= check_box_tag 'streamline', 'streamline', (params[:streamline].present? ? true : false) %> Streamline
                           <span class="checkmark"></span>
                           </label>
                         </div>
@@ -116,7 +116,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <div class="checkbox radio">
-                          <label class="radio-bx"><%= check_box_tag 'va', 'va',  (params[:commit].present? ? (params[:fha].present? ? true : false) : true) %> VA
+                          <label class="radio-bx"><%= check_box_tag 'va', 'va',  (params[:va].present? ? true : false) %> VA
                           <span class="checkmark"></span>
                           </label>
                         </div>
@@ -127,7 +127,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <div class="checkbox radio">
-                          <label class="radio-bx"><%= check_box_tag 'usda', 'usda',  (params[:commit].present? ? (params[:usda].present? ? true : false) : true) %> USDA
+                          <label class="radio-bx"><%= check_box_tag 'usda', 'usda',  (params[:usda].present? ? true : false) %> USDA
                           <span class="checkmark"></span>
                           </label>
                         </div>
