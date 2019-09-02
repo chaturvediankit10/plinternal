@@ -3954,6 +3954,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
               cc = 3 + max_column*6 
               begin
                 @title = sheet_data.cell(r,cc)
+                
                 @program = @sheet_obj.programs.find_or_create_by(program_name: @title)
                 p_name = @title + " " + sheet
                 @program.update_fields p_name
@@ -4406,13 +4407,13 @@ class ObNewRezWholesale5806Controller < ApplicationController
     block_hash.each do |hash|
       if hash.present?
         hash.each do |key|
-          if check_adjustment_range(key)
+          if Program.new.check_adj_key_names key[0]
             data = {}
             data[key[0]] = key[1]
             adj_ment = Adjustment.create(data: data,loan_category: sheet)
             link_adj_with_program(adj_ment, sheet)
           else
-            raise "Adjustment Key not Found"
+            raise "check_adj_key_names returns False for key = #{key[0]}"
           end
         end
       end
