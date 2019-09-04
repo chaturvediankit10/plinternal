@@ -168,7 +168,7 @@
                   <div class="form-group">
                     <label>Point Mode</label>
                     <div class="input-group">
-                      <%= select_tag 'point_mode', options_for_select(Program::POINT_MODE_LIST, (params[:point_mode].present? ? params[:point_mode] : "Regular")), :class=> "form-control" %>
+                      <%= select_tag 'point_mode', options_for_select(Program::POINT_MODE_LIST, (params[:point_mode].present? ? params[:point_mode] : "Expanded")), :class=> "form-control" %>
                     </div>
                   </div>
                 </div>
