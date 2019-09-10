@@ -353,14 +353,14 @@
           <div class="col-md-2">
             <div class="form-group">
               <label>Program Category</label>
-              <%= select_tag 'program_category', options_for_select(Program::PROGRAM_CATEGORY_LIST.sort, (params[:program_category] rescue nil)), { :class=> "form-control", :required => true} %>
+              <%= select_tag 'program_category', options_for_select(Program::PROGRAM_CATEGORY_LIST.sort, (params[:program_category].present? ? params[:program_category] : "6900")), { :class=> "form-control", :required => true} %>
             </div>
           </div>
           <div class="col-md-2">
             <div class="form-group">
               <label>Property Type</label>
               <div class="input-group">
-                <%= select_tag 'property_type', options_for_select(Program::PROPERTY_TYPE_VALUES.sort, (params[:property_type] rescue nil)), :class=> "form-control" %>
+                <%= select_tag 'property_type', options_for_select(Program::PROPERTY_TYPE_VALUES.sort, (params[:property_type].present? ? params[:property_type] : "1 Unit")), :class=> "form-control" %>
               </div>
             </div>
           </div>
@@ -368,7 +368,7 @@
             <div class="form-group">
               <label>Financing Type</label>
               <div class="input-group">
-                <%= select_tag 'financing_type', options_for_select(Program::FINANCING_TYPE_VALUES.sort, (params[:financing_type] rescue nil)), :class=> "form-control" %>
+                 <%= select_tag 'financing_type', options_for_select(Program::FINANCING_TYPE_VALUES.sort, (params[:financing_type].present? ? params[:financing_type] : "Subordinate Financing")), :class=> "form-control" %>
               </div>
             </div>
           </div>
@@ -376,7 +376,7 @@
             <div class="form-group">
               <label>Refinance Option</label>
               <div class="input-group">
-                <%= select_tag 'refinance_option', options_for_select(Program::REFINANCE_OPTION_VALUES.sort, (params[:refinance_option] rescue nil)), :class=> "form-control" %>
+                <%= select_tag 'refinance_option', options_for_select(Program::REFINANCE_OPTION_VALUES.sort, (params[:refinance_option].present? ? params[:refinance_option] : "Cash Out")), :class=> "form-control" %>
               </div>
             </div>
           </div>
@@ -384,7 +384,7 @@
             <div class="form-group">
               <label>Misc Adjuster</label>
               <div class="input-group">
-                <%= select_tag 'misc_adjuster', options_for_select(Program::MISC_ADJUSTER_VALUES.sort, (params[:misc_adjuster] rescue nil)), :class=> "form-control" %>
+                <%= select_tag 'misc_adjuster', options_for_select(Program::MISC_ADJUSTER_VALUES.sort, (params[:misc_adjuster].present? ? params[:misc_adjuster] : "CA Escrow Waiver (Full or Taxes Only)")), :class=> "form-control" %>
               </div>
             </div>
           </div>
@@ -392,7 +392,7 @@
             <div class="form-group">
               <label>Payment Type</label>
               <div class="input-group">
-                <%= select_tag 'payment_type', options_for_select(Program::PATMENT_TYPE_VALUES.sort, (params[:payment_type] rescue nil)), :class=> "form-control" %>
+                <%= select_tag 'payment_type', options_for_select(Program::PATMENT_TYPE_VALUES.sort, (params[:payment_type].present? ? params[:payment_type] : "Interest Only")), :class=> "form-control" %>
               </div>
             </div>
           </div>
@@ -400,7 +400,7 @@
             <div class="form-group">
               <label>DTI</label>
               <div class="input-group">
-                <%= select_tag 'dti', options_for_select(Program::DTI_VALUES.sort, (params[:dti] rescue nil)), :class=> "form-control" %>
+                <%= select_tag 'dti', options_for_select(Program::DTI_VALUES.sort, (params[:dti].present? ? params[:dti] : "25.6%")), :class=> "form-control" %>
               </div>
             </div>
           </div>
@@ -408,7 +408,7 @@
             <div class="form-group">
               <label>Coverage</label>
               <div class="input-group">
-                <%= select_tag 'coverage', options_for_select(Program::COVERAGE_VALUES.sort, (params[:coverage] rescue nil)), :class=> "form-control" %>
+                <%= select_tag 'coverage', options_for_select(Program::COVERAGE_VALUES.sort, (params[:coverage].present? ? params[:coverage] : "30.5%")), :class=> "form-control" %>
               </div>
             </div>
           </div>
@@ -416,7 +416,7 @@
             <div class="form-group">
               <label>Margin</label>
               <div class="input-group">
-                <%= select_tag 'margin', options_for_select(Program::MARGIN_VALUES.sort, (params[:margin] rescue nil)), :class=> "form-control" %>
+                <%= select_tag 'margin', options_for_select(Program::MARGIN_VALUES.sort, (params[:margin].present? ? params[:margin] : "2.0")), :class=> "form-control" %>
               </div>
             </div>
           </div>
@@ -603,7 +603,6 @@
     }
   
     function setArmDefaultValuesOnLoan(){
-      $('#financing_type').val('Subordinate Financing')
       if ($('#arm_benchmark').val()=='' && $("#loan_type").val() != "All" && $("#loan_type").val() != "ARM" ) {
           $('#arm_benchmark').val('LIBOR')
         }
