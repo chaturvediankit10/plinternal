@@ -36,4 +36,97 @@ module BankState
         return []
     end
   end
+
+  def get_bank_info(bank_name)
+    case bank_name
+      when "Allied Mortgage"
+        detail =  {:address1=>"225 E. City Ave, Suite 102",
+                  :address2=> "225 E. City Ave, Suite 102",
+                  :phone=> "(877) 448-2745",
+                  :state=> "PENNSYLVANIA",
+                  :state_code=> "PA",
+                  :zip=> "19004",
+                  :city=> "Bala Cynwyd"}
+        
+        when "Cardinal Financial"
+          detail =  {:address1=>"3701 Arco Corporate Drive, Suite 200",
+                    :address2=> "3701 Arco Corporate Drive, Suite 200",
+                    :phone=> "(855) 561-4944",
+                    :state=> "North Carolina",
+                    :state_code=> "NC",
+                    :zip=> "28273",
+                    :city=> "Charlotte"}
+        
+        when "CMG Financial"
+          detail =  {:address1=>"3160 Crow Canyon Road Suite 400",
+                    :address2=> "3160 Crow Canyon Road Suite 400",
+                    :phone=> "(866) 659-8989",
+                    :state=> "CALIFORNIA",
+                    :state_code=> "CA",
+                    :zip=> "94583",
+                    :city=> "San Ramon"}
+        
+        when "Home Point"
+          detail =  {:address1=>"2211 Old Earhart Road, Suite 250",
+                    :address2=> "2211 Old Earhart Road, Suite 250",
+                    :phone=> "(800) 686-2404",
+                    :state=> "MICHIGAN",
+                    :state_code=> "MI",
+                    :zip=> "48105",
+                    :city=> "Ann Arbor"}
+        
+        when "NewRez"
+          detail =  {:address1=>"4000 Chemical Road, Suite 200",
+                    :address2=> "4000 Chemical Road, Suite 200",
+                    :phone=> "(866) 886-9285",
+                    :state=> "PENNSYLVANIA",
+                    :state_code=> "PA",
+                    :zip=> "19462",
+                    :city=> "Plymouth Meeting"}
+        
+        when "Newfi Wholesale"
+          detail =  {:address1=>"2200 Powell St, Suite 340",
+                    :address2=> "2200 Powell St, Suite 340",
+                    :phone=> "(888) 316-3934",
+                    :state=> "CALIFORNIA",
+                    :state_code=> "CA",
+                    :zip=> "94608",
+                    :city=> "Emeryville"}
+        
+        when "Quicken Loans"
+          detail =  {:address1=>"1050 Woodward Avenue",
+                    :address2=> "1050 Woodward Avenue",
+                    :phone=> "(877) 999-3811",
+                    :state=> "MICHIGAN",
+                    :state_code=> "MI",
+                    :zip=> "48226",
+                    :city=> "Detroit"}
+        
+        when "SunWest Wholesale"
+          detail =  {:address1=>"6131 Orangethorpe Ave Ste 500",
+                    :address2=> "6131 Orangethorpe Ave Ste 500",
+                    :phone=> "(844) 978-6937",
+                    :state=> "CALIFORNIA",
+                    :state_code=> "CA",
+                    :zip=> "90620",
+                    :city=> "Buena Park"}
+        
+        when "Union Home"
+          detail =  {:address1=>"8241 Dow Circle West",
+                    :address2=> "8241 Dow Circle West",
+                    :state=> "Ohio",
+                    :state_code=> "OH",
+                    :zip=> "44136",
+                    :city=> "Strongsville"}
+        
+        when "United Wholesale"
+          detail =  {:address1=>"585 South Blvd E.",
+                    :address2=> "585 South Blvd E.",
+                    :phone=> "(800) 981-8898",
+                    :state=> "MICHIGAN",
+                    :state_code=> "MI",
+                    :zip=> "48341",
+                    :city=> "Pontiac"}
+      end
+    end
 end

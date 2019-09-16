@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_29_100943) do
+ActiveRecord::Schema.define(version: 2019_09_16_112949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "hstore"
@@ -82,9 +82,10 @@ ActiveRecord::Schema.define(version: 2019_05_29_100943) do
     t.string "city"
     t.string "state_code"
     t.string "zip"
-    t.string "state_eligibility"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "state_eligibility", default: [], array: true
+    t.string "state"
   end
 
   create_table "calculator_home_affordabilities", force: :cascade do |t|
@@ -1655,7 +1656,7 @@ ActiveRecord::Schema.define(version: 2019_05_29_100943) do
     t.boolean "usda", default: false
     t.boolean "streamline", default: false
     t.boolean "full_doc", default: false
-    t.text "adjustments"
+    t.text "adjustment_ids"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "loan_category"
@@ -1680,7 +1681,11 @@ ActiveRecord::Schema.define(version: 2019_05_29_100943) do
     t.string "arm_benchmark"
     t.float "arm_margin"
     t.string "arm_caps"
-    t.string "adjustment_ids"
+    t.index ["bank_name"], name: "index_programs_on_bank_name"
+    t.index ["loan_category"], name: "index_programs_on_loan_category"
+    t.index ["loan_purpose", "loan_type", "arm_basic"], name: "index_programs_on_loan_purpose_and_loan_type_and_arm_basic"
+    t.index ["loan_purpose", "loan_type", "term"], name: "index_programs_on_loan_purpose_and_loan_type_and_term"
+    t.index ["program_category"], name: "index_programs_on_program_category"
   end
 
   create_table "sheets", force: :cascade do |t|
@@ -1699,10 +1704,12 @@ ActiveRecord::Schema.define(version: 2019_05_29_100943) do
 
   create_table "user_favorites", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "loan_tek_data_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["loan_tek_data_id"], name: "index_user_favorites_on_loan_tek_data_id"
+    t.integer "fav_loan_program_id"
+    t.string "fav_search_url"
+    t.string "fav_loan_data"
+    t.text "fav_search_data"
     t.index ["user_id"], name: "index_user_favorites_on_user_id"
   end
 
