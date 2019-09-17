@@ -41,9 +41,9 @@ class ObNewRezWholesale5806Controller < ApplicationController
             end
           end
 
-          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
+          @bank = Bank.find_or_create_by(name: @name, state_eligibility: state_code_by_bank(@name))
           detail = get_bank_info(@name)
-          @bank.update(address1: detail[:address1],address2:detail[:address1],phone: detail[:phone] ,zip: detail[:zip],city: detail[:city],state: detail[:state], state_code: detail[:state_code])
+          @bank.update(address1: detail[:address1],address2:detail[:address2],phone: detail[:phone] ,zip: detail[:zip],city: detail[:city],state: detail[:state], state_code: detail[:state_code])
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end
@@ -111,7 +111,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value
@@ -359,7 +359,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     value = sheet_data.cell(rrr,ccc)
                     if (c_i == 0)
                       key = value
-                      @program.check_base_rate_range(key)
+                      # @program.check_base_rate_range(key)
                       @block_hash[key] = {}
                     else
                       # first_row[c_i]
@@ -695,7 +695,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     value = sheet_data.cell(rrr,ccc)
                     if (c_i == 0)
                       key = value
-                      @program.check_base_rate_range(key)
+                      # @program.check_base_rate_range(key)
                       @block_hash[key] = {}
                     else
                       @block_hash[key][15*c_i] = value
@@ -1015,7 +1015,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     value = sheet_data.cell(rrr,ccc)
                     if (c_i == 0)
                       key = value
-                      @program.check_base_rate_range(key)
+                      # @program.check_base_rate_range(key)
                       @block_hash[key] = {}
                     else
                       @block_hash[key][15*c_i] = value
@@ -1307,7 +1307,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     value = sheet_data.cell(rrr,ccc)
                     if (c_i == 0)
                       key = value
-                      @program.check_base_rate_range(key)
+                      # @program.check_base_rate_range(key)
                       @block_hash[key] = {} if key.present?
                     else
                       begin
@@ -1559,7 +1559,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     if value.present?
                       if (c_i == 0)
                         key = value
-                        @program.check_base_rate_range(key)
+                        # @program.check_base_rate_range(key)
                         @block_hash[key] = {}
                       else
                         @block_hash[key][15*c_i] = value
@@ -1790,7 +1790,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                       value = sheet_data.cell(rrr,ccc)
                       if (c_i == 0)
                         key = value
-                        @program.check_base_rate_range(key)
+                        # @program.check_base_rate_range(key)
                         @block_hash[key] = {}
                       else
                         if @program.lock_period.length <= 3
@@ -1956,7 +1956,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                       value = sheet_data.cell(rrr,ccc)
                       if (c_i == 0)
                         key = value
-                        @program.check_base_rate_range(key)
+                        # @program.check_base_rate_range(key)
                         @block_hash[key] = {}
                       else
                         @block_hash[key][15*c_i] = value
@@ -2257,7 +2257,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                       value = sheet_data.cell(rrr,ccc)
                       if (c_i == 0)
                         key = value
-                        @program.check_base_rate_range(key)
+                        # @program.check_base_rate_range(key)
                         @block_hash[key] = {}
                       else
                         @block_hash[key][15*c_i] = value
@@ -2589,7 +2589,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     value = sheet_data.cell(rrr,ccc)
                     if (c_i == 0)
                       key = value
-                      @program.check_base_rate_range(key)
+                      # @program.check_base_rate_range(key)
                       @block_hash[key] = {}
                     else
                       @block_hash[key][15*c_i] = value
@@ -2878,7 +2878,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value
@@ -3050,7 +3050,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     value = sheet_data.cell(rrr,ccc)
                     if (c_i == 0)
                       key = value
-                      @program.check_base_rate_range(key)
+                      # @program.check_base_rate_range(key)
                       @block_hash[key] = {}
                     else
                       @block_hash[key][15*c_i] = value
@@ -3376,7 +3376,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     value = sheet_data.cell(rrr,ccc)
                     if (c_i == 0)
                       key = value
-                      @program.check_base_rate_range(key)
+                      # @program.check_base_rate_range(key)
                       @block_hash[key] = {}
                     else
                       @block_hash[key][15*c_i] = value
@@ -3672,7 +3672,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     value = sheet_data.cell(rrr,ccc)
                     if (c_i == 0)
                       key = value
-                      @program.check_base_rate_range(key)
+                      # @program.check_base_rate_range(key)
                       @block_hash[key] = {}
                     else
                       @block_hash[key][15*c_i] = value
@@ -3972,7 +3972,7 @@ class ObNewRezWholesale5806Controller < ApplicationController
                     value = sheet_data.cell(rrr,ccc)
                     if (c_i == 0)
                       key = value
-                      @program.check_base_rate_range(key)
+                      # @program.check_base_rate_range(key)
                       @block_hash[key] = {}
                     else
                       @block_hash[key][15*c_i] = value
@@ -4408,14 +4408,14 @@ class ObNewRezWholesale5806Controller < ApplicationController
     block_hash.each do |hash|
       if hash.present?
         hash.each do |key|
-          if Program.new.check_adj_key_names key[0]
+          # if Program.new.check_adj_key_names key[0]
             data = {}
             data[key[0]] = key[1]
             adj_ment = Adjustment.create(data: data,loan_category: sheet)
             link_adj_with_program(adj_ment, sheet)
-          else
-            raise "check_adj_key_names returns False for key = #{key[0]}"
-          end
+          # else
+          #   raise "check_adj_key_names returns False for key = #{key[0]}"
+          # end
         end
       end
     end

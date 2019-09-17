@@ -11,9 +11,9 @@ class ObQuickenLoans3571Controller < ApplicationController
         if (sheet == "WS Rate Sheet Summary")
           # headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "Quicken Loans"
-          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
+          @bank = Bank.find_or_create_by(name: @name, state_eligibility: state_code_by_bank(@name))
           detail = get_bank_info(@name)
-          @bank.update(address1: detail[:address1],address2:detail[:address1],phone: detail[:phone] ,zip: detail[:zip],city: detail[:city],state: detail[:state], state_code: detail[:state_code])
+          @bank.update(address1: detail[:address1],address2:detail[:address2],phone: detail[:phone] ,zip: detail[:zip],city: detail[:city],state: detail[:state], state_code: detail[:state_code])
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end

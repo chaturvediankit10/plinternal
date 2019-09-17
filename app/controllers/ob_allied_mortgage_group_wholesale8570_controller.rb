@@ -13,7 +13,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
           @name = "Allied Mortgage"
           @bank = Bank.find_or_create_by(name: @name, state_eligibility: state_code_by_bank(@name))
           detail = get_bank_info(@name)
-          @bank.update(address1: detail[:address1],address2:detail[:address1],phone: detail[:phone] ,zip: detail[:zip],city: detail[:city],state: detail[:state], state_code: detail[:state_code])
+          @bank.update(address1: detail[:address1],address2: detail[:address2],phone: detail[:phone] ,zip: detail[:zip],city: detail[:city],state: detail[:state], state_code: detail[:state_code])
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end
@@ -60,7 +60,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value
@@ -273,7 +273,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*(c_i)] = value unless @block_hash[key].nil?
@@ -472,7 +472,7 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
                     if value.present?
                       if (c_i == 0)
                         key = value
-                        @program.check_base_rate_range(key)
+                        # @program.check_base_rate_range(key)
                         @block_hash[key] = {}
                       else
                         @block_hash[key][15*c_i] = value
@@ -767,14 +767,14 @@ class ObAlliedMortgageGroupWholesale8570Controller < ApplicationController
     def make_adjust(block_hash, sheet)
       block_hash.each do |hash|
         hash.each do |key|
-          if check_adjustment_range(key)
+          # if check_adjustment_range(key)
             data = {}
             data[key[0]] = key[1]
             adj_ment = Adjustment.create(data: data,loan_category: sheet)
             link_adj_with_program(adj_ment, sheet)
-          else
-            raise "Adjustment Key not Found"
-          end
+          # else
+            # raise "Adjustment Key not Found"
+          # end
         end
       end
     end

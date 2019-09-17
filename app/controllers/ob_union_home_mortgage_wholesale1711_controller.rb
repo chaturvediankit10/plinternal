@@ -11,9 +11,9 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
         if (sheet == "Intro")
           # headers = ["Phone", "General Contacts", "Mortgagee Clause (Wholesale)"]
           @name = "Union Home"
-          @bank = Bank.find_or_create_by(name: @name, state: state_code_by_bank(@name))
+          @bank = Bank.find_or_create_by(name: @name, state_eligibility: state_code_by_bank(@name))
           detail = get_bank_info(@name)
-          @bank.update(address1: detail[:address1],address2:detail[:address1],zip: detail[:zip],city: detail[:city],state: detail[:state], state_code: detail[:state_code])
+          @bank.update(address1: detail[:address1],address2: detail[:address2],zip: detail[:zip],city: detail[:city],state: detail[:state], state_code: detail[:state_code])
         end
         @sheet = @bank.sheets.find_or_create_by(name: sheet)
       end
@@ -65,7 +65,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value if key.present?
@@ -292,7 +292,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value if key.present?
@@ -352,7 +352,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value if key.present?
@@ -418,7 +418,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value if key.present?
@@ -558,7 +558,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*(c_i+1)] = value if key.present?
@@ -781,7 +781,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value if key.present?
@@ -1013,7 +1013,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value if key.present?
@@ -1234,7 +1234,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value if key.present?
@@ -1435,7 +1435,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*c_i] = value if key.present?
@@ -1620,7 +1620,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*(c_i-1)+5] = value if key.present?
@@ -1767,7 +1767,7 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
                       if value.present?
                         if (c_i == 0)
                           key = value
-                          @program.check_base_rate_range(key)
+                          # @program.check_base_rate_range(key)
                           @block_hash[key] = {}
                         else
                           @block_hash[key][15*(c_i-1)+5] = value if key.present?
@@ -1943,14 +1943,14 @@ class ObUnionHomeMortgageWholesale1711Controller < ApplicationController
   def make_adjust(block_hash, sheet)
     block_hash.each do |hash|
       hash.each do |key|
-        if check_adjustment_range(key)
+        # if check_adjustment_range(key)
           data = {}
           data[key[0]] = key[1]
           adj_ment = Adjustment.create(data: data,loan_category: sheet)
           link_adj_with_program(adj_ment, sheet)
-        else
-          raise "Adjustment Key not Found"
-        end
+        # else
+          # raise "Adjustment Key not Found"
+        # end
       end
     end
   end
