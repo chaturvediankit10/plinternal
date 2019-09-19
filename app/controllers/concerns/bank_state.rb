@@ -43,7 +43,7 @@ module BankState
         detail =  {:address1=>"225 E. City Ave, Suite 102",
                   :address2=> "225 E. City Ave, Suite 102",
                   :phone=> "(877) 448-2745",
-                  :state=> "PENNSYLVANIA",
+                  :state=> "Pennsylvania",
                   :state_code=> "PA",
                   :zip=> "19004",
                   :city=> "Bala Cynwyd"}
@@ -61,7 +61,7 @@ module BankState
           detail =  {:address1=>"3160 Crow Canyon Road Suite 400",
                     :address2=> "3160 Crow Canyon Road Suite 400",
                     :phone=> "(866) 659-8989",
-                    :state=> "CALIFORNIA",
+                    :state=> "California",
                     :state_code=> "CA",
                     :zip=> "94583",
                     :city=> "San Ramon"}
@@ -70,7 +70,7 @@ module BankState
           detail =  {:address1=>"2211 Old Earhart Road, Suite 250",
                     :address2=> "2211 Old Earhart Road, Suite 250",
                     :phone=> "(800) 686-2404",
-                    :state=> "MICHIGAN",
+                    :state=> "Michigan",
                     :state_code=> "MI",
                     :zip=> "48105",
                     :city=> "Ann Arbor"}
@@ -79,7 +79,7 @@ module BankState
           detail =  {:address1=>"4000 Chemical Road, Suite 200",
                     :address2=> "4000 Chemical Road, Suite 200",
                     :phone=> "(866) 886-9285",
-                    :state=> "PENNSYLVANIA",
+                    :state=> "Pennsylvania",
                     :state_code=> "PA",
                     :zip=> "19462",
                     :city=> "Plymouth Meeting"}
@@ -88,7 +88,7 @@ module BankState
           detail =  {:address1=>"2200 Powell St, Suite 340",
                     :address2=> "2200 Powell St, Suite 340",
                     :phone=> "(888) 316-3934",
-                    :state=> "CALIFORNIA",
+                    :state=> "California",
                     :state_code=> "CA",
                     :zip=> "94608",
                     :city=> "Emeryville"}
@@ -97,7 +97,7 @@ module BankState
           detail =  {:address1=>"1050 Woodward Avenue",
                     :address2=> "1050 Woodward Avenue",
                     :phone=> "(877) 999-3811",
-                    :state=> "MICHIGAN",
+                    :state=> "Michigan",
                     :state_code=> "MI",
                     :zip=> "48226",
                     :city=> "Detroit"}
@@ -106,7 +106,7 @@ module BankState
           detail =  {:address1=>"6131 Orangethorpe Ave Ste 500",
                     :address2=> "6131 Orangethorpe Ave Ste 500",
                     :phone=> "(844) 978-6937",
-                    :state=> "CALIFORNIA",
+                    :state=> "California",
                     :state_code=> "CA",
                     :zip=> "90620",
                     :city=> "Buena Park"}
@@ -123,7 +123,7 @@ module BankState
           detail =  {:address1=>"585 South Blvd E.",
                     :address2=> "585 South Blvd E.",
                     :phone=> "(800) 981-8898",
-                    :state=> "MICHIGAN",
+                    :state=> "Michigan",
                     :state_code=> "MI",
                     :zip=> "48341",
                     :city=> "Pontiac"}
